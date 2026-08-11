@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find Jobs | FreelanceHub</title>
+
+    <link rel="stylesheet" href="../css/jobs.css">
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+
+        <a href="home.html" class="logo">
+            <span class="logo-icon">✦</span>
+            Freelance<span>Hub</span>
+        </a>
+
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="jobs.html" class="active">Find Jobs</a>
+            <a href="#">Freelancers</a>
+            <a href="#">Categories</a>
+            <a href="#">How It Works</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="login.html" class="login-link">Login</a>
+            <a href="signup.html" class="signup-btn">Sign Up →</a>
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section class="jobs-hero">
+
+        <div class="hero-content">
+
+            <span class="small-title">
+                ✦ OPPORTUNITIES AWAIT
+            </span>
+
+            <h1>
+                Find Your Next
+                <span>Opportunity</span>
+            </h1>
+
+            <p>
+                Discover projects that match your skills,
+                experience and passion.
+            </p>
+
+            <!-- SEARCH -->
+            <div class="search-container">
+
+                <div class="search-input">
+                    <span>⌕</span>
+
+                    <input
+                        type="text"
+                        id="jobSearch"
+                        placeholder="Search jobs by title or keyword..."
+                    >
+                </div>
+
+                <div class="location-input">
+                    <span>⌖</span>
+
+                    <input
+                        type="text"
+                        id="locationSearch"
+                        placeholder="Location / Remote"
+                    >
+                </div>
+
+                <button onclick="searchJobs()">
+                    Search Jobs
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MAIN JOB AREA -->
+
+    <main class="jobs-container">
+
+        <!-- SIDEBAR -->
+
+        <aside class="filters">
+
+            <div class="filter-header">
+
+                <h3>Filters</h3>
+
+                <button onclick="clearFilters()">
+                    Clear All
+                </button>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="filter-section">
+
+                <h4>Job Category</h4>
+
+                <label>
+                    <input type="checkbox" value="Web Development">
+                    Web Development
+                </label>
+
+                <label>
+                    <input type="checkbox" value="UI/UX Design">
+                    UI/UX Design
+                </label>
+
+                <label>
+                    <input type="checkbox" value="Mobile Development">
+                    Mobile Development
+                </label>
+
+                <label>
+                    <input type="checkbox" value="Content Writing">
+                    Content Writing
+                </label>
+
+                <label>
+                    <input type="checkbox" value="Digital Marketing">
+                    Digital Marketing
+                </label>
+
+            </div>
+
+
+            <!-- JOB TYPE -->
+
+            <div class="filter-section">
+
+                <h4>Job Type</h4>
+
+                <label>
+                    <input type="checkbox">
+                    Fixed Price
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Hourly
+                </label>
+
+            </div>
+
+
+            <!-- EXPERIENCE -->
+
+            <div class="filter-section">
+
+                <h4>Experience Level</h4>
+
+                <label>
+                    <input type="checkbox">
+                    Entry Level
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Intermediate
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    Expert
+                </label>
+
+            </div>
+
+
+            <!-- REMOTE -->
+
+            <div class="filter-section">
+
+                <h4>Work Location</h4>
+
+                <label>
+                    <input type="checkbox">
+                    Remote
+                </label>
+
+                <label>
+                    <input type="checkbox">
+                    On-site
+                </label>
+
+            </div>
+
+        </aside>
+
+
+        <!-- JOB LIST -->
+
+        <section class="job-results">
+
+            <div class="results-top">
+
+                <div>
+                    <p class="result-label">
+                        AVAILABLE OPPORTUNITIES
+                    </p>
+
+                    <h2>
+                        Latest Jobs
+                    </h2>
+                </div>
+
+                <select id="sortJobs" onchange="sortJobs()">
+
+                    <option value="latest">
+                        Most Recent
+                    </option>
+
+                    <option value="budget">
+                        Highest Budget
+                    </option>
+
+                    <option value="applications">
+                        Most Applications
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- JOB CARD 1 -->
+
+            <article class="job-card">
+
+                <div class="job-top">
+
+                    <div class="company-logo">
+                        W
+                    </div>
+
+                    <div class="job-title">
+
+                        <span class="job-type">
+                            FEATURED
+                        </span>
+
+                        <h3>
+                            Build a Modern E-Commerce Website
+                        </h3>
+
+                        <p>
+                            Web Development • Posted 2 hours ago
+                        </p>
+
+                    </div>
+
+                    <button class="save-job">
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <p class="job-description">
+
+                    We are looking for an experienced developer
+                    to build a responsive e-commerce platform
+                    with modern UI and secure payment integration.
+
+                </p>
+
+
+                <div class="skills">
+
+                    <span>HTML</span>
+                    <span>CSS</span>
+                    <span>JavaScript</span>
+                    <span>React</span>
+
+                </div>
+
+
+                <div class="job-bottom">
+
+                    <div class="budget">
+
+                        <strong>₹25,000</strong>
+
+                        <span>Fixed Price</span>
+
+                    </div>
+
+                    <div class="applications">
+                        12 proposals
+                    </div>
+
+                    <button class="apply-btn"
+                            onclick="applyJob('E-Commerce Website')">
+                        Apply Now →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- JOB CARD 2 -->
+
+            <article class="job-card">
+
+                <div class="job-top">
+
+                    <div class="company-logo design">
+                        D
+                    </div>
+
+                    <div class="job-title">
+
+                        <span class="job-type">
+                            NEW
+                        </span>
+
+                        <h3>
+                            UI/UX Designer for Mobile Application
+                        </h3>
+
+                        <p>
+                            UI/UX Design • Posted 5 hours ago
+                        </p>
+
+                    </div>
+
+                    <button class="save-job">
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <p class="job-description">
+
+                    Looking for a creative UI/UX designer to
+                    design an intuitive mobile application
+                    experience using Figma.
+
+                </p>
+
+
+                <div class="skills">
+
+                    <span>Figma</span>
+                    <span>UI Design</span>
+                    <span>UX Research</span>
+
+                </div>
+
+
+                <div class="job-bottom">
+
+                    <div class="budget">
+
+                        <strong>₹15,000</strong>
+
+                        <span>Fixed Price</span>
+
+                    </div>
+
+                    <div class="applications">
+                        8 proposals
+                    </div>
+
+                    <button class="apply-btn"
+                            onclick="applyJob('Mobile UI/UX Design')">
+                        Apply Now →
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- JOB CARD 3 -->
+
+            <article class="job-card">
+
+                <div class="job-top">
+
+                    <div class="company-logo marketing">
+                        M
+                    </div>
+
+                    <div class="job-title">
+
+                        <span class="job-type">
+                            REMOTE
+                        </span>
+
+                        <h3>
+                            Digital Marketing Specialist
+                        </h3>
+
+                        <p>
+                            Digital Marketing • Posted 1 day ago
+                        </p>
+
+                    </div>
+
+                    <button class="save-job">
+                        ♡
+                    </button>
+
+                </div>
+
+
+                <p class="job-description">
+
+                    Need a digital marketing expert to manage
+                    social media campaigns and improve online
+                    brand visibility.
+
+                </p>
+
+
+                <div class="skills">
+
+                    <span>SEO</span>
+                    <span>Social Media</span>
+                    <span>Google Ads</span>
+
+                </div>
+
+
+                <div class="job-bottom">
+
+                    <div class="budget">
+
+                        <strong>₹20,000</strong>
+
+                        <span>Monthly</span>
+
+                    </div>
+
+                    <div class="applications">
+                        15 proposals
+                    </div>
+
+                    <button class="apply-btn"
+                            onclick="applyJob('Digital Marketing')">
+                        Apply Now →
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-logo">
+            Freelance<span>Hub</span>
+        </div>
+
+        <p>
+            Connect. Collaborate. Create.
+        </p>
+
+        <p class="copyright">
+            © 2026 FreelanceHub. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script src="../js/jobs.js"></script>
+
+</body>
+</html>

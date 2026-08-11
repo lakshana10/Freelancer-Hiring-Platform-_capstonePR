@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login | FreelanceHub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body class="login-page">
+
+    <!-- Header -->
+    <header class="login-header">
+        <div class="logo">
+            <span class="logo-icon">✣</span>
+            <span>Freelance<span>Hub</span></span>
+        </div>
+
+        <a href="index.html" class="back-home">
+            ← Back to Home
+        </a>
+    </header>
+
+
+    <!-- Login Section -->
+    <main class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-icon">
+                ✦
+            </div>
+
+            <h1>Welcome Back!</h1>
+
+            <p class="login-subtitle">
+                Login to continue your FreelanceHub journey.
+            </p>
+
+
+            <!-- Login Form -->
+            <form id="loginForm">
+
+                <!-- Email -->
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <div class="password-label">
+                        <label for="password">Password</label>
+
+                        <a href="#" onclick="forgotPassword()">
+                            Forgot Password?
+                        </a>
+                    </div>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="togglePassword()"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Remember -->
+                <div class="remember-row">
+
+                    <label>
+                        <input type="checkbox" id="remember">
+                        Remember me
+                    </label>
+
+                </div>
+
+
+                <!-- Login Button -->
+                <button type="submit" class="login-btn">
+                    Login
+                    <span>→</span>
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+
+            <!-- Google Login -->
+            <button class="google-btn" onclick="googleLogin()">
+                <span class="google-icon">G</span>
+                Continue with Google
+            </button>
+
+
+            <!-- Signup -->
+            <p class="signup-text">
+                Don't have an account?
+                <a href="signup.html">Create an account</a>
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="login-footer">
+        © 2026 FreelanceHub. All rights reserved.
+    </footer>
+
+
+    <script src="../js/login.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8f7ff;
+    color: #17172d;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 7%;
+    gap: 40px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.logo {
+    text-decoration: none;
+    color: #17172d;
+    font-size: 22px;
+    font-weight: 700;
+    margin-right: auto;
+}
+
+.logo span {
+    color: #6845e8;
+}
+
+.logo-icon {
+    color: #6845e8 !important;
+    margin-right: 6px;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 25px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #555;
+    font-size: 14px;
+}
+
+.navbar nav a:hover,
+.navbar nav .active {
+    color: #6845e8;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.login-link {
+    color: #555;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.signup-btn {
+    background: #6845e8;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+
+/* HERO */
+
+.jobs-hero {
+    background:
+        radial-gradient(circle at 15% 30%, #e9e2ff, transparent 35%),
+        radial-gradient(circle at 85% 70%, #eee8ff, transparent 35%),
+        #faf9ff;
+
+    padding: 70px 7%;
+    text-align: center;
+}
+
+.small-title {
+    color: #6845e8;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    margin: 15px 0;
+}
+
+.hero-content h1 span {
+    color: #6845e8;
+}
+
+.hero-content p {
+    color: #777;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+
+/* SEARCH */
+
+.search-container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 14px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 10px 30px rgba(70, 50, 120, 0.12);
+}
+
+.search-input,
+.location-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 12px;
+}
+
+.search-input input,
+.location-input input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 13px 5px;
+    font-size: 14px;
+}
+
+.search-container button {
+    border: none;
+    background: #6845e8;
+    color: white;
+    padding: 0 25px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* MAIN */
+
+.jobs-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: 35px;
+}
+
+
+/* FILTERS */
+
+.filters {
+    background: white;
+    border-radius: 15px;
+    padding: 22px;
+    height: fit-content;
+    border: 1px solid #eeeeee;
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.filter-header h3 {
+    font-size: 18px;
+}
+
+.filter-header button {
+    border: none;
+    background: none;
+    color: #6845e8;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.filter-section {
+    border-top: 1px solid #eeeeee;
+    padding: 20px 0;
+}
+
+.filter-section h4 {
+    margin-bottom: 14px;
+}
+
+.filter-section label {
+    display: block;
+    margin: 12px 0;
+    color: #666;
+    font-size: 13px;
+}
+
+.filter-section input {
+    margin-right: 8px;
+    accent-color: #6845e8;
+}
+
+
+/* RESULTS */
+
+.results-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.result-label {
+    color: #6845e8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.results-top h2 {
+    margin-top: 5px;
+}
+
+.results-top select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: white;
+}
+
+
+/* JOB CARD */
+
+.job-card {
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(60, 40, 120, 0.10);
+}
+
+.job-top {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.company-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #eee8ff;
+    color: #6845e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.company-logo.design {
+    background: #e8f4ff;
+    color: #2878d4;
+}
+
+.company-logo.marketing {
+    background: #fff0e7;
+    color: #e87528;
+}
+
+.job-title {
+    flex: 1;
+}
+
+.job-type {
+    color: #6845e8;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.job-title h3 {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.job-title p {
+    color: #888;
+    font-size: 12px;
+}
+
+.save-job {
+    border: none;
+    background: none;
+    font-size: 23px;
+    color: #888;
+    cursor: pointer;
+}
+
+.job-description {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 20px 0;
+}
+
+
+/* SKILLS */
+
+.skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 22px;
+}
+
+.skills span {
+    background: #f2efff;
+    color: #6845e8;
+    padding: 7px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+}
+
+
+/* BOTTOM */
+
+.job-bottom {
+    border-top: 1px solid #eeeeee;
+    padding-top: 18px;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.budget {
+    display: flex;
+    flex-direction: column;
+}
+
+.budget strong {
+    font-size: 16px;
+}
+
+.budget span,
+.applications {
+    color: #888;
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.apply-btn {
+    margin-left: auto;
+    border: none;
+    background: #6845e8;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* FOOTER */
+
+footer {
+    background: #17172d;
+    color: white;
+    padding: 35px 7%;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.footer-logo span {
+    color: #9275ff;
+}
+
+footer p {
+    color: #aaa;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.copyright {
+    margin-top: 20px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 900px) {
+
+    .navbar nav {
+        display: none;
+    }
+
+    .jobs-container {
+        grid-template-columns: 1fr;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    .search-container button {
+        height: 45px;
+    }
+
+    .hero-content h1 {
+        font-size: 36px;
+    }
+}

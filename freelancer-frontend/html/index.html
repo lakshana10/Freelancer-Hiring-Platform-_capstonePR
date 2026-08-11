@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FreelanceHub | Find the Right Freelancer</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">✦</div>
+            <span>Freelance<span>Hub</span></span>
+        </div>
+
+        <nav>
+            <a href="../html/home.html" class="active">Home</a>
+            <a href="#jobs">Find Jobs</a>
+            <a href="#freelancers">Freelancers</a>
+            <a href="#categories">Categories</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#pricing">Pricing</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            <button class="icon-btn" id="themeBtn" title="Toggle theme">
+                ☾
+            </button>
+
+            <button class="icon-btn">
+                ♧
+            </button>
+
+            <button class="login-btn" onclick="loginUser()">
+            <a href="login.html" class="login-btn">Login</a>
+            </button>
+
+            <button class="signup-btn" onclick="signupUser()">
+                Sign Up
+                <span>→</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <div class="hero-left">
+
+                <div class="small-badge">
+                    ✨ Connect. Collaborate. Create.
+                </div>
+
+                <h1>
+                    Find the Right
+                    <span>Freelancer</span>
+                    for Your Project
+                </h1>
+
+                <p class="hero-description">
+                    Access a global network of talented freelancers and
+                    get your projects done with quality and on time.
+                </p>
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <span class="search-icon">⌕</span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search for jobs or skills..."
+                    >
+
+                    <button onclick="searchJobs()">
+                        Find Work
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+
+                <!-- POPULAR -->
+
+                <div class="popular">
+
+                    <strong>Popular:</strong>
+
+                    <button onclick="searchCategory('Web Development')">
+                        Web Development
+                    </button>
+
+                    <button onclick="searchCategory('UI/UX Design')">
+                        UI/UX Design
+                    </button>
+
+                    <button onclick="searchCategory('Content Writing')">
+                        Content Writing
+                    </button>
+
+                    <button onclick="searchCategory('Digital Marketing')">
+                        Digital Marketing
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- HERO IMAGE / ILLUSTRATION -->
+
+            <div class="hero-right">
+
+                <div class="hero-glow"></div>
+
+                <div class="browser-card">
+
+                    <div class="browser-top">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="browser-content">
+
+                        <div class="profile-circle">
+                            👩🏻
+                        </div>
+
+                        <div class="profile-line long"></div>
+                        <div class="profile-line"></div>
+
+                        <div class="laptop">
+                            💻
+                        </div>
+
+                        <div class="working-person">
+                            👩🏻‍💻
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FLOATING CARDS -->
+
+                <div class="floating-card rating-card">
+
+                    <small>Top Rated</small>
+
+                    <strong>Freelancers</strong>
+
+                    <div class="mini-people">
+                        👩🏻 👨🏻 👩🏻
+                    </div>
+
+                    <div class="rating">
+                        ⭐ 4.9
+                    </div>
+
+                    <small>120+ reviews</small>
+
+                </div>
+
+
+                <div class="floating-card projects-card">
+
+                    <small>Projects Completed</small>
+
+                    <strong>2,500+</strong>
+
+                    <div class="graph">
+                        ╱╲__╱╲╱
+                    </div>
+
+                </div>
+
+
+                <div class="floating-card clients-card">
+
+                    <small>✓ Happy Clients</small>
+
+                    <strong>1,200+</strong>
+
+                    <span>♥</span>
+
+                </div>
+
+
+                <div class="floating-card jobs-card">
+
+                    <small>👜 Jobs Posted</small>
+
+                    <strong>3,800+</strong>
+
+                </div>
+
+
+                <div class="paper-plane">
+                    ➤
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= STATS ================= -->
+
+        <section class="stats">
+
+            <div class="stat">
+
+                <div class="stat-icon purple">
+                    👥
+                </div>
+
+                <div>
+                    <strong>25,000+</strong>
+                    <span>Active Freelancers</span>
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon green">
+                    💼
+                </div>
+
+                <div>
+                    <strong>12,500+</strong>
+                    <span>Jobs Posted</span>
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon blue">
+                    🛡
+                </div>
+
+                <div>
+                    <strong>98%</strong>
+                    <span>Client Satisfaction</span>
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-icon orange">
+                    🌐
+                </div>
+
+                <div>
+                    <strong>120+</strong>
+                    <span>Countries Served</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="categories-section" id="categories">
+
+            <div class="section-heading">
+
+                <div>
+                    <small>EXPLORE TOP CATEGORIES</small>
+
+                    <h2>Popular Skills & Services</h2>
+
+                    <p>
+                        Find the perfect expertise for your project
+                    </p>
+                </div>
+
+                <button class="view-all">
+                    View All Categories →
+                </button>
+
+            </div>
+
+
+            <div class="category-grid">
+
+
+                <!-- CARD 1 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon purple-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <h3>Web Development</h3>
+
+                    <p>1,250+ Freelancers</p>
+
+                    <button onclick="searchCategory('Web Development')">
+                        Explore →
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 2 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon green-icon">
+                        🖌
+                    </div>
+
+                    <h3>UI/UX Design</h3>
+
+                    <p>980+ Freelancers</p>
+
+                    <button onclick="searchCategory('UI/UX Design')">
+                        Explore →
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 3 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon blue-icon">
+                        🖊
+                    </div>
+
+                    <h3>Content Writing</h3>
+
+                    <p>850+ Freelancers</p>
+
+                    <button onclick="searchCategory('Content Writing')">
+                        Explore →
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 4 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon pink-icon">
+                        📣
+                    </div>
+
+                    <h3>Digital Marketing</h3>
+
+                    <p>760+ Freelancers</p>
+
+                    <button onclick="searchCategory('Digital Marketing')">
+                        Explore →
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 5 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon orange-icon">
+                        🎥
+                    </div>
+
+                    <h3>Video Editing</h3>
+
+                    <p>620+ Freelancers</p>
+
+                    <button onclick="searchCategory('Video Editing')">
+                        Explore →
+                    </button>
+
+                </div>
+
+
+                <!-- CARD 6 -->
+
+                <div class="category-card">
+
+                    <div class="category-icon violet-icon">
+                        •••
+                    </div>
+
+                    <h3>More Categories</h3>
+
+                    <p>Explore all services</p>
+
+                    <button>
+                        Explore All →
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= CTA ================= -->
+
+        <section class="cta">
+
+            <div class="cta-text">
+
+                <h2>Ready to start your project?</h2>
+
+                <p>
+                    Join thousands of clients who trust FreelanceHub
+                    to get work done.
+                </p>
+
+            </div>
+
+
+            <div class="cta-buttons">
+
+                <button class="post-btn" onclick="postJob()">
+                    ➤ &nbsp; Post a Job
+                </button>
+
+                <button class="freelancer-btn" onclick="joinFreelancer()">
+                    ♙ &nbsp; Join as Freelancer
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+            © 2026 FreelanceHub. All rights reserved.
+        </div>
+
+        <div>
+            Built for clients & freelancers.
+        </div>
+
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+
+</body>
+
+</html>

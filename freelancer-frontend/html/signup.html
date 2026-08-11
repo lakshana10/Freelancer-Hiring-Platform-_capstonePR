@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | FreelanceHub</title>
+
+    <link rel="stylesheet" href="../css/signup.css">
+</head>
+
+<body>
+
+    <!-- Top Logo -->
+    <header class="signup-header">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">✦</span>
+            <span>Freelance<span>Hub</span></span>
+        </a>
+
+        <a href="index.html" class="back-home">
+            ← Back to Home
+        </a>
+    </header>
+
+
+    <!-- Signup Section -->
+    <main class="signup-section">
+
+        <div class="signup-card">
+
+            <!-- Icon -->
+            <div class="signup-icon">
+                ✦
+            </div>
+
+            <h1>Create your account</h1>
+
+            <p class="subtitle">
+                Join FreelanceHub and start your journey today.
+            </p>
+
+
+            <!-- Signup Form -->
+            <form id="signupForm">
+
+                <!-- Full Name -->
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+                </div>
+
+
+                <!-- Email -->
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+                </div>
+
+
+                <!-- Password -->
+                <div class="input-group">
+
+                    <div class="label-row">
+                        <label for="password">Password</label>
+                    </div>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Create a password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="togglePassword('password', this)"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+                <div class="input-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="password-box">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm your password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            onclick="togglePassword('confirmPassword', this)"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Terms -->
+                <div class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required
+                    >
+
+                    <label for="terms">
+                        I agree to the
+                        <a href="#">Terms & Conditions</a>
+                        and
+                        <a href="#">Privacy Policy</a>
+                    </label>
+
+                </div>
+
+
+                <!-- Create Account -->
+                <button type="submit" class="create-btn">
+                    Create Account
+                    <span>→</span>
+                </button>
+
+            </form>
+
+
+            <!-- Divider -->
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+
+            <!-- Google -->
+            <button class="google-btn" onclick="googleSignup()">
+
+                <span class="google-icon">G</span>
+
+                Continue with Google
+
+            </button>
+
+
+            <!-- Login -->
+            <p class="login-text">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        © 2026 FreelanceHub. All rights reserved.
+    </footer>
+
+
+    <script src="../js/signup.js"></script>
+
+</body>
+</html>
