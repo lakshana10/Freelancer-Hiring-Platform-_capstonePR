@@ -7,15 +7,11 @@ function togglePassword(inputId, button) {
     const input = document.getElementById(inputId);
 
     if (input.type === "password") {
-
         input.type = "text";
         button.textContent = "🙈";
-
     } else {
-
         input.type = "password";
         button.textContent = "👁";
-
     }
 }
 
@@ -24,76 +20,127 @@ function togglePassword(inputId, button) {
 // SIGNUP FORM
 // ===============================
 
-document
-    .getElementById("signupForm")
-    .addEventListener("submit", function(event) {
+document.getElementById("signupForm").addEventListener("submit", async function(event) {
 
-        event.preventDefault();
+    event.preventDefault();
 
-        const name =
-            document.getElementById("name").value.trim();
+    const name = document.getElementById("name").value.trim();
 
-        const email =
-            document.getElementById("email").value.trim();
+    const email = document.getElementById("email").value.trim();
 
-        const password =
-            document.getElementById("password").value;
+    const password = document.getElementById("password").value;
 
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
 
-        const terms =
-            document.getElementById("terms").checked;
+    const terms =
+        document.getElementById("terms").checked;
 
 
-        // Password check
+    // ===============================
+    // VALIDATION
+    // ===============================
 
-        if (password.length < 6) {
+    if (name.length < 2) {
+        alert("Please enter your full name.");
+        return;
+    }
 
-            alert("Password must contain at least 6 characters.");
+    if (!email.includes("@")) {
+        alert("Please enter a valid email address.");
+        return;
+    }
 
-            return;
-        }
+    if (password.length < 6) {
+        alert("Password must contain at least 6 characters.");
+        return;
+    }
 
+    if (password !== confirmPassword) {
+        alert("Passwords do not match.");
+        return;
+    }
 
-        // Confirm password
-
-        if (password !== confirmPassword) {
-
-            alert("Passwords do not match.");
-
-            return;
-        }
-
-
-        // Terms
-
-        if (!terms) {
-
-            alert("Please accept the Terms & Conditions.");
-
-            return;
-        }
-
-
-        // Temporary frontend signup
-
-        localStorage.setItem("freelanceUser", JSON.stringify({
-            name: name,
-            email: email
-        }));
+    if (!terms) {
+        alert("Please accept the Terms & Conditions.");
+        return;
+    }
 
 
-        alert(
-            "Account created successfully! Welcome to FreelanceHub 🎉"
+    // ===============================
+    // SEND DATA TO SPRING BOOT
+    // ===============================
+
+    const userData = {
+
+        name: name,
+        email: email,
+        password: password,
+        role: "FREELANCER"
+
+    };
+
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:8080/api/users/signup",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(userData)
+            }
         );
 
 
-        // Go to login
+        // ===============================
+        // SUCCESS
+        // ===============================
 
-        window.location.href = "login.html";
+        if (response.ok) {
 
-    });
+            const data = await response.json();
+
+            console.log("Signup successful:", data);
+
+            alert(
+                "Account created successfully! Welcome to FreelanceHub 🎉"
+            );
+
+            window.location.href = "login.html";
+
+        }
+
+
+        // ===============================
+        // ERROR
+        // ===============================
+
+        else {
+
+            const errorMessage = await response.text();
+
+            alert(errorMessage || "Signup failed. Please try again.");
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error("Backend connection error:", error);
+
+        alert(
+            "Cannot connect to the server. Please make sure Spring Boot is running."
+        );
+
+    }
+
+});
 
 
 // ===============================
@@ -103,7 +150,7 @@ document
 function googleSignup() {
 
     alert(
-        "Google signup will be connected when we add backend authentication."
+        "Google signup will be connected later."
     );
 
 }

@@ -2,14 +2,13 @@
    LOGIN PAGE
 ========================================= */
 
-
-/* Login Form */
+// Login Form
 
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", function(event) {
+    loginForm.addEventListener("submit", async function(event) {
 
         event.preventDefault();
 
@@ -17,8 +16,12 @@ if (loginForm) {
             document.getElementById("email").value.trim();
 
         const password =
-            document.getElementById("password").value.trim();
+            document.getElementById("password").value;
 
+
+        // ===============================
+        // VALIDATION
+        // ===============================
 
         if (email === "" || password === "") {
 
@@ -36,25 +39,100 @@ if (loginForm) {
         }
 
 
-        /*
-         * Frontend testing only.
-         *
-         * Later we will replace this with:
-         *
-         * POST http://localhost:8080/api/auth/login
-         *
-         * to connect with Spring Boot.
-         */
+        // ===============================
+        // LOGIN DATA
+        // ===============================
 
-        alert("Login successful!");
-        window.location.href = "home.html";
+        const loginData = {
+
+            email: email,
+            password: password
+
+        };
+
+
+        // ===============================
+        // CONNECT TO SPRING BOOT
+        // ===============================
+
+        try {
+
+            const response = await fetch(
+                "http://localhost:8080/api/users/login",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(loginData)
+                }
+            );
+
+
+            // ===============================
+            // LOGIN SUCCESS
+            // ===============================
+
+            if (response.ok) {
+
+                const data = await response.json();
+
+                console.log("Login successful:", data);
+
+
+                // Store logged-in user
+                localStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(data.user)
+                );
+
+
+                alert("Login successful! 🎉");
+
+                window.location.href = "home.html";
+
+            }
+
+
+            // ===============================
+            // LOGIN FAILED
+            // ===============================
+
+            else {
+
+                const errorMessage = await response.text();
+
+                alert(
+                    errorMessage || "Invalid email or password."
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Backend connection error:",
+                error
+            );
+
+            alert(
+                "Cannot connect to the server. Please make sure Spring Boot is running."
+            );
+
+        }
 
     });
 
 }
 
 
-/* Show / Hide Password */
+// ===============================
+// SHOW / HIDE PASSWORD
+// ===============================
 
 function togglePassword() {
 
@@ -82,18 +160,22 @@ function togglePassword() {
 }
 
 
-/* Forgot Password */
+// ===============================
+// FORGOT PASSWORD
+// ===============================
 
 function forgotPassword() {
 
     alert(
-        "Password reset feature will be connected to the backend soon."
+        "Password reset feature will be connected later."
     );
 
 }
 
 
-/* Google Login */
+// ===============================
+// GOOGLE LOGIN
+// ===============================
 
 function googleLogin() {
 
