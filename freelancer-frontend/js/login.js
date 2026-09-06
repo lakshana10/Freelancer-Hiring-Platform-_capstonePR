@@ -2,21 +2,26 @@
    LOGIN PAGE
 ========================================= */
 
-// Login Form
-
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
 
-    loginForm.addEventListener("submit", async function(event) {
+    loginForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        const email =
-            document.getElementById("email").value.trim();
+        // ===============================
+        // GET LOGIN VALUES
+        // ===============================
 
-        const password =
-            document.getElementById("password").value;
+        const email = document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password = document
+            .getElementById("password")
+            .value;
 
 
         // ===============================
@@ -24,17 +29,12 @@ if (loginForm) {
         // ===============================
 
         if (email === "" || password === "") {
-
             alert("Please enter email and password.");
-
             return;
         }
 
-
         if (password.length < 6) {
-
             alert("Password must contain at least 6 characters.");
-
             return;
         }
 
@@ -44,10 +44,8 @@ if (loginForm) {
         // ===============================
 
         const loginData = {
-
             email: email,
             password: password
-
         };
 
 
@@ -81,17 +79,39 @@ if (loginForm) {
 
                 console.log("Login successful:", data);
 
+                // Get logged-in user
+                const user = data.user;
 
-                // Store logged-in user
+                // Check that user data exists
+                if (!user) {
+                    alert("Login successful, but user data was not received.");
+                    return;
+                }
+
+                // Store user information
                 localStorage.setItem(
                     "loggedInUser",
-                    JSON.stringify(data.user)
+                    JSON.stringify(user)
                 );
-
 
                 alert("Login successful! 🎉");
 
-                window.location.href = "home.html";
+
+                // ===============================
+                // ROLE-BASED REDIRECT
+                // ===============================
+
+                if (user.role &&
+                    user.role.toUpperCase() === "ADMIN") {
+
+                    // Admin → Admin Dashboard
+                    window.location.href = "admin.html";
+
+                } else {
+
+                    // Freelancer → Home Page
+                    window.location.href = "home.html";
+                }
 
             }
 
@@ -102,15 +122,33 @@ if (loginForm) {
 
             else {
 
-                const errorMessage = await response.text();
+                let errorMessage = "Invalid email or password.";
 
-                alert(
-                    errorMessage || "Invalid email or password."
-                );
+                try {
+                    const errorData = await response.json();
 
+                    if (errorData.message) {
+                        errorMessage = errorData.message;
+                    }
+
+                } catch (error) {
+                    // Response was not JSON
+                    const text = await response.text();
+
+                    if (text) {
+                        errorMessage = text;
+                    }
+                }
+
+                alert(errorMessage);
             }
 
         }
+
+
+        // ===============================
+        // BACKEND CONNECTION ERROR
+        // ===============================
 
         catch (error) {
 
@@ -122,17 +160,15 @@ if (loginForm) {
             alert(
                 "Cannot connect to the server. Please make sure Spring Boot is running."
             );
-
         }
 
     });
-
 }
 
 
-// ===============================
-// SHOW / HIDE PASSWORD
-// ===============================
+/* =========================================
+   SHOW / HIDE PASSWORD
+========================================= */
 
 function togglePassword() {
 
@@ -143,44 +179,49 @@ function togglePassword() {
         document.querySelector(".show-password");
 
 
+    if (!password) {
+        return;
+    }
+
+
     if (password.type === "password") {
 
         password.type = "text";
 
-        button.textContent = "🙈";
+        if (button) {
+            button.textContent = "🙈";
+        }
 
     } else {
 
         password.type = "password";
 
-        button.textContent = "👁";
-
+        if (button) {
+            button.textContent = "👁";
+        }
     }
-
 }
 
 
-// ===============================
-// FORGOT PASSWORD
-// ===============================
+/* =========================================
+   FORGOT PASSWORD
+========================================= */
 
 function forgotPassword() {
 
     alert(
         "Password reset feature will be connected later."
     );
-
 }
 
 
-// ===============================
-// GOOGLE LOGIN
-// ===============================
+/* =========================================
+   GOOGLE LOGIN
+========================================= */
 
 function googleLogin() {
 
     alert(
         "Google login will be connected later."
     );
-
 }

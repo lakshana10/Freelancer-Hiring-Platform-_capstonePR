@@ -22,38 +22,52 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    // ===============================
     // SIGNUP
+    // ===============================
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
 
         try {
+
             Optional<User> existingUser =
                     userService.getUserByEmail(user.getEmail());
 
             if (existingUser.isPresent()) {
+
                 return ResponseEntity
                         .status(HttpStatus.CONFLICT)
                         .body("Email already registered.");
             }
 
-            User savedUser = userService.registerUser(user);
+            User savedUser =
+                    userService.registerUser(user);
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(savedUser);
 
         } catch (Exception e) {
+
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Signup failed: " + e.getMessage());
         }
     }
 
+
+    // ===============================
     // LOGIN
+    // ===============================
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(
+            @RequestBody LoginRequest loginRequest) {
 
         try {
+
             Optional<User> user =
                     userService.loginUser(
                             loginRequest.getEmail(),
@@ -62,10 +76,18 @@ public class UserController {
 
             if (user.isPresent()) {
 
-                Map<String, Object> response = new HashMap<>();
+                Map<String, Object> response =
+                        new HashMap<>();
 
-                response.put("message", "Login successful");
-                response.put("user", user.get());
+                response.put(
+                        "message",
+                        "Login successful"
+                );
+
+                response.put(
+                        "user",
+                        user.get()
+                );
 
                 return ResponseEntity.ok(response);
             }
@@ -82,26 +104,71 @@ public class UserController {
         }
     }
 
+
+    // ===============================
+    // GET ALL USERS
+    // ===============================
+
+    @GetMapping
+    public ResponseEntity<?> getAllUsers() {
+
+        try {
+
+            return ResponseEntity.ok(
+                    userService.getAllUsers()
+            );
+
+        } catch (Exception e) {
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(
+                        "Failed to fetch users: "
+                        + e.getMessage()
+                    );
+        }
+    }
+
+
+    // ===============================
     // LOGIN REQUEST
+    // ===============================
+
     public static class LoginRequest {
 
         private String email;
+
         private String password;
+
+
+        // CONSTRUCTOR
 
         public LoginRequest() {
         }
+
+
+        // GET EMAIL
 
         public String getEmail() {
             return email;
         }
 
+
+        // SET EMAIL
+
         public void setEmail(String email) {
             this.email = email;
         }
 
+
+        // GET PASSWORD
+
         public String getPassword() {
             return password;
         }
+
+
+        // SET PASSWORD
 
         public void setPassword(String password) {
             this.password = password;
