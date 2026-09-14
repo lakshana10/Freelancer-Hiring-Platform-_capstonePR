@@ -16,6 +16,8 @@ public class Application {
 
     private String jobTitle;
 
+    private String status = "Pending";
+
     public Application() {
     }
 
@@ -51,5 +53,13 @@ public class Application {
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

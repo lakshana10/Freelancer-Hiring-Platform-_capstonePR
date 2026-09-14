@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Jobs - FreelanceHub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        .my-jobs-page {
+            min-height: 80vh;
+            padding: 50px 8%;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #666;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 25px;
+            text-decoration: none;
+            color: #5b3cc4;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            color: #6845e8;
+        }
+
+        #jobsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .job-card h2 {
+            margin-bottom: 12px;
+        }
+
+        .job-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .job-info {
+            margin-top: 18px;
+        }
+
+        .job-info strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .edit-btn,
+        .delete-btn,
+        .view-applications-btn {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .edit-btn {
+            background: #5b3cc4;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .view-applications-btn {
+            background: #2f80ed;
+            color: white;
+        }
+
+        .edit-btn:hover,
+        .delete-btn:hover,
+        .view-applications-btn:hover {
+            opacity: 0.9;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+
+        @media (max-width: 700px) {
+
+            .my-jobs-page {
+                padding: 40px 5%;
+            }
+
+            .job-actions {
+                flex-direction: column;
+            }
+
+            .edit-btn,
+            .delete-btn,
+            .view-applications-btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<header class="navbar">
+
+    <div class="logo">
+
+        <span class="logo-icon">✣</span>
+
+        <span>
+            Freelance<span>Hub</span>
+        </span>
+
+    </div>
+
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="jobs.html">
+            Find Jobs
+        </a>
+
+        <a href="my-applications.html">
+            My Applications
+        </a>
+
+        <a href="my-jobs.html" class="active">
+            My Jobs
+        </a>
+
+        <a href="profile.html">
+            My Profile
+        </a>
+
+        <a href="freelancers.html">
+            Freelancers
+        </a>
+
+        <a href="home.html#categories">
+            Categories
+        </a>
+
+        <a href="home.html#how-it-works">
+            How It Works
+        </a>
+
+        <a href="home.html#pricing">
+            Pricing
+        </a>
+
+    </nav>
+
+
+    <div class="nav-actions">
+
+        <button
+            class="icon-btn"
+            id="themeBtn">
+            ☾
+        </button>
+
+        <button
+            class="login-btn"
+            onclick="window.location.href='login.html'">
+            Login
+        </button>
+
+        <button
+            class="signup-btn"
+            onclick="window.location.href='signup.html'">
+            Sign Up →
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- MY JOBS -->
+
+<section class="my-jobs-page">
+
+    <a href="home.html" class="back-btn">
+        ← Back to Home
+    </a>
+
+
+    <div class="page-header">
+
+        <h1>
+            My Posted Jobs
+        </h1>
+
+        <p>
+            View and manage the jobs you have posted on FreelanceHub.
+        </p>
+
+    </div>
+
+
+    <div id="jobsContainer">
+
+        <div class="loading">
+            Loading your jobs...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="footer-logo">
+        ✣ FreelanceHub
+    </div>
+
+    <p>
+        Connect. Collaborate. Create.
+    </p>
+
+    <p>
+        © 2026 FreelanceHub. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+async function loadMyJobs() {
+
+    const userEmail =
+        localStorage.getItem("userEmail");
+
+    const container =
+        document.getElementById("jobsContainer");
+
+
+    if (!userEmail) {
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                <h2>
+                    Please Login
+                </h2>
+
+                <p>
+                    You need to login to view your posted jobs.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "http://localhost:8080/api/jobs"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to load jobs"
+            );
+
+        }
+
+
+        const jobs =
+            await response.json();
+
+
+        const myJobs =
+            jobs.filter(
+                job => job.clientEmail === userEmail
+            );
+
+
+        if (myJobs.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    <h2>
+                        No Jobs Posted Yet
+                    </h2>
+
+                    <p>
+                        You haven't posted any jobs.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        container.innerHTML = "";
+
+
+        myJobs.forEach(job => {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "job-card";
+
+
+            card.innerHTML = `
+
+                <h2>
+                    ${job.title}
+                </h2>
+
+                <p>
+                    ${job.description}
+                </p>
+
+
+                <div class="job-info">
+
+                    <strong>
+                        Budget: ₹${job.budget}
+                    </strong>
+
+                    <strong>
+                        Skills: ${job.skills}
+                    </strong>
+
+                    <strong>
+                        Job ID: ${job.id}
+                    </strong>
+
+                </div>
+
+
+                <div class="job-actions">
+
+                    <button
+                        class="edit-btn"
+                        onclick="editJob(
+                            ${job.id},
+                            '${escapeQuotes(job.title)}',
+                            '${escapeQuotes(job.description)}',
+                            '${job.budget}',
+                            '${escapeQuotes(job.skills)}'
+                        )">
+
+                        ✏️ Edit
+
+                    </button>
+
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteJob(${job.id})">
+
+                        🗑️ Delete
+
+                    </button>
+
+
+                    <button
+                        class="view-applications-btn"
+                        onclick="viewApplications(${job.id})">
+
+                        👥 View Applications
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(card);
+
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                <h2>
+                    Unable to load jobs
+                </h2>
+
+                <p>
+                    Please make sure the backend is running.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+function escapeQuotes(text) {
+
+    return String(text)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r");
+
+}
+
+
+async function editJob(
+    id,
+    title,
+    description,
+    budget,
+    skills
+) {
+
+    const newTitle =
+        prompt(
+            "Enter job title:",
+            title
+        );
+
+
+    if (newTitle === null) {
+        return;
+    }
+
+
+    const newDescription =
+        prompt(
+            "Enter job description:",
+            description
+        );
+
+
+    if (newDescription === null) {
+        return;
+    }
+
+
+    const newBudget =
+        prompt(
+            "Enter budget:",
+            budget
+        );
+
+
+    if (newBudget === null) {
+        return;
+    }
+
+
+    const newSkills =
+        prompt(
+            "Enter skills:",
+            skills
+        );
+
+
+    if (newSkills === null) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:8080/api/jobs/${id}`,
+                {
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        title: newTitle,
+
+                        description: newDescription,
+
+                        budget: Number(newBudget),
+
+                        skills: newSkills
+
+                    })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to update job"
+            );
+
+        }
+
+
+        alert(
+            "Job updated successfully!"
+        );
+
+
+        loadMyJobs();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Unable to update job."
+        );
+
+    }
+
+}
+
+
+async function deleteJob(id) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this job?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `http://localhost:8080/api/jobs/${id}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to delete job"
+            );
+
+        }
+
+
+        alert(
+            "Job deleted successfully!"
+        );
+
+
+        loadMyJobs();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        alert(
+            "Unable to delete job."
+        );
+
+    }
+
+}
+
+
+function viewApplications(jobId) {
+
+    window.location.href =
+        `applications-client.html?jobId=${jobId}`;
+
+}
+
+
+loadMyJobs();
+
+</script>
+
+
+</body>
+
+</html>

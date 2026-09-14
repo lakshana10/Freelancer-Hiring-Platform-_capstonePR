@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications - FreelanceHub</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            min-height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 6%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            gap: 20px;
+        }
+
+        .logo {
+            text-decoration: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #123c69;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #6845e8;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .navbar nav a:hover {
+            color: #6845e8;
+        }
+
+        .navbar nav a.active {
+            color: #6845e8;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .icon-btn {
+            border: none;
+            background: transparent;
+            font-size: 20px;
+            cursor: pointer;
+            color: #123c69;
+        }
+
+        .login-btn,
+        .signup-btn {
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 16px;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #123c69;
+        }
+
+        .signup-btn {
+            background: #6845e8;
+            color: white;
+        }
+
+        .signup-btn:hover {
+            background: #5435c5;
+        }
+
+        /* PAGE */
+
+        .page {
+            width: 90%;
+            max-width: 1100px;
+            margin: 50px auto;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header small {
+            color: #6845e8;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .page-header h1 {
+            margin-top: 8px;
+            font-size: 36px;
+            color: #123c69;
+        }
+
+        .page-header p {
+            margin-top: 8px;
+            color: #6b7280;
+        }
+
+        /* APPLICATION CARD */
+
+        .application {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(18,60,105,0.08);
+            border-left: 5px solid #6845e8;
+        }
+
+        .application-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-size: 21px;
+            font-weight: bold;
+            color: #123c69;
+        }
+
+        .application-id {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #f7f8fc;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .detail-box small {
+            display: block;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .detail-box strong {
+            color: #123c69;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.accepted {
+            background: #d1fae5;
+            color: #047857;
+        }
+
+        .status.rejected {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            background: white;
+            padding: 50px 25px;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #123c69;
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #777;
+            margin-bottom: 20px;
+        }
+
+        .jobs-btn {
+            display: inline-block;
+            background: #6845e8;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .jobs-btn:hover {
+            background: #5435c5;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 80px;
+            padding: 30px;
+            text-align: center;
+            background: #123c69;
+            color: white;
+        }
+
+        footer strong {
+            color: #c9b8ff;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .navbar nav {
+                gap: 12px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .page {
+                width: 92%;
+                margin: 35px auto;
+            }
+
+            .page-header h1 {
+                font-size: 28px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .application-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .nav-actions {
+                justify-content: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <a href="home.html" class="logo">
+            Freelance<span>Hub</span>
+        </a>
+
+
+        <nav>
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="jobs.html">
+                Find Jobs
+            </a>
+
+            <a href="my-applications.html" class="active">
+                My Applications
+            </a>
+
+            <a href="my-jobs.html">
+                My Jobs
+            </a>
+
+            <a href="profile.html">
+                My Profile
+            </a>
+
+            <a href="freelancers.html">
+                Freelancers
+            </a>
+
+            <a href="home.html#categories">
+                Categories
+            </a>
+
+            <a href="home.html#how-it-works">
+                How It Works
+            </a>
+
+            <a href="home.html#pricing">
+                Pricing
+            </a>
+
+        </nav>
+
+
+        <div class="nav-actions">
+
+            <button
+                class="icon-btn"
+                id="themeBtn">
+                ☾
+            </button>
+
+            <button
+                class="login-btn"
+                onclick="window.location.href='login.html'">
+                Login
+            </button>
+
+            <button
+                class="signup-btn"
+                onclick="window.location.href='signup.html'">
+                Sign Up →
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="page">
+
+        <div class="page-header">
+
+            <small>
+                FREELANCER DASHBOARD
+            </small>
+
+            <h1>
+                My Applications
+            </h1>
+
+            <p>
+                Track the jobs you have applied for and check your application status.
+            </p>
+
+        </div>
+
+
+        <div id="applications">
+            Loading applications...
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            <strong>FreelanceHub</strong>
+            — Connect. Collaborate. Create.
+        </p>
+
+        <p>
+            © 2026 FreelanceHub. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        async function loadApplications() {
+
+            const container =
+                document.getElementById("applications");
+
+            const userEmail =
+                localStorage.getItem("userEmail");
+
+
+            if (!userEmail) {
+
+                container.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🔐
+                        </div>
+
+                        <h2>
+                            Please Login
+                        </h2>
+
+                        <p>
+                            Login to view your job applications.
+                        </p>
+
+                        <a href="login.html" class="jobs-btn">
+                            Login
+                        </a>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:8080/applications/freelancer/" +
+                        encodeURIComponent(userEmail)
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Failed to load applications"
+                    );
+
+                }
+
+
+                const applications =
+                    await response.json();
+
+
+                if (applications.length === 0) {
+
+                    container.innerHTML = `
+                        <div class="empty">
+
+                            <div class="empty-icon">
+                                💼
+                            </div>
+
+                            <h2>
+                                No Applications Yet
+                            </h2>
+
+                            <p>
+                                You have not applied for any jobs yet.
+                            </p>
+
+                            <a href="jobs.html" class="jobs-btn">
+                                Find Jobs →
+                            </a>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                container.innerHTML =
+                    applications.map(application => {
+
+                        const status =
+                            application.status || "Pending";
+
+                        const statusClass =
+                            status.toLowerCase();
+
+                        return `
+
+                            <div class="application">
+
+                                <div class="application-top">
+
+                                    <div>
+
+                                        <div class="job-title">
+                                            ${application.jobTitle}
+                                        </div>
+
+                                        <div class="application-id">
+                                            Application ID:
+                                            ${application.id}
+                                        </div>
+
+                                    </div>
+
+                                    <span class="status ${statusClass}">
+                                        ${status}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="details">
+
+                                    <div class="detail-box">
+
+                                        <small>
+                                            Job ID
+                                        </small>
+
+                                        <strong>
+                                            #${application.jobId}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="detail-box">
+
+                                        <small>
+                                            Application Status
+                                        </small>
+
+                                        <strong>
+                                            ${status}
+                                        </strong>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("");
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                container.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h2>
+                            Unable to Load Applications
+                        </h2>
+
+                        <p>
+                            Please make sure the Spring Boot backend is running.
+                        </p>
+
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        loadApplications();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 package com.freelancer.backend.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "users")
@@ -15,19 +16,31 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     private String password;
 
     private String role;
 
+    private String skills;
+
+    private String experience;
+
+    @Column(columnDefinition = "TEXT")
+    private String bio;
+
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String role) {
+    public User(Long id, String name, String email, String password,
+                String role, String skills, String experience, String bio) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.skills = skills;
+        this.experience = experience;
+        this.bio = bio;
     }
 
     public Long getId() {
@@ -68,5 +81,29 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getSkills() {
+        return skills;
+    }
+
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }

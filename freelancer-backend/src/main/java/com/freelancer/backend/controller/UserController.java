@@ -127,7 +127,45 @@ public class UserController {
                         + e.getMessage()
                     );
         }
+    }// ===============================
+// UPDATE PROFILE
+// ===============================
+
+@PutMapping("/{email}")
+public ResponseEntity<?> updateProfile(
+        @PathVariable String email,
+        @RequestBody User updatedUser) {
+
+    try {
+
+        Optional<User> existingUser =
+                userService.getUserByEmail(email);
+
+        if (existingUser.isEmpty()) {
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("User not found.");
+        }
+
+        User user = existingUser.get();
+
+        user.setSkills(updatedUser.getSkills());
+        user.setExperience(updatedUser.getExperience());
+        user.setBio(updatedUser.getBio());
+
+        User savedUser =
+                userService.updateUser(user);
+
+        return ResponseEntity.ok(savedUser);
+
+    } catch (Exception e) {
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Profile update failed: " + e.getMessage());
     }
+}
 
 
     // ===============================

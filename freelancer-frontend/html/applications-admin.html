@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - FreelanceHub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #123c69;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #123c69;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .application {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .application p {
+            margin: 8px 0;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <a class="back" href="admin.html">← Back to Admin Dashboard</a>
+
+    <h1>Applications</h1>
+
+    <div id="applications">
+        Loading applications...
+    </div>
+
+    <script>
+        async function loadApplications() {
+            const container = document.getElementById("applications");
+
+            try {
+                const response = await fetch("http://localhost:8080/applications");
+
+                if (!response.ok) {
+                    throw new Error("Failed to load applications");
+                }
+
+                const applications = await response.json();
+
+                if (applications.length === 0) {
+                    container.innerHTML = '<div class="empty">No applications found.</div>';
+                    return;
+                }
+
+                container.innerHTML = applications.map(application => `
+                    <div class="application">
+                        <p><strong>Application ID:</strong> ${application.id ?? "N/A"}</p>
+                        <p><strong>Job Title:</strong> ${application.jobTitle ?? "N/A"}</p>
+                        <p><strong>Freelancer Email:</strong> ${application.freelancerEmail ?? "N/A"}</p>
+                        <p><strong>Status:</strong> ${application.status ?? "Pending"}</p>
+                        <button onclick="updateStatus(${application.id}, 'Accepted')">Accept</button>
+                        <button onclick="updateStatus(${application.id}, 'Rejected')">Reject</button>
+                    </div>
+                `).join("");
+
+            } catch (error) {
+                container.innerHTML =
+                    '<div class="empty">Unable to load applications. Please make sure Spring Boot is running.</div>';
+                console.error(error);
+            }
+        }
+async function updateStatus(id, status) {
+    try {
+        const response = await fetch(
+            `http://localhost:8080/applications/${id}/status?status=${status}`,
+            {
+                method: "PUT"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to update status");
+        }
+
+        alert("Application status updated to " + status);
+        loadApplications();
+
+    } catch (error) {
+        alert("Unable to update application status.");
+        console.error(error);
+    }
+}
+        loadApplications();
+    </script>
+
+</body>
+</html>

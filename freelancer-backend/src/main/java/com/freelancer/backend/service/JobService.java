@@ -28,6 +28,18 @@ public class JobService {
                 .orElseThrow(() -> new RuntimeException("Job not found"));
     }
 
+    public Job updateJob(Long id, Job job) {
+        Job existingJob = jobRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found"));
+
+        existingJob.setTitle(job.getTitle());
+        existingJob.setDescription(job.getDescription());
+        existingJob.setBudget(job.getBudget());
+        existingJob.setSkills(job.getSkills());
+
+        return jobRepository.save(existingJob);
+    }
+
     public void deleteJob(Long id) {
         jobRepository.deleteById(id);
     }

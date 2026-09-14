@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "FreelancerBackendApplication",
+            "request": "launch",
+            "mainClass": "com.freelancer.backend.FreelancerBackendApplication",
+            "projectName": "freelancer-backend"
+        },
+        {
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome against localhost",

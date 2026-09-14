@@ -10,10 +10,6 @@ if (loginForm) {
 
         event.preventDefault();
 
-        // ===============================
-        // GET LOGIN VALUES
-        // ===============================
-
         const email = document
             .getElementById("email")
             .value
@@ -24,9 +20,7 @@ if (loginForm) {
             .value;
 
 
-        // ===============================
-        // VALIDATION
-        // ===============================
+        /* VALIDATION */
 
         if (email === "" || password === "") {
             alert("Please enter email and password.");
@@ -39,9 +33,7 @@ if (loginForm) {
         }
 
 
-        // ===============================
-        // LOGIN DATA
-        // ===============================
+        /* LOGIN DATA */
 
         const loginData = {
             email: email,
@@ -49,9 +41,7 @@ if (loginForm) {
         };
 
 
-        // ===============================
-        // CONNECT TO SPRING BOOT
-        // ===============================
+        /* CONNECT TO SPRING BOOT */
 
         try {
 
@@ -69,9 +59,7 @@ if (loginForm) {
             );
 
 
-            // ===============================
-            // LOGIN SUCCESS
-            // ===============================
+            /* LOGIN SUCCESS */
 
             if (response.ok) {
 
@@ -79,61 +67,70 @@ if (loginForm) {
 
                 console.log("Login successful:", data);
 
-                // Get logged-in user
                 const user = data.user;
 
-                // Check that user data exists
                 if (!user) {
-                    alert("Login successful, but user data was not received.");
+                    alert(
+                        "Login successful, but user data was not received."
+                    );
                     return;
                 }
 
-                // Store user information
+
+                /* STORE USER INFORMATION */
+
                 localStorage.setItem(
                     "loggedInUser",
                     JSON.stringify(user)
                 );
 
+                localStorage.setItem(
+                    "userEmail",
+                    user.email
+                );
+
+
                 alert("Login successful! 🎉");
 
 
-                // ===============================
-                // ROLE-BASED REDIRECT
-                // ===============================
+                /* ROLE-BASED REDIRECT */
 
-                if (user.role &&
-                    user.role.toUpperCase() === "ADMIN") {
+                if (
+                    user.role &&
+                    user.role.toUpperCase() === "ADMIN"
+                ) {
 
-                    // Admin → Admin Dashboard
                     window.location.href = "admin.html";
 
                 } else {
 
-                    // Freelancer → Home Page
                     window.location.href = "home.html";
                 }
 
             }
 
 
-            // ===============================
-            // LOGIN FAILED
-            // ===============================
+            /* LOGIN FAILED */
 
             else {
 
-                let errorMessage = "Invalid email or password.";
+                let errorMessage =
+                    "Invalid email or password.";
 
                 try {
-                    const errorData = await response.json();
+
+                    const errorData =
+                        await response.json();
 
                     if (errorData.message) {
-                        errorMessage = errorData.message;
+                        errorMessage =
+                            errorData.message;
                     }
 
                 } catch (error) {
-                    // Response was not JSON
-                    const text = await response.text();
+
+                    const text =
+                        await response.text();
 
                     if (text) {
                         errorMessage = text;
@@ -146,9 +143,7 @@ if (loginForm) {
         }
 
 
-        // ===============================
-        // BACKEND CONNECTION ERROR
-        // ===============================
+        /* BACKEND CONNECTION ERROR */
 
         catch (error) {
 
@@ -178,11 +173,9 @@ function togglePassword() {
     const button =
         document.querySelector(".show-password");
 
-
     if (!password) {
         return;
     }
-
 
     if (password.type === "password") {
 

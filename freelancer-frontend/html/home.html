@@ -23,7 +23,10 @@
         <nav>
             <a href="home.html" class="active">Home</a>
             <a href="jobs.html">Find Jobs</a>
-            <a href="#freelancers">Freelancers</a>
+            <a href="my-applications.html">My Applications</a>
+            <a href="my-jobs.html">My Jobs</a>
+            <a href="profile.html">My Profile</a>
+            <a href="freelancers.html">Freelancers</a>
             <a href="#categories">Categories</a>
             <a href="#how-it-works">How It Works</a>
             <a href="#pricing">Pricing</a>
@@ -92,7 +95,6 @@
                 </button>
 
             </div>
-
 
             <!-- POPULAR -->
 
@@ -287,7 +289,9 @@
 
             </div>
 
-            <button class="view-btn">
+            <button
+                class="view-btn"
+                onclick="window.location.href='jobs.html'">
                 View All Categories →
             </button>
 
@@ -295,6 +299,7 @@
 
 
         <div class="category-grid">
+
 
             <div class="category-card">
 
@@ -443,16 +448,20 @@
 
         </div>
 
+
         <div class="cta-buttons">
 
             <!-- POST JOB -->
+
             <button
                 class="post-job"
-                onclick="window.location.href='login.html'">
+                onclick="window.location.href='post-job.html'">
                 ➤ &nbsp; Post a Job
             </button>
 
+
             <!-- JOIN FREELANCER -->
+
             <button
                 class="join-freelancer"
                 onclick="window.location.href='signup.html'">

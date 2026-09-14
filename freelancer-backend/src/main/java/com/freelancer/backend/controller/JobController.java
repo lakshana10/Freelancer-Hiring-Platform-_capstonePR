@@ -34,7 +34,11 @@ public class JobController {
     public Job getJobById(@PathVariable Long id) {
         return jobService.getJobById(id);
     }
-
+// Update job
+@PutMapping("/{id}")
+public Job updateJob(@PathVariable Long id, @RequestBody Job job) {
+    return jobService.updateJob(id, job);
+}
     // Delete job
     @DeleteMapping("/{id}")
     public String deleteJob(@PathVariable Long id) {

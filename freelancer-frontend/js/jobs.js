@@ -172,7 +172,7 @@ function displayJobs(jobs) {
 
                 <button
                     class="apply-btn"
-                    onclick="applyJob('${job.title.replace(/'/g, "\\'")}')">
+                    onclick="applyJob(${job.id}, '${job.title.replace(/'/g, "\\'")}')">
 
                     Apply Now →
 
@@ -239,13 +239,67 @@ function createSkills(skills) {
 
 /* APPLY JOB */
 
-function applyJob(jobName) {
+async function applyJob(jobId, jobName) {
 
-    alert(
-        "Application started for: " +
-        jobName +
-        "\n\nApplication feature will be connected to Spring Boot later."
-    );
+    try {
+
+        const userEmail =
+            localStorage.getItem("userEmail");
+
+        if (!userEmail) {
+
+            alert("Please login before applying for a job.");
+
+            window.location.href = "login.html";
+
+            return;
+        }
+
+        const response =
+            await fetch("http://localhost:8080/applications/apply", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    freelancerEmail: userEmail,
+
+                    jobId: jobId,
+
+                    jobTitle: jobName
+
+                })
+
+            });
+
+
+        if (!response.ok) {
+
+            const errorText =
+                await response.text();
+
+            throw new Error(
+                errorText || "Application failed"
+            );
+
+        }
+
+
+        alert("Application submitted successfully!");
+
+
+    } catch (error) {
+
+        alert(error.message);
+
+        console.error(error);
+
+    }
+
 }
 
 

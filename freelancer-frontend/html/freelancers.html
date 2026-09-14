@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Freelancers - FreelanceHub</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="logo">
+        <span class="logo-icon">✣</span>
+        <span>Freelance<span>Hub</span></span>
+    </div>
+
+    <nav>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="jobs.html">
+            Find Jobs
+        </a>
+
+        <a href="my-applications.html">
+            My Applications
+        </a>
+
+        <a href="my-jobs.html">
+            My Jobs
+        </a>
+
+        <a href="profile.html">
+            My Profile
+        </a>
+
+        <a href="freelancers.html" class="active">
+            Freelancers
+        </a>
+
+        <a href="home.html#categories">
+            Categories
+        </a>
+
+        <a href="home.html#how-it-works">
+            How It Works
+        </a>
+
+        <a href="home.html#pricing">
+            Pricing
+        </a>
+
+    </nav>
+
+    <div class="nav-actions">
+
+        <button
+            class="icon-btn"
+            id="themeBtn">
+            ☾
+        </button>
+
+        <button
+            class="login-btn"
+            onclick="window.location.href='login.html'">
+            Login
+        </button>
+
+        <button
+            class="signup-btn"
+            onclick="window.location.href='signup.html'">
+            Sign Up →
+        </button>
+
+    </div>
+
+</header>
+
+
+<section class="freelancers-page">
+
+    <div class="page-header">
+
+        <div class="page-badge">
+            ✦ TALENT NETWORK
+        </div>
+
+        <h1>
+            Find the Right
+            <span>Freelancer</span>
+        </h1>
+
+        <p>
+            Discover skilled professionals ready to bring your ideas to life.
+        </p>
+
+    </div>
+
+
+    <div class="freelancer-search">
+
+        <input
+            type="text"
+            id="freelancerSearch"
+            placeholder="Search freelancers by name or skill..."
+            oninput="filterFreelancers()">
+
+    </div>
+
+
+    <div class="freelancer-heading">
+
+        <div>
+            <h2>Top Freelancers</h2>
+
+            <p>
+                Explore professionals and find the perfect match for your project.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div id="freelancersContainer">
+
+        <div class="loading-freelancers">
+            <div class="loading-icon">✣</div>
+            <p>Loading freelancers...</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-logo">
+        ✣ FreelanceHub
+    </div>
+
+    <p>
+        Connect. Collaborate. Create.
+    </p>
+
+    <p>
+        © 2026 FreelanceHub. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script src="../js/freelancers.js"></script>
+
+</body>
+
+</html>

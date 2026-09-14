@@ -69,4 +69,14 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
+    // ===============================
+    // UPDATE USER PROFILE
+    // ===============================
+
+    public User updateUser(User user) {
+
+        return userRepository.save(user);
+    }
+
 }

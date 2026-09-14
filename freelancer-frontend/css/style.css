@@ -1233,3 +1233,793 @@ body.dark .cta {
         text-align: center;
     }
 }
+/* =========================================
+   FREELANCERS PAGE
+========================================= */
+
+.freelancers-page {
+    min-height: 80vh;
+    padding: 50px 8%;
+}
+
+.freelancers-page .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.freelancers-page .page-header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.freelancers-page .page-header p {
+    color: #707083;
+    font-size: 14px;
+}
+
+#freelancersContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.freelancer-card {
+    background: white;
+    border: 1px solid #e8e7f0;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(50, 40, 100, 0.06);
+    transition: 0.25s;
+}
+
+.freelancer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(70, 50, 140, 0.12);
+}
+
+.freelancer-card h2 {
+    color: #16172b;
+    font-size: 20px;
+    margin-bottom: 18px;
+}
+
+.freelancer-card p {
+    color: #656579;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.freelancer-card strong {
+    color: #333344;
+}
+
+
+/* FREELANCERS PAGE - DARK MODE */
+
+body.dark .freelancers-page .page-header p {
+    color: #aaa6ba;
+}
+
+body.dark .freelancer-card {
+    background: #1b1929;
+    border-color: #302d43;
+}
+
+body.dark .freelancer-card h2 {
+    color: white;
+}
+
+body.dark .freelancer-card p {
+    color: #aaa6ba;
+}
+
+body.dark .freelancer-card strong {
+    color: #ddd8ef;
+}
+
+
+/* FREELANCERS PAGE - RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    #freelancersContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    .freelancers-page {
+        padding: 40px 5%;
+    }
+
+    #freelancersContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .freelancers-page .page-header h1 {
+        font-size: 27px;
+    }
+}/* =========================================
+   ELEGANT PROFILE PAGE
+========================================= */
+
+.profile-page {
+    min-height: 80vh;
+    padding: 60px 8%;
+}
+
+.profile-page .page-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.profile-page .page-header h1 {
+    font-size: 34px;
+    margin-bottom: 8px;
+    color: #16172b;
+    font-weight: 700;
+}
+
+.profile-page .page-header p {
+    color: #707083;
+    font-size: 14px;
+}
+
+.profile-form {
+    width: 100%;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 40px;
+    background: #ffffff;
+    border: 1px solid #e8e7f0;
+    border-radius: 22px;
+    box-shadow: 0 15px 40px rgba(50, 40, 100, 0.10);
+    box-sizing: border-box;
+}
+
+.profile-form::before {
+    content: "✣";
+    display: block;
+    width: 58px;
+    height: 58px;
+    line-height: 58px;
+    margin: 0 auto 25px;
+    text-align: center;
+    border-radius: 50%;
+    background: #f0ebff;
+    color: #6c4ab6;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.profile-form label {
+    display: block;
+    margin: 20px 0 8px;
+    color: #333344;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-form label:first-of-type {
+    margin-top: 0;
+}
+
+.profile-form input,
+.profile-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 1px solid #ddd9e8;
+    border-radius: 12px;
+    background: #faf9fd;
+    color: #333344;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.25s;
+}
+
+.profile-form textarea {
+    min-height: 130px;
+    resize: vertical;
+}
+
+.profile-form input:focus,
+.profile-form textarea:focus {
+    background: #ffffff;
+    border-color: #6c4ab6;
+    box-shadow: 0 0 0 3px rgba(108, 74, 182, 0.10);
+}
+
+.profile-form button {
+    width: 100%;
+    margin-top: 28px;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: #6c4ab6;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.profile-form button:hover {
+    background: #5b3da0;
+    transform: translateY(-1px);
+}
+
+#message {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PROFILE PAGE - DARK MODE
+========================================= */
+
+body.dark .profile-page .page-header h1 {
+    color: #ffffff;
+}
+
+body.dark .profile-page .page-header p {
+    color: #aaa6ba;
+}
+
+body.dark .profile-form {
+    background: #1b1929;
+    border-color: #302d43;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+body.dark .profile-form::before {
+    background: #292340;
+    color: #9b7be8;
+}
+
+body.dark .profile-form label {
+    color: #ddd8ef;
+}
+
+body.dark .profile-form input,
+body.dark .profile-form textarea {
+    background: #242134;
+    color: #ffffff;
+    border-color: #3a354d;
+}
+
+body.dark .profile-form input:focus,
+body.dark .profile-form textarea:focus {
+    background: #29263a;
+    border-color: #8060c9;
+}
+
+
+/* =========================================
+   PROFILE PAGE - MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .profile-page {
+        padding: 40px 5%;
+    }
+
+    .profile-page .page-header h1 {
+        font-size: 28px;
+    }
+
+    .profile-form {
+        padding: 28px 22px;
+    }
+}/* =========================================
+   VIEW PROFILE BUTTON
+========================================= */
+
+.view-profile-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    background: #6c4ab6;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.view-profile-btn:hover {
+    background: #5b3da0;
+    transform: translateY(-2px);
+}
+
+body.dark .view-profile-btn {
+    background: #8060c9;
+}
+
+body.dark .view-profile-btn:hover {
+    background: #9172d8;
+}/* =========================================
+   ELEGANT FREELANCER SEARCH
+========================================= */
+
+.freelancer-search {
+    max-width: 650px;
+    margin: 0 auto 40px;
+    position: relative;
+}
+
+.freelancer-search::before {
+    content: "⌕";
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #6c4ab6;
+    z-index: 1;
+}
+
+.freelancer-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 20px 16px 50px;
+    border: 1px solid #e3dff0;
+    border-radius: 30px;
+    background: #ffffff;
+    color: #333344;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 8px 25px rgba(50, 40, 100, 0.08);
+    transition: all 0.3s ease;
+}
+
+.freelancer-search input::placeholder {
+    color: #9995a8;
+}
+
+.freelancer-search input:focus {
+    border-color: #6c4ab6;
+    box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.10),
+                0 10px 30px rgba(50, 40, 100, 0.10);
+    transform: translateY(-1px);
+}
+
+body.dark .freelancer-search input {
+    background: #1b1929;
+    color: #ffffff;
+    border-color: #302d43;
+}
+
+body.dark .freelancer-search input::placeholder {
+    color: #aaa6ba;
+}
+
+body.dark .freelancer-search::before {
+    color: #9b7be8;
+}/* =========================================
+   CLIENT APPLICATIONS
+========================================= */
+
+.applications-client-page {
+    min-height: 80vh;
+    padding: 60px 8%;
+}
+
+.applications-client-page .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.applications-client-page .page-header h1 {
+    font-size: 34px;
+    color: #16172b;
+    margin-bottom: 8px;
+}
+
+.applications-client-page .page-header p {
+    color: #707083;
+    font-size: 14px;
+}
+
+#clientApplicationsContainer {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.client-application-card {
+    background: #ffffff;
+    border: 1px solid #e8e7f0;
+    border-radius: 18px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(50, 40, 100, 0.07);
+    transition: 0.25s;
+}
+
+.client-application-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 35px rgba(70, 50, 140, 0.12);
+}
+
+.client-application-card h2 {
+    color: #16172b;
+    font-size: 19px;
+    margin-bottom: 18px;
+}
+
+.client-application-card p {
+    color: #656579;
+    font-size: 14px;
+    margin: 10px 0;
+}
+
+.client-application-card strong {
+    color: #333344;
+}
+
+.application-status {
+    font-weight: 600;
+    color: #6c4ab6;
+}
+
+.application-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.application-actions button {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    border-radius: 10px;
+    background: #6c4ab6;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.application-actions button:hover {
+    background: #5b3da0;
+    transform: translateY(-1px);
+}
+
+.no-applications {
+    text-align: center;
+    padding: 50px 20px;
+    background: #ffffff;
+    border: 1px solid #e8e7f0;
+    border-radius: 18px;
+}
+
+.no-applications h2 {
+    color: #16172b;
+    margin-bottom: 10px;
+}
+
+.no-applications p {
+    color: #707083;
+}
+
+body.dark .applications-client-page .page-header h1 {
+    color: #ffffff;
+}
+
+body.dark .applications-client-page .page-header p {
+    color: #aaa6ba;
+}
+
+body.dark .client-application-card,
+body.dark .no-applications {
+    background: #1b1929;
+    border-color: #302d43;
+}
+
+body.dark .client-application-card h2,
+body.dark .no-applications h2 {
+    color: #ffffff;
+}
+
+body.dark .client-application-card p,
+body.dark .no-applications p {
+    color: #aaa6ba;
+}
+
+body.dark .client-application-card strong {
+    color: #ddd8ef;
+}
+
+@media (max-width: 600px) {
+
+    .applications-client-page {
+        padding: 40px 5%;
+    }
+
+    .applications-client-page .page-header h1 {
+        font-size: 28px;
+    }
+
+    .application-actions {
+        flex-direction: column;
+    }
+}
+/* =========================================
+   ENHANCED FREELANCERS PAGE
+========================================= */
+
+.freelancers-page {
+    min-height: 80vh;
+    padding: 70px 8%;
+}
+
+.freelancers-page .page-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.page-badge {
+    display: inline-block;
+    padding: 7px 16px;
+    margin-bottom: 15px;
+    border-radius: 30px;
+    background: #f0ebff;
+    color: #6c4ab6;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.freelancers-page .page-header h1 {
+    font-size: 38px;
+    color: #16172b;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.freelancers-page .page-header h1 span {
+    color: #6c4ab6;
+}
+
+.freelancers-page .page-header p {
+    color: #707083;
+    font-size: 15px;
+}
+
+.freelancer-search {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    position: relative;
+}
+
+.freelancer-search::before {
+    content: "⌕";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 23px;
+    color: #6c4ab6;
+    z-index: 1;
+}
+
+.freelancer-search input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 17px 22px 17px 54px;
+    border: 1px solid #e3dff0;
+    border-radius: 35px;
+    background: #ffffff;
+    color: #333344;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 10px 30px rgba(50, 40, 100, 0.08);
+    transition: 0.3s;
+}
+
+.freelancer-search input:focus {
+    border-color: #6c4ab6;
+    box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.10),
+                0 12px 35px rgba(50, 40, 100, 0.10);
+}
+
+.freelancer-heading {
+    max-width: 1100px;
+    margin: 0 auto 25px;
+}
+
+.freelancer-heading h2 {
+    color: #16172b;
+    font-size: 24px;
+    margin-bottom: 6px;
+}
+
+.freelancer-heading p {
+    color: #707083;
+    font-size: 13px;
+}
+
+#freelancersContainer {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.freelancer-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e8e7f0;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(50, 40, 100, 0.07);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.freelancer-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #6c4ab6;
+}
+
+.freelancer-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 40px rgba(70, 50, 140, 0.14);
+}
+
+.freelancer-card h2 {
+    color: #16172b;
+    font-size: 20px;
+    margin: 5px 0 18px;
+}
+
+.freelancer-card p {
+    color: #656579;
+    font-size: 13px;
+    line-height: 1.7;
+    margin: 11px 0;
+}
+
+.freelancer-card strong {
+    color: #333344;
+}
+
+.freelancer-card p:nth-of-type(2) {
+    background: #f7f4ff;
+    padding: 10px 12px;
+    border-radius: 9px;
+}
+
+.view-profile-btn {
+    width: 100%;
+    margin-top: 18px;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 11px;
+    background: #6c4ab6;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.view-profile-btn:hover {
+    background: #5b3da0;
+    transform: translateY(-2px);
+}
+
+.loading-freelancers {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-icon {
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #f0ebff;
+    color: #6c4ab6;
+    font-size: 24px;
+}
+
+.loading-freelancers p {
+    color: #707083;
+}
+
+body.dark .page-badge {
+    background: #292340;
+    color: #9b7be8;
+}
+
+body.dark .freelancers-page .page-header h1,
+body.dark .freelancer-heading h2 {
+    color: #ffffff;
+}
+
+body.dark .freelancers-page .page-header p,
+body.dark .freelancer-heading p {
+    color: #aaa6ba;
+}
+
+body.dark .freelancer-search input {
+    background: #1b1929;
+    color: #ffffff;
+    border-color: #302d43;
+}
+
+body.dark .freelancer-card {
+    background: #1b1929;
+    border-color: #302d43;
+}
+
+body.dark .freelancer-card h2 {
+    color: #ffffff;
+}
+
+body.dark .freelancer-card p {
+    color: #aaa6ba;
+}
+
+body.dark .freelancer-card strong {
+    color: #ddd8ef;
+}
+
+body.dark .freelancer-card p:nth-of-type(2) {
+    background: #242134;
+}
+
+body.dark .loading-icon {
+    background: #292340;
+    color: #9b7be8;
+}
+
+body.dark .loading-freelancers p {
+    color: #aaa6ba;
+}
+
+@media (max-width: 1000px) {
+
+    #freelancersContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 650px) {
+
+    .freelancers-page {
+        padding: 50px 5%;
+    }
+
+    .freelancers-page .page-header h1 {
+        font-size: 30px;
+    }
+
+    #freelancersContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .freelancer-card {
+        padding: 23px;
+    }
+
+}
