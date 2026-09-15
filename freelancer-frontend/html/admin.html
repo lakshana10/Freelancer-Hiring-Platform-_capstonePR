@@ -818,10 +818,12 @@
 
             try {
 
+                /* ================================
+                   LOAD USERS
+                ================================= */
+
                 const response =
                     await fetch("http://localhost:8080/api/users");
-
-
 
                 if (!response.ok) {
 
@@ -831,25 +833,16 @@
 
                 }
 
-
-
                 const users =
                     await response.json();
 
 
-
                 /* ================================
-                   TOTAL USERS
+                   CALCULATE USER STATISTICS
                 ================================= */
 
                 const totalUsers =
                     users.length;
-
-
-
-                /* ================================
-                   FREELANCERS
-                ================================= */
 
                 const totalFreelancers =
                     users.filter(
@@ -858,12 +851,6 @@
                             user.role.toUpperCase() === "FREELANCER"
                     ).length;
 
-
-
-                /* ================================
-                   CLIENTS
-                ================================= */
-
                 const totalClients =
                     users.filter(
                         user =>
@@ -871,6 +858,27 @@
                             user.role.toUpperCase() === "CLIENT"
                     ).length;
 
+
+                /* ================================
+                   LOAD JOBS
+                ================================= */
+
+                const jobsResponse =
+                    await fetch("http://localhost:8080/api/jobs");
+
+                if (!jobsResponse.ok) {
+
+                    throw new Error(
+                        "Failed to fetch jobs"
+                    );
+
+                }
+
+                const jobs =
+                    await jobsResponse.json();
+
+                const totalJobs =
+                    jobs.length;
 
 
                 /* ================================
@@ -886,17 +894,13 @@
                 document.getElementById("totalClients")
                     .textContent = totalClients;
 
-
-
-                /*
-                   Jobs will be connected after
-                   the Job API is completed.
-                */
-
                 document.getElementById("totalJobs")
-                    .textContent = 0;
+                    .textContent = totalJobs;
 
 
+                /* ================================
+                   CONSOLE INFORMATION
+                ================================= */
 
                 console.log(
                     "Dashboard statistics loaded successfully."
@@ -917,6 +921,10 @@
                     totalClients
                 );
 
+                console.log(
+                    "Total Jobs:",
+                    totalJobs
+                );
 
 
             } catch (error) {
@@ -927,11 +935,9 @@
                 );
 
 
-
-                /*
-                   Keep dashboard values at 0
-                   if backend is unavailable.
-                */
+                /* ================================
+                   FALLBACK
+                ================================= */
 
                 document.getElementById("totalUsers")
                     .textContent = 0;
@@ -957,23 +963,23 @@
 
         function manageUsers() {
 
-    window.location.href = "users.html";
+            window.location.href = "users.html";
 
-}
-
+        }
 
 
         function manageJobs() {
 
-    window.location.href = "jobs-admin.html";
+            window.location.href = "jobs-admin.html";
 
-}
-
+        }
 
 
         function viewApplications() {
-    window.location.href = "applications-admin.html";
-}
+
+            window.location.href = "applications-admin.html";
+
+        }
 
 
 

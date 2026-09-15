@@ -18,7 +18,7 @@ async function loadJobs() {
 
         console.log("Jobs from database:", allJobs);
 
-        displayJobs(allJobs);
+        applyHomeFilters();
 
     } catch (error) {
 
@@ -33,48 +33,195 @@ async function loadJobs() {
 }
 
 
+/* APPLY HOME PAGE SEARCH / CATEGORY */
+
+function applyHomeFilters() {
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const search =
+        params.get("search");
+
+    const category =
+        params.get("category");
+
+    let filteredJobs = [...allJobs];
+
+
+    /* HOME SEARCH */
+
+    if (search) {
+
+        const searchText =
+            search.toLowerCase().trim();
+
+        filteredJobs =
+            filteredJobs.filter(function(job) {
+
+                const jobText =
+                    (
+                        (job.title || "") + " " +
+                        (job.description || "") + " " +
+                        (job.skills || "")
+                    ).toLowerCase();
+
+                return jobText.includes(searchText);
+
+            });
+
+    }
+
+
+    /* HOME CATEGORY */
+
+    if (category) {
+
+        const categoryText =
+            category.toLowerCase().trim();
+
+
+        const categoryKeywords = {
+
+            "web development": [
+                "html",
+                "css",
+                "javascript",
+                "react",
+                "web"
+            ],
+
+            "ui/ux design": [
+                "ui",
+                "ux",
+                "figma",
+                "design"
+            ],
+
+            "content writing": [
+                "content",
+                "writing",
+                "writer",
+                "blog"
+            ],
+
+            "digital marketing": [
+                "marketing",
+                "seo",
+                "social media"
+            ],
+
+            "video editing": [
+                "video",
+                "editing",
+                "editor"
+            ]
+
+        };
+
+
+        const keywords =
+            categoryKeywords[categoryText]
+            || [categoryText];
+
+
+        filteredJobs =
+            filteredJobs.filter(function(job) {
+
+                const jobText =
+                    (
+                        (job.title || "") + " " +
+                        (job.description || "") + " " +
+                        (job.skills || "")
+                    ).toLowerCase();
+
+
+                return keywords.some(function(keyword) {
+
+                    return jobText.includes(keyword);
+
+                });
+
+            });
+
+    }
+
+
+    displayJobs(filteredJobs);
+
+
+    /* SHOW SEARCH IN SEARCH BOX */
+
+    const jobSearch =
+        document.getElementById("jobSearch");
+
+    if (jobSearch && search) {
+
+        jobSearch.value = search;
+
+    }
+
+}
+
+
 /* SEARCH JOBS */
 
 async function searchJobs() {
 
+    const keywordElement =
+        document.getElementById("jobSearch");
+
+    const locationElement =
+        document.getElementById("locationSearch");
+
+
     const keyword =
-        document.getElementById("jobSearch")
-            .value
-            .trim()
-            .toLowerCase();
+        keywordElement
+            ? keywordElement.value.trim().toLowerCase()
+            : "";
+
 
     const location =
-        document.getElementById("locationSearch")
-            .value
-            .trim()
-            .toLowerCase();
+        locationElement
+            ? locationElement.value.trim().toLowerCase()
+            : "";
+
 
     if (keyword === "" && location === "") {
 
         displayJobs(allJobs);
 
         return;
+
     }
 
-    const filteredJobs = allJobs.filter(function(job) {
 
-        const jobText =
-            (
-                job.title + " " +
-                job.description + " " +
-                job.skills
-            ).toLowerCase();
+    const filteredJobs =
+        allJobs.filter(function(job) {
 
-        return (
-            (keyword === "" ||
-                jobText.includes(keyword)) &&
+            const jobText =
+                (
+                    (job.title || "") + " " +
+                    (job.description || "") + " " +
+                    (job.skills || "")
+                ).toLowerCase();
 
-            (location === "" ||
-                jobText.includes(location))
-        );
-    });
+
+            return (
+
+                (keyword === "" ||
+                    jobText.includes(keyword)) &&
+
+                (location === "" ||
+                    jobText.includes(location))
+
+            );
+
+        });
+
 
     displayJobs(filteredJobs);
+
 }
 
 
@@ -98,6 +245,7 @@ function displayJobs(jobs) {
         `;
 
         return;
+
     }
 
 
@@ -114,7 +262,9 @@ function displayJobs(jobs) {
             <div class="job-top">
 
                 <div class="company-logo">
-                    ${job.title.charAt(0).toUpperCase()}
+                    ${(job.title || "J")
+                        .charAt(0)
+                        .toUpperCase()}
                 </div>
 
                 <div class="job-title">
@@ -155,7 +305,8 @@ function displayJobs(jobs) {
                 <div class="budget">
 
                     <strong>
-                        ₹${Number(job.budget).toLocaleString("en-IN")}
+                        ₹${Number(job.budget)
+                            .toLocaleString("en-IN")}
                     </strong>
 
                     <span>
@@ -172,7 +323,11 @@ function displayJobs(jobs) {
 
                 <button
                     class="apply-btn"
-                    onclick="applyJob(${job.id}, '${job.title.replace(/'/g, "\\'")}')">
+                    onclick="applyJob(
+                        ${job.id},
+                        '${String(job.title)
+                            .replace(/'/g, "\\'")}'
+                    )">
 
                     Apply Now →
 
@@ -198,7 +353,9 @@ function displayJobs(jobs) {
                 "click",
                 function() {
 
-                    if (button.textContent.trim() === "♡") {
+                    if (
+                        button.textContent.trim() === "♡"
+                    ) {
 
                         button.textContent = "♥";
                         button.style.color = "#6845e8";
@@ -234,6 +391,7 @@ function createSkills(skills) {
 
         })
         .join("");
+
 }
 
 
@@ -246,35 +404,44 @@ async function applyJob(jobId, jobName) {
         const userEmail =
             localStorage.getItem("userEmail");
 
+
         if (!userEmail) {
 
-            alert("Please login before applying for a job.");
+            alert(
+                "Please login before applying for a job."
+            );
 
-            window.location.href = "login.html";
+            window.location.href =
+                "login.html";
 
             return;
+
         }
 
+
         const response =
-            await fetch("http://localhost:8080/applications/apply", {
+            await fetch(
+                "http://localhost:8080/applications/apply",
+                {
 
-                method: "POST",
+                    method: "POST",
 
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
 
-                body: JSON.stringify({
+                    body: JSON.stringify({
 
-                    freelancerEmail: userEmail,
+                        freelancerEmail: userEmail,
 
-                    jobId: jobId,
+                        jobId: jobId,
 
-                    jobTitle: jobName
+                        jobTitle: jobName
 
-                })
+                    })
 
-            });
+                }
+            );
 
 
         if (!response.ok) {
@@ -289,7 +456,9 @@ async function applyJob(jobId, jobName) {
         }
 
 
-        alert("Application submitted successfully!");
+        alert(
+            "Application submitted successfully!"
+        );
 
 
     } catch (error) {
@@ -312,11 +481,15 @@ function clearFilters() {
             '.filters input[type="checkbox"]'
         );
 
+
     checkboxes.forEach(function(checkbox) {
 
         checkbox.checked = false;
 
     });
+
+
+    displayJobs(allJobs);
 
 }
 
@@ -325,11 +498,21 @@ function clearFilters() {
 
 function sortJobs() {
 
+    const sortElement =
+        document.getElementById("sortJobs");
+
+
+    if (!sortElement) {
+        return;
+    }
+
+
     const value =
-        document.getElementById("sortJobs").value;
+        sortElement.value;
 
 
-    let sortedJobs = [...allJobs];
+    let sortedJobs =
+        [...allJobs];
 
 
     if (value === "budget") {

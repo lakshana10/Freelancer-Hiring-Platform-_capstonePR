@@ -1,17 +1,23 @@
-// ================= SEARCH =================
+// ================= SEARCH JOBS =================
 
 function searchWork() {
 
-    const search = document.getElementById("searchInput").value.trim();
+    const searchInput = document.getElementById("searchInput");
 
-    if (search === "") {
-        alert("Please enter a job or skill to search.");
+    if (!searchInput) {
         return;
     }
 
-    alert("Searching for: " + search);
+    const search = searchInput.value.trim();
 
-    // Later we will connect this to Spring Boot backend.
+    if (search === "") {
+        alert("Please enter a job or skill to search.");
+        searchInput.focus();
+        return;
+    }
+
+    window.location.href =
+        "jobs.html?search=" + encodeURIComponent(search);
 }
 
 
@@ -19,7 +25,7 @@ function searchWork() {
 
 function login() {
 
-    alert("Login page will be connected to the backend soon.");
+    window.location.href = "login.html";
 
 }
 
@@ -28,7 +34,7 @@ function login() {
 
 function signup() {
 
-    alert("Sign Up page will be connected to the backend soon.");
+    window.location.href = "signup.html";
 
 }
 
@@ -37,26 +43,31 @@ function signup() {
 
 const themeBtn = document.getElementById("themeBtn");
 
-themeBtn.addEventListener("click", function () {
+if (themeBtn) {
 
-    document.body.classList.toggle("dark");
+    themeBtn.addEventListener("click", function () {
 
-    if (document.body.classList.contains("dark")) {
+        document.body.classList.toggle("dark");
 
-        themeBtn.innerHTML = "☀";
+        if (document.body.classList.contains("dark")) {
 
-    } else {
+            themeBtn.innerHTML = "☀";
 
-        themeBtn.innerHTML = "☾";
+        } else {
 
-    }
+            themeBtn.innerHTML = "☾";
 
-});
+        }
+
+    });
+
+}
 
 
 // ================= CATEGORY CLICK =================
 
-const categoryLinks = document.querySelectorAll(".category-card a");
+const categoryLinks =
+    document.querySelectorAll(".category-card a");
 
 categoryLinks.forEach(function (link) {
 
@@ -64,11 +75,48 @@ categoryLinks.forEach(function (link) {
 
         event.preventDefault();
 
-        const category =
-            this.parentElement.querySelector("h3").innerText;
+        const categoryCard =
+            this.closest(".category-card");
 
-        alert("Opening category: " + category);
+        if (!categoryCard) {
+            return;
+        }
+
+        const heading =
+            categoryCard.querySelector("h3");
+
+        if (!heading) {
+            return;
+        }
+
+        const category =
+            heading.innerText.trim();
+
+        window.location.href =
+            "jobs.html?category=" + encodeURIComponent(category);
 
     });
 
 });
+
+
+// ================= SEARCH WITH ENTER KEY =================
+
+const searchInput =
+    document.getElementById("searchInput");
+
+if (searchInput) {
+
+    searchInput.addEventListener("keydown", function (event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            searchWork();
+
+        }
+
+    });
+
+}
