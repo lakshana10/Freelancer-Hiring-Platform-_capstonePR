@@ -23,13 +23,13 @@ async function loadProfile() {
         const users = await response.json();
 
         const freelancer = users.find(
-            user => user.email === email &&
-                    user.role === "FREELANCER"
+            user =>
+                user.email === email &&
+                user.role === "FREELANCER"
         );
 
         if (!freelancer) {
-            container.innerHTML =
-                "<p>Freelancer not found.</p>";
+            container.innerHTML = "<p>Freelancer not found.</p>";
             return;
         }
 
@@ -50,29 +50,22 @@ async function loadProfile() {
 
                     <div>
                         <h3>Skills</h3>
-                        <p>
-                            ${freelancer.skills || "Not added"}
-                        </p>
+                        <p>${freelancer.skills || "Not added"}</p>
                     </div>
 
                     <div>
                         <h3>Experience</h3>
-                        <p>
-                            ${freelancer.experience || "Not added"}
-                        </p>
+                        <p>${freelancer.experience || "Not added"}</p>
                     </div>
 
                     <div>
                         <h3>About</h3>
-                        <p>
-                            ${freelancer.bio || "No bio available"}
-                        </p>
+                        <p>${freelancer.bio || "No bio available"}</p>
                     </div>
 
                 </div>
 
-                <button
-                    onclick="window.location.href='freelancers.html'">
+                <button onclick="window.location.href='freelancers.html'">
                     ← Back to Freelancers
                 </button>
 
@@ -84,9 +77,7 @@ async function loadProfile() {
         console.error(error);
 
         container.innerHTML = `
-            <p>
-                Unable to load freelancer profile.
-            </p>
+            <p>Unable to load freelancer profile.</p>
         `;
     }
 }

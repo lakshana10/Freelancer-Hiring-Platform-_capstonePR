@@ -257,6 +257,7 @@ async function updateStatus(id, status) {
 
     try {
 
+        // Step 1: Update application status
         const response = await fetch(
             `http://localhost:8080/applications/${id}/status?status=${status}`,
             {
@@ -267,11 +268,100 @@ async function updateStatus(id, status) {
 
         if (!response.ok) {
             throw new Error(
-                "Failed to update status"
+                "Failed to update application status"
             );
         }
 
 
+        // Step 2: Create contract when accepted
+        if (status === "Accepted") {
+
+            // Get all applications
+            const applicationsResponse = await fetch(
+                "http://localhost:8080/applications"
+            );
+
+
+            if (!applicationsResponse.ok) {
+                throw new Error(
+                    "Failed to get applications"
+                );
+            }
+
+
+            const applications =
+                await applicationsResponse.json();
+
+
+            // Find the accepted application
+            const application =
+                applications.find(
+                    app =>
+                        String(app.id) === String(id)
+                );
+
+
+            if (!application) {
+                throw new Error(
+                    "Application not found"
+                );
+            }
+
+
+            // Prepare contract data
+            const contract = {
+
+                jobId: application.jobId,
+
+                jobTitle: application.jobTitle,
+
+                clientEmail: userEmail,
+
+                freelancerEmail:
+                    application.freelancerEmail,
+
+                status: "ACTIVE"
+            };
+
+
+            // Save contract
+            const contractResponse =
+                await fetch(
+                    "http://localhost:8080/api/contracts",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(contract)
+                    }
+                );
+
+
+            if (!contractResponse.ok) {
+                throw new Error(
+                    "Failed to create contract"
+                );
+            }
+
+
+            alert(
+                "Freelancer accepted and contract created successfully!"
+            );
+
+        } else {
+
+            alert(
+                "Application rejected."
+            );
+        }
+
+
+        // Refresh applications
         loadApplications();
 
 

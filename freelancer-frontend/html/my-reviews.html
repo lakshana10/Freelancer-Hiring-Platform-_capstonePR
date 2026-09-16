@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Reviews - FreelanceHub</title>
+
+    <link rel="stylesheet"
+          href="../css/style.css">
+
+    <style>
+
+        body {
+            background: #f6f8fc;
+        }
+
+        .reviews-container {
+            max-width: 1100px;
+            margin: 45px auto;
+            padding: 0 20px 50px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            margin: 0 0 8px;
+            font-size: 32px;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .review-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: #fff4d6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .rating-summary {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .rating-number {
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .stars {
+            color: #f5b301;
+            font-size: 25px;
+            letter-spacing: 2px;
+        }
+
+        .rating-count {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+            border: 1px solid #edf0f5;
+        }
+
+        .review-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 18px;
+        }
+
+        .review-job {
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .review-client {
+            color: #777;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .review-comment {
+            color: #444;
+            line-height: 1.6;
+            margin: 15px 0 0;
+        }
+
+        .no-reviews {
+            background: white;
+            padding: 70px 20px;
+            text-align: center;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .no-reviews p {
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+
+            .page-header {
+                align-items: flex-start;
+            }
+
+            .rating-summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .review-top {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            FreelanceHub
+        </div>
+
+        <div class="nav-links">
+
+            <a href="home.html">
+                Home
+            </a>
+
+            <a href="jobs.html">
+                Find Jobs
+            </a>
+
+            <a href="my-applications.html">
+                My Applications
+            </a>
+
+            <a href="my-contracts.html">
+                My Contracts
+            </a>
+
+            <a href="my-payments.html">
+                My Payments
+            </a>
+
+            <a href="profile.html">
+                My Profile
+            </a>
+
+            <a href="my-reviews.html">
+                My Reviews
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <div class="reviews-container">
+
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    My Reviews
+                </h1>
+
+                <p>
+                    See what clients say about your work.
+                </p>
+
+            </div>
+
+            <div class="review-icon">
+                ⭐
+            </div>
+
+        </div>
+
+
+        <!-- RATING SUMMARY -->
+
+        <div
+            id="ratingSummary"
+            class="rating-summary">
+
+        </div>
+
+
+        <!-- REVIEWS -->
+
+        <div id="reviewsContainer">
+
+            <div class="no-reviews">
+
+                <div class="empty-icon">
+                    ⭐
+                </div>
+
+                <h2>
+                    Loading Reviews...
+                </h2>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <script src="../js/my-reviews.js"></script>
+
+
+</body>
+
+</html>
