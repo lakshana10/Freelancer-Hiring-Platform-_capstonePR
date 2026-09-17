@@ -129,11 +129,19 @@ if (loginForm) {
 
                 } catch (error) {
 
-                    const text =
-                        await response.text();
+                    try {
 
-                    if (text) {
-                        errorMessage = text;
+                        const text =
+                            await response.text();
+
+                        if (text) {
+                            errorMessage = text;
+                        }
+
+                    } catch (e) {
+
+                        console.error(e);
+
                     }
                 }
 
@@ -202,8 +210,29 @@ function togglePassword() {
 
 function forgotPassword() {
 
+    const emailInput =
+        document.getElementById("email");
+
+    const email =
+        emailInput ? emailInput.value.trim() : "";
+
+    if (email === "") {
+
+        alert(
+            "Please enter your email address first."
+        );
+
+        if (emailInput) {
+            emailInput.focus();
+        }
+
+        return;
+    }
+
     alert(
-        "Password reset feature will be connected later."
+        "Password reset request received for " +
+        email +
+        ". Please contact the administrator to reset your password."
     );
 }
 
@@ -215,6 +244,6 @@ function forgotPassword() {
 function googleLogin() {
 
     alert(
-        "Google login will be connected later."
+        "Google Login is not configured for this project. Please use your FreelanceHub email and password to login."
     );
 }

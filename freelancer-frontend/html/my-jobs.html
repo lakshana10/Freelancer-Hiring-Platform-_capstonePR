@@ -21,12 +21,36 @@
             margin-bottom: 30px;
         }
 
+        .page-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 8px;
+        }
+
         .page-header h1 {
             margin-bottom: 8px;
         }
 
         .page-header p {
             color: #666;
+        }
+
+        .post-job-btn {
+            background: #6845e8;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .post-job-btn:hover {
+            background: #5635c9;
         }
 
         .back-btn {
@@ -43,7 +67,10 @@
 
         #jobsContainer {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
             gap: 25px;
         }
 
@@ -127,6 +154,15 @@
                 padding: 40px 5%;
             }
 
+            .page-header-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .post-job-btn {
+                width: 100%;
+            }
+
             .job-actions {
                 flex-direction: column;
             }
@@ -143,10 +179,13 @@
 
 </head>
 
+
 <body>
 
 
-<!-- NAVBAR -->
+<!-- ===============================
+     NAVBAR
+=============================== -->
 
 <header class="navbar">
 
@@ -175,7 +214,9 @@
             My Applications
         </a>
 
-        <a href="my-jobs.html" class="active">
+        <a
+            href="my-jobs.html"
+            class="active">
             My Jobs
         </a>
 
@@ -195,10 +236,6 @@
             How It Works
         </a>
 
-        <a href="home.html#pricing">
-            Pricing
-        </a>
-
     </nav>
 
 
@@ -210,11 +247,13 @@
             ☾
         </button>
 
+
         <button
             class="login-btn"
             onclick="window.location.href='login.html'">
             Login
         </button>
+
 
         <button
             class="signup-btn"
@@ -227,24 +266,51 @@
 </header>
 
 
-<!-- MY JOBS -->
+
+<!-- ===============================
+     MY JOBS
+=============================== -->
 
 <section class="my-jobs-page">
 
-    <a href="home.html" class="back-btn">
+
+    <a
+        href="home.html"
+        class="back-btn">
+
         ← Back to Home
+
     </a>
 
 
     <div class="page-header">
 
-        <h1>
-            My Posted Jobs
-        </h1>
+        <div class="page-header-top">
 
-        <p>
-            View and manage the jobs you have posted on FreelanceHub.
-        </p>
+            <div>
+
+                <h1>
+                    My Posted Jobs
+                </h1>
+
+                <p>
+                    View and manage the jobs you have posted on FreelanceHub.
+                </p>
+
+            </div>
+
+
+            <!-- POST JOB BUTTON -->
+
+            <button
+                class="post-job-btn"
+                onclick="window.location.href='post-job.html'">
+
+                + Post a Job
+
+            </button>
+
+        </div>
 
     </div>
 
@@ -260,7 +326,10 @@
 </section>
 
 
-<!-- FOOTER -->
+
+<!-- ===============================
+     FOOTER
+=============================== -->
 
 <footer>
 
@@ -279,21 +348,34 @@
 </footer>
 
 
+
 <script>
+
+/* =========================================
+   LOAD MY JOBS
+========================================= */
 
 async function loadMyJobs() {
 
     const userEmail =
         localStorage.getItem("userEmail");
 
+    const loggedInUser =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
     const container =
         document.getElementById("jobsContainer");
 
 
-    if (!userEmail) {
+    /* ===============================
+       LOGIN CHECK
+    =============================== */
+
+    if (!userEmail || !loggedInUser) {
 
         container.innerHTML = `
-
             <div class="empty-message">
 
                 <h2>
@@ -304,13 +386,53 @@ async function loadMyJobs() {
                     You need to login to view your posted jobs.
                 </p>
 
-            </div>
+                <br>
 
+                <button
+                    class="edit-btn"
+                    onclick="window.location.href='login.html'">
+
+                    Login
+
+                </button>
+
+            </div>
         `;
 
         return;
     }
 
+
+    /* ===============================
+       CLIENT CHECK
+    =============================== */
+
+    if (
+        !loggedInUser.role ||
+        loggedInUser.role.toUpperCase() !== "CLIENT"
+    ) {
+
+        container.innerHTML = `
+            <div class="empty-message">
+
+                <h2>
+                    Client Access Only
+                </h2>
+
+                <p>
+                    Only clients can view and manage posted jobs.
+                </p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    /* ===============================
+       LOAD JOBS
+    =============================== */
 
     try {
 
@@ -333,11 +455,20 @@ async function loadMyJobs() {
             await response.json();
 
 
+        /* ===============================
+           FILTER CLIENT JOBS
+        =============================== */
+
         const myJobs =
             jobs.filter(
-                job => job.clientEmail === userEmail
+                job =>
+                    job.clientEmail === userEmail
             );
 
+
+        /* ===============================
+           NO JOBS
+        =============================== */
 
         if (myJobs.length === 0) {
 
@@ -353,6 +484,16 @@ async function loadMyJobs() {
                         You haven't posted any jobs.
                     </p>
 
+                    <br>
+
+                    <button
+                        class="edit-btn"
+                        onclick="window.location.href='post-job.html'">
+
+                        Post a Job →
+
+                    </button>
+
                 </div>
 
             `;
@@ -360,6 +501,10 @@ async function loadMyJobs() {
             return;
         }
 
+
+        /* ===============================
+           DISPLAY JOBS
+        =============================== */
 
         container.innerHTML = "";
 
@@ -369,6 +514,7 @@ async function loadMyJobs() {
             const card =
                 document.createElement("div");
 
+
             card.className =
                 "job-card";
 
@@ -376,11 +522,12 @@ async function loadMyJobs() {
             card.innerHTML = `
 
                 <h2>
-                    ${job.title}
+                    ${escapeHTML(job.title)}
                 </h2>
 
+
                 <p>
-                    ${job.description}
+                    ${escapeHTML(job.description)}
                 </p>
 
 
@@ -391,11 +538,15 @@ async function loadMyJobs() {
                     </strong>
 
                     <strong>
-                        Skills: ${job.skills}
+                        Skills: ${escapeHTML(job.skills)}
                     </strong>
 
                     <strong>
                         Job ID: ${job.id}
+                    </strong>
+
+                    <strong>
+                        Client: ${escapeHTML(job.clientEmail)}
                     </strong>
 
                 </div>
@@ -405,13 +556,7 @@ async function loadMyJobs() {
 
                     <button
                         class="edit-btn"
-                        onclick="editJob(
-                            ${job.id},
-                            '${escapeQuotes(job.title)}',
-                            '${escapeQuotes(job.description)}',
-                            '${job.budget}',
-                            '${escapeQuotes(job.skills)}'
-                        )">
+                        onclick="editJob(${job.id})">
 
                         ✏️ Edit
 
@@ -444,8 +589,14 @@ async function loadMyJobs() {
 
         });
 
+    }
 
-    } catch (error) {
+
+    /* ===============================
+       ERROR
+    =============================== */
+
+    catch (error) {
 
         console.error(error);
 
@@ -455,12 +606,22 @@ async function loadMyJobs() {
             <div class="empty-message">
 
                 <h2>
-                    Unable to load jobs
+                    Unable to Load Jobs
                 </h2>
 
                 <p>
                     Please make sure the backend is running.
                 </p>
+
+                <br>
+
+                <button
+                    class="edit-btn"
+                    onclick="loadMyJobs()">
+
+                    Try Again
+
+                </button>
 
             </div>
 
@@ -471,74 +632,185 @@ async function loadMyJobs() {
 }
 
 
-function escapeQuotes(text) {
 
-    return String(text)
-        .replace(/\\/g, "\\\\")
-        .replace(/'/g, "\\'")
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r");
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
 
 }
 
 
-async function editJob(
-    id,
-    title,
-    description,
-    budget,
-    skills
-) {
 
-    const newTitle =
-        prompt(
-            "Enter job title:",
-            title
+/* =========================================
+   EDIT JOB
+========================================= */
+
+async function editJob(id) {
+
+    const userEmail =
+        localStorage.getItem("userEmail");
+
+
+    const loggedInUser =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
         );
 
 
-    if (newTitle === null) {
-        return;
-    }
+    if (
+        !userEmail ||
+        !loggedInUser ||
+        !loggedInUser.role ||
+        loggedInUser.role.toUpperCase() !== "CLIENT"
+    ) {
 
-
-    const newDescription =
-        prompt(
-            "Enter job description:",
-            description
+        alert(
+            "Only clients can edit jobs."
         );
 
-
-    if (newDescription === null) {
         return;
-    }
 
-
-    const newBudget =
-        prompt(
-            "Enter budget:",
-            budget
-        );
-
-
-    if (newBudget === null) {
-        return;
-    }
-
-
-    const newSkills =
-        prompt(
-            "Enter skills:",
-            skills
-        );
-
-
-    if (newSkills === null) {
-        return;
     }
 
 
     try {
+
+        const jobsResponse =
+            await fetch(
+                "http://localhost:8080/api/jobs"
+            );
+
+
+        if (!jobsResponse.ok) {
+
+            throw new Error(
+                "Unable to load job"
+            );
+
+        }
+
+
+        const jobs =
+            await jobsResponse.json();
+
+
+        const job =
+            jobs.find(
+                item =>
+                    String(item.id) === String(id)
+            );
+
+
+        if (!job) {
+
+            alert(
+                "Job not found."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            job.clientEmail !== userEmail
+        ) {
+
+            alert(
+                "You can only edit your own jobs."
+            );
+
+            return;
+
+        }
+
+
+        const newTitle =
+            prompt(
+                "Enter job title:",
+                job.title
+            );
+
+
+        if (newTitle === null) {
+            return;
+        }
+
+
+        const newDescription =
+            prompt(
+                "Enter job description:",
+                job.description
+            );
+
+
+        if (newDescription === null) {
+            return;
+        }
+
+
+        const newBudget =
+            prompt(
+                "Enter budget:",
+                job.budget
+            );
+
+
+        if (newBudget === null) {
+            return;
+        }
+
+
+        const newSkills =
+            prompt(
+                "Enter required skills:",
+                job.skills
+            );
+
+
+        if (newSkills === null) {
+            return;
+        }
+
+
+        if (
+            newTitle.trim() === "" ||
+            newDescription.trim() === "" ||
+            newSkills.trim() === ""
+        ) {
+
+            alert(
+                "Please fill in all fields."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            isNaN(Number(newBudget)) ||
+            Number(newBudget) <= 0
+        ) {
+
+            alert(
+                "Please enter a valid budget."
+            );
+
+            return;
+
+        }
+
 
         const response =
             await fetch(
@@ -547,21 +819,28 @@ async function editJob(
                     method: "PUT",
 
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type":
+                            "application/json"
                     },
 
                     body: JSON.stringify({
 
-                        title: newTitle,
+                        title:
+                            newTitle.trim(),
 
-                        description: newDescription,
+                        description:
+                            newDescription.trim(),
 
-                        budget: Number(newBudget),
+                        budget:
+                            Number(newBudget),
 
-                        skills: newSkills
+                        skills:
+                            newSkills.trim(),
+
+                        clientEmail:
+                            userEmail
 
                     })
-
                 }
             );
 
@@ -576,20 +855,22 @@ async function editJob(
 
 
         alert(
-            "Job updated successfully!"
+            "Job updated successfully! 🎉"
         );
 
 
         loadMyJobs();
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.error(error);
 
 
         alert(
-            "Unable to update job."
+            "Unable to update job. Please try again."
         );
 
     }
@@ -597,7 +878,38 @@ async function editJob(
 }
 
 
+
+/* =========================================
+   DELETE JOB
+========================================= */
+
 async function deleteJob(id) {
+
+    const userEmail =
+        localStorage.getItem("userEmail");
+
+
+    const loggedInUser =
+        JSON.parse(
+            localStorage.getItem("loggedInUser")
+        );
+
+
+    if (
+        !userEmail ||
+        !loggedInUser ||
+        !loggedInUser.role ||
+        loggedInUser.role.toUpperCase() !== "CLIENT"
+    ) {
+
+        alert(
+            "Only clients can delete jobs."
+        );
+
+        return;
+
+    }
+
 
     const confirmDelete =
         confirm(
@@ -611,6 +923,56 @@ async function deleteJob(id) {
 
 
     try {
+
+        const jobsResponse =
+            await fetch(
+                "http://localhost:8080/api/jobs"
+            );
+
+
+        if (!jobsResponse.ok) {
+
+            throw new Error(
+                "Unable to verify job"
+            );
+
+        }
+
+
+        const jobs =
+            await jobsResponse.json();
+
+
+        const job =
+            jobs.find(
+                item =>
+                    String(item.id) === String(id)
+            );
+
+
+        if (!job) {
+
+            alert(
+                "Job not found."
+            );
+
+            return;
+
+        }
+
+
+        if (
+            job.clientEmail !== userEmail
+        ) {
+
+            alert(
+                "You can only delete your own jobs."
+            );
+
+            return;
+
+        }
+
 
         const response =
             await fetch(
@@ -631,26 +993,33 @@ async function deleteJob(id) {
 
 
         alert(
-            "Job deleted successfully!"
+            "Job deleted successfully! 🗑️"
         );
 
 
         loadMyJobs();
 
+    }
 
-    } catch (error) {
+
+    catch (error) {
 
         console.error(error);
 
 
         alert(
-            "Unable to delete job."
+            "Unable to delete job. Please try again."
         );
 
     }
 
 }
 
+
+
+/* =========================================
+   VIEW APPLICATIONS
+========================================= */
 
 function viewApplications(jobId) {
 
@@ -659,6 +1028,53 @@ function viewApplications(jobId) {
 
 }
 
+
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        function() {
+
+            document.body
+                .classList
+                .toggle("dark");
+
+
+            if (
+                document.body
+                    .classList
+                    .contains("dark")
+            ) {
+
+                themeBtn.textContent =
+                    "☀";
+
+            } else {
+
+                themeBtn.textContent =
+                    "☾";
+
+            }
+
+        }
+    );
+
+}
+
+
+
+/* =========================================
+   START
+========================================= */
 
 loadMyJobs();
 

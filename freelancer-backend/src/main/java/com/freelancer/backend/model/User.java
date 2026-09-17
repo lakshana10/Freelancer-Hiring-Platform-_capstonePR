@@ -1,7 +1,7 @@
 package com.freelancer.backend.model;
 
 import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +16,8 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
+    @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private String role;
@@ -33,6 +34,7 @@ public class User {
 
     public User(Long id, String name, String email, String password,
                 String role, String skills, String experience, String bio) {
+
         this.id = id;
         this.name = name;
         this.email = email;

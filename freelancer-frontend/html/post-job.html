@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -9,6 +11,7 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <style>
+
         .post-job-page {
             min-height: 80vh;
             display: flex;
@@ -83,86 +86,190 @@
             color: #5b3cc4;
             font-weight: 600;
         }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+<!-- ===============================
+     NAVBAR
+=============================== -->
 
 <header class="navbar">
 
     <div class="logo">
+
         <span class="logo-icon">✣</span>
-        <span>Freelance<span>Hub</span></span>
+
+        <span>
+            Freelance<span>Hub</span>
+        </span>
+
     </div>
 
+
     <nav>
-        <a href="home.html">Home</a>
-        <a href="jobs.html">Find Jobs</a>
-        <a href="my-applications.html">My Applications</a>
-        <a href="my-jobs.html">My Jobs</a>
-        <a href="profile.html">My Profile</a>
-        <a href="freelancers.html">Freelancers</a>
-        <a href="home.html#categories">Categories</a>
-        <a href="home.html#how-it-works">How It Works</a>
-        <a href="home.html#pricing">Pricing</a>
+
+        <a href="home.html">
+            Home
+        </a>
+
+        <a href="jobs.html">
+            Find Jobs
+        </a>
+
+        <a href="my-applications.html">
+            My Applications
+        </a>
+
+        <a href="my-jobs.html">
+            My Jobs
+        </a>
+
+        <a href="profile.html">
+            My Profile
+        </a>
+
+        <a href="freelancers.html">
+            Freelancers
+        </a>
+
+        <a href="home.html#categories">
+            Categories
+        </a>
+
+        <a href="home.html#how-it-works">
+            How It Works
+        </a>
+
+        <a href="home.html#pricing">
+            Pricing
+        </a>
+
     </nav>
 
+
     <div class="nav-actions">
-        <button class="icon-btn" id="themeBtn">☾</button>
+
+        <button
+            class="icon-btn"
+            id="themeBtn">
+
+            ☾
+
+        </button>
+
 
         <button
             class="login-btn"
             onclick="window.location.href='login.html'">
+
             Login
+
         </button>
+
 
         <button
             class="signup-btn"
             onclick="window.location.href='signup.html'">
+
             Sign Up →
+
         </button>
+
     </div>
 
 </header>
 
 
+
+<!-- ===============================
+     POST JOB SECTION
+=============================== -->
+
 <section class="post-job-page">
 
     <div class="job-form-container">
 
-        <a href="home.html" class="back-btn">← Back to Home</a>
 
-        <h1>Post a New Job</h1>
+        <a
+            href="home.html"
+            class="back-btn">
+
+            ← Back to Home
+
+        </a>
+
+
+        <h1>
+            Post a New Job
+        </h1>
+
 
         <p class="subtitle">
+
             Tell freelancers what you need and find the right talent for your project.
+
         </p>
+
+
+
+        <!-- ===============================
+             JOB FORM
+        =============================== -->
 
         <form id="postJobForm">
 
+
+            <!-- JOB TITLE -->
+
             <div class="form-group">
-                <label for="title">Job Title</label>
+
+                <label for="title">
+                    Job Title
+                </label>
+
 
                 <input
                     type="text"
                     id="title"
                     placeholder="Example: Build a Modern E-Commerce Website"
                     required>
+
             </div>
 
 
+
+            <!-- DESCRIPTION -->
+
             <div class="form-group">
-                <label for="description">Job Description</label>
+
+                <label for="description">
+                    Job Description
+                </label>
+
 
                 <textarea
                     id="description"
                     placeholder="Describe your project requirements..."
                     required></textarea>
+
             </div>
 
 
+
+            <!-- BUDGET -->
+
             <div class="form-group">
-                <label for="budget">Budget</label>
+
+                <label for="budget">
+                    Budget
+                </label>
+
 
                 <input
                     type="number"
@@ -170,23 +277,40 @@
                     placeholder="Enter your budget"
                     min="1"
                     required>
+
             </div>
 
 
+
+            <!-- SKILLS -->
+
             <div class="form-group">
-                <label for="skills">Required Skills</label>
+
+                <label for="skills">
+                    Required Skills
+                </label>
+
 
                 <input
                     type="text"
                     id="skills"
                     placeholder="Example: Java, Spring Boot, React"
                     required>
+
             </div>
 
 
-            <button type="submit" class="submit-job-btn">
+
+            <!-- SUBMIT -->
+
+            <button
+                type="submit"
+                class="submit-job-btn">
+
                 Post Job →
+
             </button>
+
 
         </form>
 
@@ -195,15 +319,24 @@
 </section>
 
 
+
+<!-- ===============================
+     FOOTER
+=============================== -->
+
 <footer>
 
     <div class="footer-logo">
+
         ✣ FreelanceHub
+
     </div>
+
 
     <p>
         Connect. Collaborate. Create.
     </p>
+
 
     <p>
         © 2026 FreelanceHub. All rights reserved.
@@ -212,57 +345,344 @@
 </footer>
 
 
+
+<!-- ===============================
+     POST JOB JAVASCRIPT
+=============================== -->
+
 <script>
 
-document.getElementById("postJobForm").addEventListener("submit", async function(event) {
+document
+    .getElementById("postJobForm")
+    .addEventListener("submit", async function(event) {
 
-    event.preventDefault();
+        event.preventDefault();
 
-    const userEmail = localStorage.getItem("userEmail");
 
-    if (!userEmail) {
-        alert("Please login first.");
-        window.location.href = "login.html";
-        return;
-    }
+        /* ===============================
+           GET LOGIN INFORMATION
+        =============================== */
 
-    const job = {
-        title: document.getElementById("title").value,
-        description: document.getElementById("description").value,
-        budget: Number(document.getElementById("budget").value),
-        skills: document.getElementById("skills").value,
-        clientEmail: userEmail
-    };
+        const userEmail =
+            localStorage.getItem("userEmail");
 
-    try {
+        const loggedInUser =
+            JSON.parse(
+                localStorage.getItem("loggedInUser")
+            );
 
-        const response = await fetch("http://localhost:8080/api/jobs", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(job)
-        });
 
-        if (!response.ok) {
-            throw new Error("Failed to post job");
+
+        /* ===============================
+           LOGIN CHECK
+        =============================== */
+
+        if (!userEmail || !loggedInUser) {
+
+            alert(
+                "Please login first."
+            );
+
+            window.location.href =
+                "login.html";
+
+            return;
         }
 
-        alert("Job posted successfully!");
 
-        window.location.href = "jobs.html";
 
-    } catch (error) {
+        /* ===============================
+           CLIENT ROLE CHECK
+        =============================== */
 
-        console.error(error);
+        if (
+            !loggedInUser.role ||
+            loggedInUser.role.toUpperCase() !== "CLIENT"
+        ) {
 
-        alert("Unable to post job. Please make sure the backend is running.");
+            alert(
+                "Only clients can post jobs."
+            );
 
-    }
+            return;
+        }
 
-});
+
+
+        /* ===============================
+           GET FORM VALUES
+        =============================== */
+
+        const title =
+            document
+                .getElementById("title")
+                .value
+                .trim();
+
+
+        const description =
+            document
+                .getElementById("description")
+                .value
+                .trim();
+
+
+        const budget =
+            Number(
+                document
+                    .getElementById("budget")
+                    .value
+            );
+
+
+        const skills =
+            document
+                .getElementById("skills")
+                .value
+                .trim();
+
+
+
+        /* ===============================
+           VALIDATION
+        =============================== */
+
+        if (title === "") {
+
+            alert(
+                "Please enter a job title."
+            );
+
+            return;
+        }
+
+
+        if (description === "") {
+
+            alert(
+                "Please enter a job description."
+            );
+
+            return;
+        }
+
+
+        if (!budget || budget <= 0) {
+
+            alert(
+                "Please enter a valid budget."
+            );
+
+            return;
+        }
+
+
+        if (skills === "") {
+
+            alert(
+                "Please enter the required skills."
+            );
+
+            return;
+        }
+
+
+
+        /* ===============================
+           JOB DATA
+        =============================== */
+
+        const job = {
+
+            title: title,
+
+            description: description,
+
+            budget: budget,
+
+            skills: skills,
+
+            clientEmail: userEmail
+
+        };
+
+
+
+        /* ===============================
+           SEND TO SPRING BOOT
+        =============================== */
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://localhost:8080/api/jobs",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify(job)
+                    }
+                );
+
+
+
+            /* ===============================
+               SUCCESS
+            =============================== */
+
+            if (response.ok) {
+
+                const data =
+                    await response.json();
+
+
+                console.log(
+                    "Job posted successfully:",
+                    data
+                );
+
+
+                alert(
+                    "Job posted successfully! 🎉"
+                );
+
+
+                document
+                    .getElementById("postJobForm")
+                    .reset();
+
+
+                window.location.href =
+                    "jobs.html";
+
+
+                return;
+            }
+
+
+
+            /* ===============================
+               ERROR RESPONSE
+            =============================== */
+
+            let errorMessage =
+                "Unable to post job. Please try again.";
+
+
+            try {
+
+                const errorData =
+                    await response.json();
+
+
+                if (errorData.message) {
+
+                    errorMessage =
+                        errorData.message;
+
+                }
+
+            } catch (error) {
+
+                try {
+
+                    const text =
+                        await response.text();
+
+
+                    if (text) {
+
+                        errorMessage =
+                            text;
+
+                    }
+
+                } catch (e) {
+
+                    console.error(e);
+
+                }
+
+            }
+
+
+            alert(errorMessage);
+
+        }
+
+
+
+        /* ===============================
+           BACKEND CONNECTION ERROR
+        =============================== */
+
+        catch (error) {
+
+            console.error(
+                "Post job error:",
+                error
+            );
+
+
+            alert(
+                "Cannot connect to the server. Please make sure Spring Boot is running."
+            );
+
+        }
+
+    });
+
+
+
+/* ===============================
+   DARK MODE
+=============================== */
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        function() {
+
+            document.body
+                .classList
+                .toggle("dark");
+
+
+            if (
+                document.body
+                    .classList
+                    .contains("dark")
+            ) {
+
+                themeBtn.textContent =
+                    "☀";
+
+            } else {
+
+                themeBtn.textContent =
+                    "☾";
+
+            }
+
+        }
+    );
+
+}
 
 </script>
 
+
 </body>
+
 </html>

@@ -1,60 +1,121 @@
-const container = document.getElementById("clientApplicationsContainer");
+const container =
+    document.getElementById("clientApplicationsContainer");
 
-const userEmail = localStorage.getItem("userEmail");
+const userEmail =
+    localStorage.getItem("userEmail");
 
-const params = new URLSearchParams(window.location.search);
-const jobId = params.get("jobId");
+const params =
+    new URLSearchParams(window.location.search);
 
+const jobId =
+    params.get("jobId");
+
+
+// =========================================
+// LOAD APPLICATIONS
+// =========================================
 
 async function loadApplications() {
 
     if (!userEmail) {
-        window.location.href = "login.html";
+
+        window.location.href =
+            "login.html";
+
         return;
     }
 
+
     if (!jobId) {
+
         container.innerHTML =
             "<p>Job not selected.</p>";
+
         return;
     }
+
 
     try {
 
-        const jobsResponse = await fetch(
-            "http://localhost:8080/api/jobs"
-        );
+        // =========================================
+        // GET JOBS
+        // =========================================
+
+        const jobsResponse =
+            await fetch(
+                "http://localhost:8080/api/jobs"
+            );
+
 
         if (!jobsResponse.ok) {
-            throw new Error("Failed to load jobs");
+
+            throw new Error(
+                "Failed to load jobs"
+            );
+
         }
 
-        const jobs = await jobsResponse.json();
 
-        const job = jobs.find(
-            j => String(j.id) === String(jobId)
-        );
+        const jobs =
+            await jobsResponse.json();
 
-        if (!job || job.clientEmail !== userEmail) {
+
+        const job =
+            jobs.find(
+                j =>
+                    String(j.id) ===
+                    String(jobId)
+            );
+
+
+        // =========================================
+        // CHECK CLIENT OWNERSHIP
+        // =========================================
+
+        if (
+            !job ||
+            job.clientEmail !== userEmail
+        ) {
 
             container.innerHTML = `
+
                 <div class="no-applications">
-                    <h2>Access Denied</h2>
-                    <p>You are not authorized to view these applications.</p>
+
+                    <h2>
+                        Access Denied
+                    </h2>
+
+                    <p>
+                        You are not authorized
+                        to view these applications.
+                    </p>
+
                 </div>
+
             `;
 
             return;
         }
 
 
-        const applicationsResponse = await fetch(
-            "http://localhost:8080/applications"
-        );
+        // =========================================
+        // GET APPLICATIONS
+        // =========================================
+
+        const applicationsResponse =
+            await fetch(
+                "http://localhost:8080/applications"
+            );
+
 
         if (!applicationsResponse.ok) {
-            throw new Error("Failed to load applications");
+
+            throw new Error(
+                "Failed to load applications"
+            );
+
         }
+
 
         const applications =
             await applicationsResponse.json();
@@ -63,63 +124,125 @@ async function loadApplications() {
         const jobApplications =
             applications.filter(
                 application =>
-                    String(application.jobId) === String(jobId)
+                    String(application.jobId) ===
+                    String(jobId)
             );
 
 
-        const usersResponse = await fetch(
-            "http://localhost:8080/api/users"
-        );
+        // =========================================
+        // GET FREELANCERS
+        // =========================================
+
+        const usersResponse =
+            await fetch(
+                "http://localhost:8080/api/users"
+            );
+
 
         if (!usersResponse.ok) {
-            throw new Error("Failed to load freelancers");
+
+            throw new Error(
+                "Failed to load freelancers"
+            );
+
         }
 
-        const users = await usersResponse.json();
 
+        const users =
+            await usersResponse.json();
+
+
+        // =========================================
+        // ADD FREELANCER DETAILS
+        // =========================================
 
         const enrichedApplications =
-            jobApplications.map(application => {
+            jobApplications.map(
+                application => {
 
-                const freelancer = users.find(
-                    user =>
-                        user.email ===
-                        application.freelancerEmail
-                );
-
-                return {
-                    ...application,
-                    freelancer: freelancer
-                };
-            });
+                    const freelancer =
+                        users.find(
+                            user =>
+                                user.email ===
+                                application.freelancerEmail
+                        );
 
 
-        displayApplications(enrichedApplications);
+                    return {
+                        ...application,
+                        freelancer:
+                            freelancer
+                    };
+
+                }
+            );
+
+
+        displayApplications(
+            enrichedApplications
+        );
 
 
     } catch (error) {
 
         console.error(error);
 
+
         container.innerHTML = `
+
             <div class="no-applications">
-                <h2>Unable to Load Applications</h2>
-                <p>Please make sure the backend is running.</p>
+
+                <h2>
+                    Unable to Load Applications
+                </h2>
+
+                <p>
+                    Please make sure the backend
+                    is running.
+                </p>
+
+                <button
+                    class="jobs-btn"
+                    onclick="loadApplications()">
+
+                    Try Again
+
+                </button>
+
             </div>
+
         `;
+
     }
+
 }
 
 
-function displayApplications(applications) {
+// =========================================
+// DISPLAY APPLICATIONS
+// =========================================
+
+function displayApplications(
+    applications
+) {
 
     if (applications.length === 0) {
 
         container.innerHTML = `
+
             <div class="no-applications">
-                <h2>No Applications Yet</h2>
-                <p>No freelancer has applied for this job.</p>
+
+                <h2>
+                    No Applications Yet
+                </h2>
+
+                <p>
+                    No freelancer has applied
+                    for this job.
+                </p>
+
             </div>
+
         `;
 
         return;
@@ -129,163 +252,274 @@ function displayApplications(applications) {
     container.innerHTML = "";
 
 
-    applications.forEach(application => {
+    applications.forEach(
+        application => {
 
-        const freelancer =
-            application.freelancer;
-
-
-        const card =
-            document.createElement("div");
+            const freelancer =
+                application.freelancer;
 
 
-        card.className =
-            "client-application-card";
+            const card =
+                document.createElement("div");
 
 
-        card.innerHTML = `
-
-            <div class="application-profile">
-
-                <div class="application-avatar">
-                    ✣
-                </div>
-
-                <div>
-                    <h2>
-                        ${freelancer
-                            ? freelancer.name
-                            : application.freelancerEmail}
-                    </h2>
-
-                    <p class="application-email">
-                        ${application.freelancerEmail}
-                    </p>
-                </div>
-
-            </div>
+            card.className =
+                "client-application-card";
 
 
-            <div class="application-details">
-
-                <div>
-                    <strong>Skills</strong>
-
-                    <p>
-                        ${freelancer?.skills || "Not added"}
-                    </p>
-                </div>
+            const freelancerName =
+                freelancer
+                    ? freelancer.name
+                    : application.freelancerEmail;
 
 
-                <div>
-                    <strong>Experience</strong>
-
-                    <p>
-                        ${freelancer?.experience || "Not added"}
-                    </p>
-                </div>
+            const skills =
+                freelancer?.skills ||
+                "Not added";
 
 
-                <div>
-                    <strong>About</strong>
-
-                    <p>
-                        ${freelancer?.bio || "No bio available"}
-                    </p>
-                </div>
+            const experience =
+                freelancer?.experience ||
+                "Not added";
 
 
-                <div>
-                    <strong>Job</strong>
-
-                    <p>
-                        ${application.jobTitle}
-                    </p>
-                </div>
+            const bio =
+                freelancer?.bio ||
+                "No bio available";
 
 
-                <div>
-                    <strong>Application ID</strong>
+            const jobTitle =
+                application.jobTitle ||
+                "Untitled Job";
 
-                    <p>
-                        #${application.id}
-                    </p>
+
+            const status =
+                application.status ||
+                "Pending";
+
+
+            card.innerHTML = `
+
+                <div class="application-profile">
+
+                    <div class="application-avatar">
+                        ✣
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            ${escapeHTML(
+                                freelancerName
+                            )}
+                        </h2>
+
+                        <p class="application-email">
+                            ${escapeHTML(
+                                application.freelancerEmail
+                            )}
+                        </p>
+
+                    </div>
+
                 </div>
 
 
-                <div>
-                    <strong>Status</strong>
+                <div class="application-details">
 
-                    <p class="application-status">
-                        ${application.status}
-                    </p>
+                    <div>
+
+                        <strong>
+                            Skills
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(
+                                skills
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Experience
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(
+                                experience
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            About
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(
+                                bio
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Job
+                        </strong>
+
+                        <p>
+                            ${escapeHTML(
+                                jobTitle
+                            )}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Application ID
+                        </strong>
+
+                        <p>
+                            #${application.id}
+                        </p>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Status
+                        </strong>
+
+                        <p class="application-status">
+
+                            ${escapeHTML(
+                                status
+                            )}
+
+                        </p>
+
+                    </div>
+
                 </div>
 
-            </div>
+
+                <div class="application-actions">
+
+                    ${
+                        status === "Pending"
+                        ? `
+
+                            <button
+                                onclick="updateStatus(
+                                    ${application.id},
+                                    'Accepted'
+                                )">
+
+                                ✓ Accept
+
+                            </button>
 
 
-            <div class="application-actions">
+                            <button
+                                onclick="updateStatus(
+                                    ${application.id},
+                                    'Rejected'
+                                )">
 
-                <button
-                    onclick="updateStatus(
-                        ${application.id},
-                        'Accepted'
-                    )">
-                    ✓ Accept
-                </button>
+                                ✕ Reject
+
+                            </button>
+
+                        `
+                        : `
+
+                            <span>
+                                Application ${escapeHTML(status)}
+                            </span>
+
+                        `
+                    }
+
+                </div>
+
+            `;
 
 
-                <button
-                    onclick="updateStatus(
-                        ${application.id},
-                        'Rejected'
-                    )">
-                    ✕ Reject
-                </button>
+            container.appendChild(card);
 
-            </div>
-        `;
+        }
+    );
 
-
-        container.appendChild(card);
-
-    });
 }
 
 
-async function updateStatus(id, status) {
+// =========================================
+// UPDATE APPLICATION STATUS
+// =========================================
+
+async function updateStatus(
+    id,
+    status
+) {
 
     try {
 
-        // Step 1: Update application status
-        const response = await fetch(
-            `http://localhost:8080/applications/${id}/status?status=${status}`,
-            {
-                method: "PUT"
-            }
-        );
+        // =========================================
+        // UPDATE APPLICATION
+        // =========================================
+
+        const response =
+            await fetch(
+                `http://localhost:8080/applications/${id}/status?status=${encodeURIComponent(status)}`,
+                {
+                    method: "PUT"
+                }
+            );
 
 
         if (!response.ok) {
+
             throw new Error(
                 "Failed to update application status"
             );
+
         }
 
 
-        // Step 2: Create contract when accepted
+        // =========================================
+        // ACCEPT → CREATE CONTRACT
+        // =========================================
+
         if (status === "Accepted") {
 
-            // Get all applications
-            const applicationsResponse = await fetch(
-                "http://localhost:8080/applications"
-            );
+            const applicationsResponse =
+                await fetch(
+                    "http://localhost:8080/applications"
+                );
 
 
             if (!applicationsResponse.ok) {
+
                 throw new Error(
                     "Failed to get applications"
                 );
+
             }
 
 
@@ -293,38 +527,89 @@ async function updateStatus(id, status) {
                 await applicationsResponse.json();
 
 
-            // Find the accepted application
             const application =
                 applications.find(
                     app =>
-                        String(app.id) === String(id)
+                        String(app.id) ===
+                        String(id)
                 );
 
 
             if (!application) {
+
                 throw new Error(
                     "Application not found"
                 );
+
             }
 
 
-            // Prepare contract data
+            // =========================================
+            // CHECK EXISTING CONTRACT
+            // =========================================
+
+            const existingContractsResponse =
+                await fetch(
+                    `http://localhost:8080/api/contracts/client/${encodeURIComponent(userEmail)}`
+                );
+
+
+            if (
+                existingContractsResponse.ok
+            ) {
+
+                const existingContracts =
+                    await existingContractsResponse.json();
+
+
+                const alreadyExists =
+                    existingContracts.some(
+                        contract =>
+                            String(contract.jobId) ===
+                            String(application.jobId) &&
+                            contract.freelancerEmail ===
+                            application.freelancerEmail
+                    );
+
+
+                if (alreadyExists) {
+
+                    alert(
+                        "A contract already exists for this freelancer and job."
+                    );
+
+                    loadApplications();
+
+                    return;
+                }
+
+            }
+
+
+            // =========================================
+            // CREATE CONTRACT
+            // =========================================
+
             const contract = {
 
-                jobId: application.jobId,
+                jobId:
+                    application.jobId,
 
-                jobTitle: application.jobTitle,
+                jobTitle:
+                    application.jobTitle,
 
-                clientEmail: userEmail,
+                clientEmail:
+                    userEmail,
 
                 freelancerEmail:
                     application.freelancerEmail,
 
-                status: "ACTIVE"
+                status:
+                    "ACTIVE"
+
             };
 
 
-            // Save contract
             const contractResponse =
                 await fetch(
                     "http://localhost:8080/api/contracts",
@@ -343,9 +628,11 @@ async function updateStatus(id, status) {
 
 
             if (!contractResponse.ok) {
+
                 throw new Error(
                     "Failed to create contract"
                 );
+
             }
 
 
@@ -353,15 +640,20 @@ async function updateStatus(id, status) {
                 "Freelancer accepted and contract created successfully!"
             );
 
+
         } else {
 
             alert(
                 "Application rejected."
             );
+
         }
 
 
-        // Refresh applications
+        // =========================================
+        // REFRESH
+        // =========================================
+
         loadApplications();
 
 
@@ -369,11 +661,35 @@ async function updateStatus(id, status) {
 
         console.error(error);
 
+
         alert(
             "Unable to update application status."
         );
+
     }
+
 }
 
+
+// =========================================
+// SAFE HTML
+// =========================================
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+// =========================================
+// START
+// =========================================
 
 loadApplications();

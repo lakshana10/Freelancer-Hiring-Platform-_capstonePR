@@ -2023,3 +2023,198 @@ body.dark .loading-freelancers p {
     }
 
 }
+/* =========================================
+   GIVE REVIEW BUTTON
+========================================= */
+
+.review-btn {
+    border: none;
+    padding: 10px 17px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #f59e0b;
+    color: white;
+    transition: 0.2s;
+}
+
+.review-btn:hover {
+    background: #d97706;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   REVIEW PAGE
+========================================= */
+
+.review-page {
+    min-height: 75vh;
+    padding: 60px 20px;
+    background: #f6f8fc;
+}
+
+.review-box {
+    max-width: 650px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.review-box h1 {
+    margin-bottom: 8px;
+    color: #172554;
+}
+
+.review-box .subtitle {
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.contract-info {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+.contract-info p {
+    margin: 7px 0;
+    color: #475569;
+}
+
+.contract-info strong {
+    color: #172554;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.star-rating {
+    display: flex;
+    gap: 8px;
+    font-size: 34px;
+}
+
+.star-rating span {
+    cursor: pointer;
+    color: #cbd5e1;
+    transition: 0.2s;
+}
+
+.star-rating span.selected {
+    color: #f59e0b;
+}
+
+.review-box textarea {
+    width: 100%;
+    min-height: 130px;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    resize: vertical;
+    font-family: inherit;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.review-box textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+}
+
+.submit-review-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit-review-btn:hover {
+    background: #1d4ed8;
+}
+
+.message {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   REVIEW PAGE - DARK MODE
+========================================= */
+
+body.dark .review-page {
+    background: #11101b;
+}
+
+body.dark .review-box {
+    background: #1b1929;
+}
+
+body.dark .review-box h1 {
+    color: white;
+}
+
+body.dark .review-box .subtitle {
+    color: #aaa6ba;
+}
+
+body.dark .contract-info {
+    background: #242134;
+}
+
+body.dark .contract-info p {
+    color: #aaa6ba;
+}
+
+body.dark .contract-info strong {
+    color: #ddd8ef;
+}
+
+body.dark .form-group label {
+    color: #ddd8ef;
+}
+
+body.dark .review-box textarea {
+    background: #242134;
+    color: white;
+    border-color: #3a354d;
+}
+
+body.dark .review-box textarea:focus {
+    border-color: #8060c9;
+}
+
+
+/* =========================================
+   REVIEW PAGE - MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .review-box {
+        padding: 25px 20px;
+    }
+
+    .star-rating {
+        font-size: 30px;
+    }
+}

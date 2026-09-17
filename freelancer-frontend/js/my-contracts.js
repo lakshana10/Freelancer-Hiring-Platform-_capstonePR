@@ -7,6 +7,10 @@ const container =
     document.getElementById("contractsContainer");
 
 
+// =========================================
+// LOAD CONTRACTS
+// =========================================
+
 async function loadContracts() {
 
     if (!userEmail) {
@@ -24,7 +28,9 @@ async function loadContracts() {
                     You need to login to view your contracts.
                 </p>
 
-                <a href="login.html" class="jobs-btn">
+                <a
+                    href="login.html"
+                    class="jobs-btn">
                     Login
                 </a>
 
@@ -47,6 +53,7 @@ async function loadContracts() {
             throw new Error(
                 "Failed to load contracts"
             );
+
         }
 
 
@@ -63,7 +70,9 @@ async function loadContracts() {
                         📄
                     </div>
 
-                    <h2>No Contracts Yet</h2>
+                    <h2>
+                        No Contracts Yet
+                    </h2>
 
                     <p>
                         You don't have any contracts yet.
@@ -113,7 +122,10 @@ async function loadContracts() {
                         <div>
 
                             <h3>
-                                ${contract.jobTitle || "Untitled Job"}
+                                ${escapeHTML(
+                                    contract.jobTitle ||
+                                    "Untitled Job"
+                                )}
                             </h3>
 
                             <div class="contract-number">
@@ -129,7 +141,7 @@ async function loadContracts() {
 
                         <span class="status-dot"></span>
 
-                        ${status}
+                        ${escapeHTML(status)}
 
                     </div>
 
@@ -137,7 +149,6 @@ async function loadContracts() {
 
 
                 <div class="contract-details">
-
 
                     <div class="detail-box">
 
@@ -159,7 +170,9 @@ async function loadContracts() {
                         </span>
 
                         <span class="detail-value">
-                            ${contract.clientEmail}
+                            ${escapeHTML(
+                                contract.clientEmail
+                            )}
                         </span>
 
                     </div>
@@ -172,7 +185,9 @@ async function loadContracts() {
                         </span>
 
                         <span class="detail-value">
-                            ${contract.freelancerEmail}
+                            ${escapeHTML(
+                                contract.freelancerEmail
+                            )}
                         </span>
 
                     </div>
@@ -185,11 +200,10 @@ async function loadContracts() {
                         </span>
 
                         <span class="detail-value">
-                            ${status}
+                            ${escapeHTML(status)}
                         </span>
 
                     </div>
-
 
                 </div>
 
@@ -199,7 +213,10 @@ async function loadContracts() {
                     <div class="contract-info">
 
                         Contract ID:
-                        <strong>#${contract.id}</strong>
+
+                        <strong>
+                            #${contract.id}
+                        </strong>
 
                     </div>
 
@@ -208,10 +225,10 @@ async function loadContracts() {
 
                         <button
                             class="details-btn"
-                            onclick="showContractDetails(
-                                ${contract.id}
-                            )">
+                            onclick="showContractDetails(${contract.id})">
+
                             View Details
+
                         </button>
 
 
@@ -224,7 +241,9 @@ async function loadContracts() {
                                 '${escapeValue(contract.clientEmail)}',
                                 '${escapeValue(contract.freelancerEmail)}'
                             )">
+
                             💳 Payment
+
                         </button>
 
                     </div>
@@ -263,7 +282,9 @@ async function loadContracts() {
                 <button
                     class="jobs-btn"
                     onclick="loadContracts()">
+
                     Try Again
+
                 </button>
 
             </div>
@@ -275,7 +296,26 @@ async function loadContracts() {
 }
 
 
-/* ================= SAFE TEXT ================= */
+// =========================================
+// SAFE HTML
+// =========================================
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        value ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+// =========================================
+// SAFE VALUE FOR BUTTON
+// =========================================
 
 function escapeValue(value) {
 
@@ -289,20 +329,108 @@ function escapeValue(value) {
 }
 
 
-/* ================= CONTRACT DETAILS ================= */
+// =========================================
+// CONTRACT DETAILS
+// =========================================
 
 function showContractDetails(id) {
 
+    const cards =
+        document.querySelectorAll(".contract-card");
+
+
+    let selectedContract = null;
+
+
+    cards.forEach(card => {
+
+        const number =
+            card.querySelector(".contract-number");
+
+
+        if (
+            number &&
+            number.textContent.includes(
+                `Contract #${id}`
+            )
+        ) {
+
+            selectedContract = card;
+
+        }
+
+    });
+
+
+    if (!selectedContract) {
+
+        alert(
+            "Contract details not found."
+        );
+
+        return;
+
+    }
+
+
+    const title =
+        selectedContract.querySelector(
+            "h3"
+        ).textContent;
+
+
+    const details =
+        selectedContract.querySelectorAll(
+            ".detail-value"
+        );
+
+
+    const jobId =
+        details[0]
+            ? details[0].textContent
+            : "-";
+
+
+    const client =
+        details[1]
+            ? details[1].textContent
+            : "-";
+
+
+    const freelancer =
+        details[2]
+            ? details[2].textContent
+            : "-";
+
+
+    const status =
+        details[3]
+            ? details[3].textContent
+            : "-";
+
+
     alert(
-        "Contract #" +
-        id +
-        "\n\nDetailed contract view will be added soon."
+        "Contract Details\n\n" +
+
+        "Contract ID: #" + id +
+
+        "\nJob Title: " + title +
+
+        "\nJob ID: " + jobId +
+
+        "\nClient: " + client +
+
+        "\nFreelancer: " + freelancer +
+
+        "\nStatus: " + status
     );
 
 }
 
 
-/* ================= CREATE PAYMENT ================= */
+// =========================================
+// CREATE PAYMENT
+// =========================================
 
 async function createPayment(
     contractId,
@@ -337,6 +465,7 @@ async function createPayment(
         );
 
         return;
+
     }
 
 
@@ -353,6 +482,7 @@ async function createPayment(
             throw new Error(
                 "Failed to check existing payment"
             );
+
         }
 
 
@@ -367,24 +497,32 @@ async function createPayment(
             );
 
             return;
+
         }
 
 
         const payment = {
 
-            contractId: contractId,
+            contractId:
+                contractId,
 
-            jobId: jobId,
+            jobId:
+                jobId,
 
-            jobTitle: jobTitle,
+            jobTitle:
+                jobTitle,
 
-            clientEmail: clientEmail,
+            clientEmail:
+                clientEmail,
 
-            freelancerEmail: freelancerEmail,
+            freelancerEmail:
+                freelancerEmail,
 
-            amount: amount,
+            amount:
+                amount,
 
-            status: "PENDING"
+            status:
+                "PENDING"
 
         };
 
@@ -411,6 +549,7 @@ async function createPayment(
             throw new Error(
                 "Failed to create payment"
             );
+
         }
 
 
@@ -437,6 +576,49 @@ async function createPayment(
 }
 
 
-/* ================= LOAD ================= */
+// =========================================
+// DARK MODE
+// =========================================
+
+const themeBtn =
+    document.getElementById("themeBtn");
+
+
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        function () {
+
+            document.body
+                .classList
+                .toggle("dark");
+
+
+            if (
+                document.body
+                    .classList
+                    .contains("dark")
+            ) {
+
+                themeBtn.textContent =
+                    "☀";
+
+            } else {
+
+                themeBtn.textContent =
+                    "☾";
+
+            }
+
+        }
+    );
+
+}
+
+
+// =========================================
+// START
+// =========================================
 
 loadContracts();

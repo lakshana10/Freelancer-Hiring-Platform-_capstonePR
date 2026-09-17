@@ -1,4 +1,5 @@
 let allJobs = [];
+let selectedJobId = null;
 
 
 /* LOAD JOBS FROM DATABASE */
@@ -27,34 +28,63 @@ async function loadJobs() {
         const jobList =
             document.getElementById("jobList");
 
-        jobList.innerHTML =
-            "<p>Unable to load jobs. Please check the backend.</p>";
+        if (jobList) {
+
+            jobList.innerHTML =
+                "<p>Unable to load jobs. Please check the backend.</p>";
+
+        }
+
     }
 }
 
 
-/* APPLY HOME PAGE SEARCH / CATEGORY */
+/* APPLY HOME PAGE SEARCH / CATEGORY / SELECTED JOB */
 
 function applyHomeFilters() {
 
     const params =
         new URLSearchParams(window.location.search);
 
+
     const search =
         params.get("search");
+
 
     const category =
         params.get("category");
 
-    let filteredJobs = [...allJobs];
+
+    selectedJobId =
+        params.get("jobId");
 
 
-    /* HOME SEARCH */
+    let filteredJobs =
+        [...allJobs];
+
+
+    /* ================= SELECTED JOB ================= */
+
+    if (selectedJobId) {
+
+        filteredJobs =
+            filteredJobs.filter(function(job) {
+
+                return String(job.id) ===
+                       String(selectedJobId);
+
+            });
+
+    }
+
+
+    /* ================= HOME SEARCH ================= */
 
     if (search) {
 
         const searchText =
             search.toLowerCase().trim();
+
 
         filteredJobs =
             filteredJobs.filter(function(job) {
@@ -66,6 +96,7 @@ function applyHomeFilters() {
                         (job.skills || "")
                     ).toLowerCase();
 
+
                 return jobText.includes(searchText);
 
             });
@@ -73,7 +104,7 @@ function applyHomeFilters() {
     }
 
 
-    /* HOME CATEGORY */
+    /* ================= HOME CATEGORY ================= */
 
     if (category) {
 
@@ -155,9 +186,11 @@ function applyHomeFilters() {
     const jobSearch =
         document.getElementById("jobSearch");
 
+
     if (jobSearch && search) {
 
-        jobSearch.value = search;
+        jobSearch.value =
+            search;
 
     }
 
@@ -170,6 +203,7 @@ async function searchJobs() {
 
     const keywordElement =
         document.getElementById("jobSearch");
+
 
     const locationElement =
         document.getElementById("locationSearch");
@@ -187,7 +221,10 @@ async function searchJobs() {
             : "";
 
 
-    if (keyword === "" && location === "") {
+    if (
+        keyword === "" &&
+        location === ""
+    ) {
 
         displayJobs(allJobs);
 
@@ -232,6 +269,12 @@ function displayJobs(jobs) {
     const jobList =
         document.getElementById("jobList");
 
+
+    if (!jobList) {
+        return;
+    }
+
+
     jobList.innerHTML = "";
 
 
@@ -254,7 +297,9 @@ function displayJobs(jobs) {
         const jobCard =
             document.createElement("article");
 
-        jobCard.className = "job-card";
+
+        jobCard.className =
+            "job-card";
 
 
         jobCard.innerHTML = `
@@ -274,7 +319,7 @@ function displayJobs(jobs) {
                     </span>
 
                     <h3>
-                        ${job.title}
+                        ${job.title || "Untitled Job"}
                     </h3>
 
                     <p>
@@ -291,7 +336,7 @@ function displayJobs(jobs) {
 
 
             <p class="job-description">
-                ${job.description}
+                ${job.description || "No description available."}
             </p>
 
 
@@ -317,7 +362,7 @@ function displayJobs(jobs) {
 
 
                 <div class="applications">
-                    Client: ${job.clientEmail}
+                    Client: ${job.clientEmail || "N/A"}
                 </div>
 
 
@@ -325,7 +370,7 @@ function displayJobs(jobs) {
                     class="apply-btn"
                     onclick="applyJob(
                         ${job.id},
-                        '${String(job.title)
+                        '${String(job.title || "")
                             .replace(/'/g, "\\'")}'
                     )">
 
@@ -358,12 +403,16 @@ function displayJobs(jobs) {
                     ) {
 
                         button.textContent = "♥";
-                        button.style.color = "#6845e8";
+
+                        button.style.color =
+                            "#6845e8";
 
                     } else {
 
                         button.textContent = "♡";
-                        button.style.color = "#888";
+
+                        button.style.color =
+                            "#888";
 
                     }
 
@@ -383,11 +432,16 @@ function createSkills(skills) {
         return "";
     }
 
+
     return skills
         .split(",")
         .map(function(skill) {
 
-            return `<span>${skill.trim()}</span>`;
+            return `
+                <span>
+                    ${skill.trim()}
+                </span>
+            `;
 
         })
         .join("");
@@ -411,8 +465,10 @@ async function applyJob(jobId, jobName) {
                 "Please login before applying for a job."
             );
 
+
             window.location.href =
                 "login.html";
+
 
             return;
 
@@ -432,11 +488,14 @@ async function applyJob(jobId, jobName) {
 
                     body: JSON.stringify({
 
-                        freelancerEmail: userEmail,
+                        freelancerEmail:
+                            userEmail,
 
-                        jobId: jobId,
+                        jobId:
+                            jobId,
 
-                        jobTitle: jobName
+                        jobTitle:
+                            jobName
 
                     })
 
@@ -449,8 +508,10 @@ async function applyJob(jobId, jobName) {
             const errorText =
                 await response.text();
 
+
             throw new Error(
-                errorText || "Application failed"
+                errorText ||
+                "Application failed"
             );
 
         }
@@ -463,9 +524,14 @@ async function applyJob(jobId, jobName) {
 
     } catch (error) {
 
-        alert(error.message);
+        alert(
+            error.message
+        );
 
-        console.error(error);
+
+        console.error(
+            error
+        );
 
     }
 
@@ -482,11 +548,14 @@ function clearFilters() {
         );
 
 
-    checkboxes.forEach(function(checkbox) {
+    checkboxes.forEach(
+        function(checkbox) {
 
-        checkbox.checked = false;
+            checkbox.checked =
+                false;
 
-    });
+        }
+    );
 
 
     displayJobs(allJobs);
@@ -517,12 +586,14 @@ function sortJobs() {
 
     if (value === "budget") {
 
-        sortedJobs.sort(function(a, b) {
+        sortedJobs.sort(
+            function(a, b) {
 
-            return Number(b.budget) -
-                   Number(a.budget);
+                return Number(b.budget) -
+                       Number(a.budget);
 
-        });
+            }
+        );
 
     }
 

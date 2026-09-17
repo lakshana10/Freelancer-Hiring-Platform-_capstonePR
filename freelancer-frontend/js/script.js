@@ -6,6 +6,10 @@ function searchJobs() {
 
     const input = document.getElementById("searchInput");
 
+    if (!input) {
+        return;
+    }
+
     const searchValue = input.value.trim();
 
     if (searchValue === "") {
@@ -17,11 +21,9 @@ function searchJobs() {
         return;
     }
 
-    alert(
-        "Searching for: " + searchValue
-    );
-
-    // Later this will connect to Spring Boot API
+    window.location.href =
+        "jobs.html?search=" +
+        encodeURIComponent(searchValue);
 }
 
 
@@ -33,14 +35,13 @@ function searchCategory(category) {
 
     const input = document.getElementById("searchInput");
 
-    input.value = category;
+    if (input) {
+        input.value = category;
+    }
 
-    input.focus();
-
-    alert(
-        "Searching freelancers for " + category
-    );
-
+    window.location.href =
+        "jobs.html?search=" +
+        encodeURIComponent(category);
 }
 
 
@@ -50,9 +51,7 @@ function searchCategory(category) {
 
 function loginUser() {
 
-    alert(
-        "Login page will be connected to the Spring Boot backend."
-    );
+    window.location.href = "login.html";
 
 }
 
@@ -63,9 +62,7 @@ function loginUser() {
 
 function signupUser() {
 
-    alert(
-        "Registration page will be connected to the Spring Boot backend."
-    );
+    window.location.href = "signup.html";
 
 }
 
@@ -76,9 +73,29 @@ function signupUser() {
 
 function postJob() {
 
-    alert(
-        "Post Job page coming next."
-    );
+    const user =
+        JSON.parse(localStorage.getItem("loggedInUser"));
+
+    if (!user) {
+
+        alert("Please login first to post a job.");
+
+        window.location.href = "login.html";
+
+        return;
+    }
+
+    if (
+        !user.role ||
+        user.role.toUpperCase() !== "CLIENT"
+    ) {
+
+        alert("Only clients can post jobs.");
+
+        return;
+    }
+
+    window.location.href = "post-job.html";
 
 }
 
@@ -89,9 +106,7 @@ function postJob() {
 
 function joinFreelancer() {
 
-    alert(
-        "Freelancer registration will be connected to the backend."
-    );
+    window.location.href = "signup.html";
 
 }
 
@@ -100,20 +115,27 @@ function joinFreelancer() {
    DARK MODE
 ========================================= */
 
-const themeBtn = document.getElementById("themeBtn");
+const themeBtn =
+    document.getElementById("themeBtn");
 
-themeBtn.addEventListener("click", function () {
+if (themeBtn) {
 
-    document.body.classList.toggle("dark");
+    themeBtn.addEventListener("click", function () {
 
-    if (document.body.classList.contains("dark")) {
+        document.body.classList.toggle("dark");
 
-        themeBtn.textContent = "☀";
+        if (
+            document.body.classList.contains("dark")
+        ) {
 
-    } else {
+            themeBtn.textContent = "☀";
 
-        themeBtn.textContent = "☾";
+        } else {
 
-    }
+            themeBtn.textContent = "☾";
 
-});
+        }
+
+    });
+
+}

@@ -737,3 +737,242 @@ body.dark .category-card p {
         height: 350px;
     }
 }
+/* ================= LATEST JOBS ================= */
+
+.latest-jobs {
+    width: 90%;
+    margin: 0 auto 70px;
+    padding: 20px 0;
+}
+
+.latest-jobs .section-heading {
+    margin-bottom: 30px;
+}
+
+.latest-jobs .section-heading h2 {
+    font-size: 32px;
+    margin-top: 8px;
+}
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+/* JOB CARD */
+
+.job-card {
+    background: white;
+    border: 1px solid #e8e6ee;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 5px 20px rgba(30, 20, 70, 0.05);
+    transition: 0.3s;
+}
+
+.job-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(70, 50, 140, 0.12);
+}
+
+.job-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #171a32;
+}
+
+.job-card p {
+    color: #707486;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.job-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 10px;
+}
+
+.job-budget {
+    font-size: 16px;
+    font-weight: 700;
+    color: #6841e8;
+}
+
+.job-type {
+    background: #eee8ff;
+    color: #6841e8;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 11px;
+}
+
+.job-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 18px;
+}
+
+.job-skills span {
+    background: #f4f1ff;
+    color: #66558d;
+    border: 1px solid #e5def7;
+    padding: 5px 9px;
+    border-radius: 12px;
+    font-size: 10px;
+}
+
+.view-job-btn {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #6841e8;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.view-job-btn:hover {
+    background: #512bd4;
+}
+
+
+/* ================= HOW IT WORKS ================= */
+
+.how-it-works {
+    width: 90%;
+    margin: 0 auto 70px;
+    padding: 20px 0;
+}
+
+.how-it-works-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.how-it-works-heading small {
+    color: #7044ee;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.how-it-works-heading h2 {
+    font-size: 32px;
+    margin-top: 8px;
+}
+
+.how-it-works-heading p {
+    color: #777;
+    margin-top: 8px;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.step-card {
+    background: white;
+    border: 1px solid #e8e6ee;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(30, 20, 70, 0.04);
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #eee8ff;
+    color: #6841e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.step-card h3 {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.step-card p {
+    color: #777;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ================= DARK MODE - NEW SECTIONS ================= */
+
+body.dark .job-card,
+body.dark .step-card {
+    background: #1d1a29;
+    border-color: #302c40;
+    color: white;
+}
+
+body.dark .job-card h3,
+body.dark .step-card h3 {
+    color: white;
+}
+
+body.dark .job-card p,
+body.dark .step-card p,
+body.dark .how-it-works-heading p {
+    color: #aaa;
+}
+
+body.dark .job-skills span {
+    background: #29243a;
+    border-color: #3b354e;
+    color: #c1b5e5;
+}
+
+body.dark .job-type {
+    background: #29243a;
+    color: #b59aff;
+}
+
+
+/* ================= RESPONSIVE - NEW SECTIONS ================= */
+
+@media (max-width: 900px) {
+
+    .jobs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .latest-jobs,
+    .how-it-works {
+        width: 90%;
+    }
+
+    .jobs-grid,
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .latest-jobs .section-heading h2,
+    .how-it-works-heading h2 {
+        font-size: 26px;
+    }
+}
