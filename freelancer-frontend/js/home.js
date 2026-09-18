@@ -275,9 +275,13 @@ async function loadLatestJobs() {
                     "Project";
 
 
-                jobInfo.appendChild(budget);
+                jobInfo.appendChild(
+                    budget
+                );
 
-                jobInfo.appendChild(jobType);
+                jobInfo.appendChild(
+                    jobType
+                );
 
 
                 // ================= SKILLS =================
@@ -364,11 +368,17 @@ async function loadLatestJobs() {
 
                 // ================= ADD TO CARD =================
 
-                card.appendChild(title);
+                card.appendChild(
+                    title
+                );
 
-                card.appendChild(description);
+                card.appendChild(
+                    description
+                );
 
-                card.appendChild(jobInfo);
+                card.appendChild(
+                    jobInfo
+                );
 
                 card.appendChild(
                     skillsContainer
@@ -379,7 +389,9 @@ async function loadLatestJobs() {
                 );
 
 
-                homeJobs.appendChild(card);
+                homeJobs.appendChild(
+                    card
+                );
 
             }
         );
@@ -408,3 +420,119 @@ async function loadLatestJobs() {
 // ================= START LATEST JOBS =================
 
 loadLatestJobs();
+
+
+// =========================================
+// LOGGED-IN USER
+// =========================================
+
+function updateUserSection() {
+
+    const userSection =
+        document.getElementById("userSection");
+
+    if (!userSection) {
+        return;
+    }
+
+
+    const storedUser =
+        localStorage.getItem("loggedInUser");
+
+
+    if (!storedUser) {
+        return;
+    }
+
+
+    let user;
+
+
+    try {
+
+        user =
+            JSON.parse(storedUser);
+
+    } catch (error) {
+
+        console.error(
+            "Invalid logged-in user data:",
+            error
+        );
+
+        localStorage.removeItem(
+            "loggedInUser"
+        );
+
+        return;
+    }
+
+
+    const role =
+        user.role === "CLIENT"
+            ? "Client"
+            : "Freelancer";
+
+
+    userSection.innerHTML = `
+
+        <div class="user-profile">
+
+            <div class="user-avatar">
+                👤
+            </div>
+
+            <div class="user-details">
+
+                <span class="user-name">
+                    ${user.name || "User"}
+                </span>
+
+                <span class="user-role">
+                    ${role}
+                </span>
+
+            </div>
+
+            <button
+                class="logout-btn"
+                onclick="logoutUser()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+// =========================================
+// LOGOUT
+// =========================================
+
+function logoutUser() {
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    alert(
+        "You have been logged out successfully."
+    );
+
+
+    window.location.href =
+        "home.html";
+
+}
+
+
+// =========================================
+// UPDATE USER SECTION
+// =========================================
+
+updateUserSection();

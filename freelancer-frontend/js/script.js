@@ -139,3 +139,67 @@ if (themeBtn) {
     });
 
 }
+/* =========================================
+   LOGGED-IN USER
+========================================= */
+
+function updateUserSection() {
+
+    const userSection =
+        document.getElementById("userSection");
+
+    if (!userSection) {
+        return;
+    }
+
+    const user =
+        JSON.parse(localStorage.getItem("loggedInUser"));
+
+    if (!user) {
+        return;
+    }
+
+    const role =
+        user.role === "CLIENT"
+            ? "Client"
+            : "Freelancer";
+
+    userSection.innerHTML = `
+        <span style="font-weight: 600; margin-right: 10px;">
+            👤 ${user.name}
+        </span>
+
+        <span style="margin-right: 10px; font-size: 14px;">
+            (${role})
+        </span>
+
+        <button
+            class="signup-btn"
+            onclick="logoutUser()">
+
+            Logout
+
+        </button>
+    `;
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+function logoutUser() {
+
+    localStorage.removeItem("loggedInUser");
+
+    alert("You have been logged out successfully.");
+
+    window.location.href = "home.html";
+}
+
+
+/* =========================================
+   UPDATE USER SECTION
+========================================= */
+
+updateUserSection();

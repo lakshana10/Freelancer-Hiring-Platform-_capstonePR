@@ -975,4 +975,160 @@ body.dark .job-type {
     .how-it-works-heading h2 {
         font-size: 26px;
     }
+}/* =========================================
+   PROFESSIONAL USER SECTION
+========================================= */
+
+#userSection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+
+/* USER PROFILE */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 6px 8px 6px 6px;
+
+    background: #f7f4ff;
+
+    border: 1px solid #e6defd;
+
+    border-radius: 14px;
+
+    transition: all 0.25s ease;
+}
+
+.user-profile:hover {
+    border-color: #6845e8;
+
+    box-shadow:
+        0 5px 16px rgba(104, 69, 232, 0.12);
+}
+
+
+/* PROFILE ICON */
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    background: linear-gradient(
+        135deg,
+        #6845e8,
+        #8a5cf6
+    );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+
+/* USER DETAILS */
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 75px;
+}
+
+.user-name {
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #25243b;
+
+    white-space: nowrap;
+
+    max-width: 110px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.user-role {
+    font-size: 10px;
+
+    color: #6845e8;
+
+    font-weight: 600;
+
+    margin-top: 2px;
+}
+
+
+/* LOGOUT BUTTON */
+
+.logout-btn {
+    height: 34px;
+
+    padding: 0 12px;
+
+    border: 1px solid #e1dcef;
+
+    border-radius: 9px;
+
+    background: white;
+
+    color: #55556b;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+    background: #6845e8;
+
+    border-color: #6845e8;
+
+    color: white;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   MOBILE USER SECTION
+========================================= */
+
+@media (max-width: 900px) {
+
+    #userSection {
+        gap: 5px;
+    }
+
+    .user-details {
+        display: none;
+    }
+
+    .user-profile {
+        padding: 5px;
+    }
+
+    .logout-btn {
+        padding: 0 9px;
+    }
+
 }

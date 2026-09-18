@@ -86,26 +86,30 @@
             </button>
 
 
-            <!-- LOGIN -->
+            <!-- ================= USER SECTION ================= -->
 
-            <button
-                class="login-btn"
-                onclick="window.location.href='login.html'">
+            <div id="userSection">
 
-                Login
+                <!-- Logged-out buttons -->
 
-            </button>
+                <button
+                    class="login-btn"
+                    onclick="window.location.href='login.html'">
+
+                    Login
+
+                </button>
 
 
-            <!-- SIGN UP -->
+                <button
+                    class="signup-btn"
+                    onclick="window.location.href='signup.html'">
 
-            <button
-                class="signup-btn"
-                onclick="window.location.href='signup.html'">
+                    Sign Up →
 
-                Sign Up →
+                </button>
 
-            </button>
+            </div>
 
         </div>
 
@@ -442,8 +446,6 @@
         </div>
 
 
-        <!-- JOBS WILL LOAD HERE -->
-
         <div
             class="jobs-grid"
             id="homeJobs">
@@ -497,191 +499,130 @@
 
 
 
-        <!-- CATEGORY GRID -->
-
         <div class="category-grid">
 
-
-            <!-- WEB DEVELOPMENT -->
 
             <div class="category-card">
 
                 <div class="category-icon purple-icon">
-
                     &lt;/&gt;
-
                 </div>
-
 
                 <h3>
                     Web Development
                 </h3>
 
-
                 <p>
                     1,250+ Freelancers
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore →
-
                 </a>
 
             </div>
 
 
-
-            <!-- UI/UX -->
-
             <div class="category-card">
 
                 <div class="category-icon green-icon">
-
                     ✎
-
                 </div>
-
 
                 <h3>
                     UI/UX Design
                 </h3>
 
-
                 <p>
                     980+ Freelancers
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore →
-
                 </a>
 
             </div>
 
 
-
-            <!-- CONTENT WRITING -->
-
             <div class="category-card">
 
                 <div class="category-icon blue-icon">
-
                     ◆
-
                 </div>
-
 
                 <h3>
                     Content Writing
                 </h3>
 
-
                 <p>
                     850+ Freelancers
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore →
-
                 </a>
 
             </div>
 
 
-
-            <!-- DIGITAL MARKETING -->
-
             <div class="category-card">
 
                 <div class="category-icon pink-icon">
-
                     📢
-
                 </div>
-
 
                 <h3>
                     Digital Marketing
                 </h3>
 
-
                 <p>
                     760+ Freelancers
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore →
-
                 </a>
 
             </div>
 
 
-
-            <!-- VIDEO EDITING -->
-
             <div class="category-card">
 
                 <div class="category-icon orange-icon">
-
                     ▣
-
                 </div>
-
 
                 <h3>
                     Video Editing
                 </h3>
 
-
                 <p>
                     620+ Freelancers
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore →
-
                 </a>
 
             </div>
 
 
-
-            <!-- MORE -->
-
             <div class="category-card">
 
                 <div class="category-icon violet-icon">
-
                     •••
-
                 </div>
-
 
                 <h3>
                     More Categories
                 </h3>
 
-
                 <p>
                     Explore more skills
                 </p>
 
-
                 <a href="jobs.html">
-
                     Explore All →
-
                 </a>
 
             </div>
@@ -723,20 +664,15 @@
         <div class="steps-grid">
 
 
-            <!-- STEP 1 -->
-
             <div class="step-card">
-
 
                 <div class="step-number">
                     1
                 </div>
 
-
                 <h3>
                     Create an Account
                 </h3>
-
 
                 <p>
                     Sign up as a client or freelancer and create your profile.
@@ -745,21 +681,15 @@
             </div>
 
 
-
-            <!-- STEP 2 -->
-
             <div class="step-card">
-
 
                 <div class="step-number">
                     2
                 </div>
 
-
                 <h3>
                     Find or Post Jobs
                 </h3>
-
 
                 <p>
                     Clients can post jobs while freelancers can find suitable projects.
@@ -768,21 +698,15 @@
             </div>
 
 
-
-            <!-- STEP 3 -->
-
             <div class="step-card">
-
 
                 <div class="step-number">
                     3
                 </div>
 
-
                 <h3>
                     Work & Get Paid
                 </h3>
-
 
                 <p>
                     Connect, create contracts, complete projects and manage payments.
@@ -820,19 +744,14 @@
         <div class="cta-buttons">
 
 
-            <!-- POST JOB -->
-
             <button
                 class="post-job"
-                onclick="window.location.href='post-job.html'">
+                onclick="postJob()">
 
                 ➤ &nbsp; Post a Job
 
             </button>
 
-
-
-            <!-- JOIN FREELANCER -->
 
             <button
                 class="join-freelancer"

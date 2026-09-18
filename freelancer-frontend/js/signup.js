@@ -49,6 +49,9 @@ document
         const email =
             document.getElementById("email").value.trim();
 
+        const role =
+            document.getElementById("role").value;
+
         const password =
             document.getElementById("password").value;
 
@@ -79,9 +82,23 @@ document
         }
 
 
+        if (!role) {
+
+            alert(
+                "Please select whether you are a Freelancer or Client."
+            );
+
+            return;
+
+        }
+
+
         if (password.length < 6) {
 
-            alert("Password must contain at least 6 characters.");
+            alert(
+                "Password must contain at least 6 characters."
+            );
+
             return;
 
         }
@@ -97,7 +114,10 @@ document
 
         if (!terms) {
 
-            alert("Please accept the Terms & Conditions.");
+            alert(
+                "Please accept the Terms & Conditions."
+            );
+
             return;
 
         }
@@ -112,7 +132,7 @@ document
             name: name,
             email: email,
             password: password,
-            role: "FREELANCER"
+            role: role
 
         };
 
@@ -143,7 +163,19 @@ document
 
             if (response.ok) {
 
-                console.log("Signup successful.");
+                console.log(
+                    "Signup successful."
+                );
+
+
+                // ===============================
+                // ROLE NAME FOR EMAIL
+                // ===============================
+
+                const roleName =
+                    role === "CLIENT"
+                        ? "Client"
+                        : "Freelancer";
 
 
                 // ===============================
@@ -158,7 +190,7 @@ document
                         {
                             to_name: name,
                             to_email: email,
-                            user_role: "Freelancer"
+                            user_role: roleName
                         }
                     );
 
@@ -183,7 +215,7 @@ document
                 // ===============================
 
                 alert(
-                    "Account created successfully! Welcome to FreelanceHub 🎉"
+                    `Account created successfully as ${roleName}! Welcome to FreelanceHub 🎉`
                 );
 
 
@@ -260,7 +292,7 @@ document
 function googleSignup() {
 
     alert(
-        "Google Sign-Up is not configured for this project. Please create your FreelanceHub account using your name, email, and password."
+        "Google Sign-Up is not configured for this project. Please create your FreelanceHub account using your name, email, role, and password."
     );
 
 }
