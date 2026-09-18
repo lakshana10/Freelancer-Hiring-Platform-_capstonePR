@@ -129,6 +129,56 @@
 
 
                 <!-- ===============================
+                     OTP
+                ================================ -->
+
+                <div class="input-group">
+
+                    <label for="otp">
+                        Email Verification OTP
+                    </label>
+
+
+                    <div class="otp-box">
+
+                        <input
+                            type="text"
+                            id="otp"
+                            placeholder="Enter 6-digit OTP"
+                            maxlength="6"
+                            inputmode="numeric"
+                        >
+
+
+                        <button
+                            type="button"
+                            id="generateOtpBtn"
+                        >
+                            Get OTP
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="verifyOtpBtn"
+                        class="verify-otp-btn"
+                    >
+                        Verify OTP
+                    </button>
+
+
+                    <p
+                        id="otpMessage"
+                        class="otp-message"
+                    ></p>
+
+                </div>
+
+
+
+                <!-- ===============================
                      JOIN AS
                 ================================ -->
 
@@ -331,6 +381,7 @@
                 <button
                     type="submit"
                     class="create-btn"
+                    id="createAccountBtn"
                 >
 
                     Create Account
