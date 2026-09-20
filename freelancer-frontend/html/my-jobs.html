@@ -3,193 +3,645 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Jobs - FreelanceHub</title>
+<title>My Jobs - FreelanceHub</title>
 
-    <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 
-    <style>
+<style>
 
-        .my-jobs-page {
-            min-height: 80vh;
-            padding: 50px 8%;
-        }
+.my-jobs-page {
+    min-height: 80vh;
+    padding: 50px 8%;
+}
 
-        .page-header {
-            margin-bottom: 30px;
-        }
+.page-header {
+    margin-bottom: 30px;
+}
 
-        .page-header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 8px;
-        }
+.page-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 8px;
+}
 
-        .page-header h1 {
-            margin-bottom: 8px;
-        }
+.page-header h1 {
+    margin-bottom: 8px;
+}
 
-        .page-header p {
-            color: #666;
-        }
+.page-header p {
+    color: #666;
+}
 
-        .post-job-btn {
-            background: #6845e8;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 9px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            white-space: nowrap;
-        }
+.post-job-btn {
+    background: #6845e8;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
 
-        .post-job-btn:hover {
-            background: #5635c9;
-        }
+.post-job-btn:hover {
+    background: #5635c9;
+}
 
-        .back-btn {
-            display: inline-block;
-            margin-bottom: 25px;
-            text-decoration: none;
-            color: #5b3cc4;
-            font-weight: 600;
-        }
+.back-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: #5b3cc4;
+    font-weight: 600;
+}
 
-        .back-btn:hover {
-            color: #6845e8;
-        }
+.back-btn:hover {
+    color: #6845e8;
+}
 
-        #jobsContainer {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(280px, 1fr)
-            );
-            gap: 25px;
-        }
+#jobsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
 
-        .job-card {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-        }
+.job-card {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
 
-        .job-card h2 {
-            margin-bottom: 12px;
-        }
+.job-card h2 {
+    margin-bottom: 12px;
+}
 
-        .job-card p {
-            color: #666;
-            line-height: 1.6;
-        }
+.job-card p {
+    color: #666;
+    line-height: 1.6;
+}
 
-        .job-info {
-            margin-top: 18px;
-        }
+.job-info {
+    margin-top: 18px;
+}
 
-        .job-info strong {
-            display: block;
-            margin-bottom: 6px;
-        }
+.job-info strong {
+    display: block;
+    margin-bottom: 6px;
+}
 
-        .job-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
+.job-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
 
-        .edit-btn,
-        .delete-btn,
-        .view-applications-btn {
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
+.edit-btn,
+.delete-btn,
+.view-applications-btn {
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
 
-        .edit-btn {
-            background: #5b3cc4;
-            color: white;
-        }
+.edit-btn {
+    background: #5b3cc4;
+    color: white;
+}
 
-        .delete-btn {
-            background: #e74c3c;
-            color: white;
-        }
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+}
 
-        .view-applications-btn {
-            background: #2f80ed;
-            color: white;
-        }
+.view-applications-btn {
+    background: #2f80ed;
+    color: white;
+}
 
-        .edit-btn:hover,
-        .delete-btn:hover,
-        .view-applications-btn:hover {
-            opacity: 0.9;
-        }
+.edit-btn:hover,
+.delete-btn:hover,
+.view-applications-btn:hover {
+    opacity: 0.9;
+}
 
-        .empty-message {
-            text-align: center;
-            padding: 50px;
-            color: #666;
-        }
+.empty-message {
+    text-align: center;
+    padding: 50px;
+    color: #666;
+}
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-        }
+.loading {
+    text-align: center;
+    padding: 40px;
+}
 
-        @media (max-width: 700px) {
 
-            .my-jobs-page {
-                padding: 40px 5%;
-            }
+/* ===============================
+   NAVBAR
+================================ */
 
-            .page-header-top {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+.navbar {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-            .post-job-btn {
-                width: 100%;
-            }
+.navbar .logo {
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
 
-            .job-actions {
-                flex-direction: column;
-            }
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 
-            .edit-btn,
-            .delete-btn,
-            .view-applications-btn {
-                width: 100%;
-            }
+.navbar nav a {
+    text-decoration: none;
+    white-space: nowrap;
+}
 
-        }
+.navbar nav a.active {
+    font-weight: 700;
+}
 
-    </style>
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.logout-btn {
+    border: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f1f1f5;
+    color: #444;
+}
+
+.logout-btn:hover {
+    background: #e7e7ec;
+    color: #dc2626;
+}
+
+
+/* ===============================
+   APPLICATION MODAL
+================================ */
+
+.application-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9999;
+}
+
+.application-modal.active {
+    display: flex;
+}
+
+.application-modal-content {
+    width: 100%;
+    max-width: 850px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 15px;
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    cursor: pointer;
+    color: #555;
+}
+
+.modal-header {
+    padding-right: 40px;
+    margin-bottom: 25px;
+}
+
+.modal-header h2 {
+    margin-bottom: 7px;
+}
+
+.modal-header p {
+    color: #666;
+}
+
+.application-job-info {
+    background: #f5f4ff;
+    padding: 18px;
+    border-radius: 12px;
+    margin-bottom: 22px;
+}
+
+.application-job-info strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#applicationsList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.application-item {
+    border: 1px solid #e5e5e5;
+    border-radius: 13px;
+    padding: 18px;
+    background: #fff;
+}
+
+.application-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.application-item-header h3 {
+    margin: 0;
+}
+
+.application-email {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-accepted {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.application-item-info {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+.application-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.application-view-btn,
+.application-accept-btn,
+.application-reject-btn,
+.application-close-btn {
+    border: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.application-view-btn {
+    background: #6845e8;
+    color: white;
+}
+
+.application-accept-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.application-reject-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.application-close-btn {
+    background: #eeeeee;
+    color: #444;
+}
+
+.no-applications {
+    text-align: center;
+    padding: 35px 15px;
+    color: #666;
+}
+
+
+/* ===============================
+   DETAILS MODAL
+================================ */
+
+.details-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10000;
+}
+
+.details-modal.active {
+    display: flex;
+}
+
+.details-modal-content {
+    width: 100%;
+    max-width: 550px;
+    background: white;
+    border-radius: 18px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.details-close {
+    position: absolute;
+    right: 18px;
+    top: 12px;
+    border: none;
+    background: transparent;
+    font-size: 30px;
+    cursor: pointer;
+    color: #555;
+}
+
+.details-header {
+    margin-bottom: 25px;
+}
+
+.details-header h2 {
+    margin-bottom: 6px;
+}
+
+.details-header p {
+    color: #666;
+}
+
+.freelancer-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f5f4ff;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.freelancer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #6845e8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.freelancer-box h3 {
+    margin-bottom: 4px;
+}
+
+.freelancer-box p {
+    color: #666;
+    font-size: 14px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.detail-box {
+    background: #f8f8f8;
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.detail-label {
+    display: block;
+    color: #777;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-weight: 600;
+}
+
+.detail-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.detail-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.detail-actions button {
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    padding: 11px 15px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.detail-accept {
+    background: #16a34a;
+    color: white;
+}
+
+.detail-reject {
+    background: #dc2626;
+    color: white;
+}
+
+.detail-close {
+    background: #eeeeee;
+    color: #444;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width:1100px) {
+
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 15px 20px;
+    }
+
+    .navbar nav {
+        gap: 12px;
+    }
+
+}
+
+@media (max-width:700px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar nav {
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .my-jobs-page {
+        padding: 40px 5%;
+    }
+
+    .page-header-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-job-btn {
+        width: 100%;
+    }
+
+    .job-actions {
+        flex-direction: column;
+    }
+
+    .edit-btn,
+    .delete-btn,
+    .view-applications-btn {
+        width: 100%;
+    }
+
+    .application-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .application-modal-content,
+    .details-modal-content {
+        padding: 22px;
+    }
+
+}
+
+
+/* ===============================
+   DARK MODE
+================================ */
+
+body.dark .job-card,
+body.dark .application-modal-content,
+body.dark .details-modal-content,
+body.dark .application-item {
+    background: #1f1f2b;
+    color: white;
+}
+
+body.dark .job-card p,
+body.dark .page-header p,
+body.dark .application-email,
+body.dark .application-item-info,
+body.dark .modal-header p,
+body.dark .details-header p,
+body.dark .freelancer-box p {
+    color: #c7c7d1;
+}
+
+body.dark .application-job-info,
+body.dark .freelancer-box {
+    background: #29293a;
+}
+
+body.dark .detail-box {
+    background: #29293a;
+}
+
+body.dark .application-item {
+    border-color: #3d3d4d;
+}
+
+</style>
 
 </head>
-
 
 <body>
 
 
 <!-- ===============================
-     NAVBAR
-=============================== -->
+     CLIENT NAVBAR
+================================ -->
 
 <header class="navbar">
 
-    <div class="logo">
+    <a href="client-dashboard.html" class="logo">
 
         <span class="logo-icon">✣</span>
 
@@ -197,68 +649,58 @@
             Freelance<span>Hub</span>
         </span>
 
-    </div>
-
+    </a>
 
     <nav>
 
-        <a href="home.html">
-            Home
+        <a href="client-dashboard.html">
+            Dashboard
         </a>
 
-        <a href="jobs.html">
-            Find Jobs
+        <a href="post-job.html">
+            Post Job
         </a>
 
-        <a href="my-applications.html">
-            My Applications
-        </a>
-
-        <a
-            href="my-jobs.html"
-            class="active">
+        <a href="my-jobs.html" class="active">
             My Jobs
+        </a>
+
+        <a href="applications-client.html">
+            Applications Received
+        </a>
+
+        <a href="client-contracts.html">
+            My Contracts
+        </a>
+
+        <a href="my-payments.html">
+            My Payments
+        </a>
+
+        <a href="my-reviews.html">
+            My Reviews
         </a>
 
         <a href="profile.html">
             My Profile
         </a>
 
-        <a href="freelancers.html">
-            Freelancers
-        </a>
-
-        <a href="home.html#categories">
-            Categories
-        </a>
-
-        <a href="home.html#how-it-works">
-            How It Works
-        </a>
-
     </nav>
-
 
     <div class="nav-actions">
 
         <button
+            type="button"
             class="icon-btn"
             id="themeBtn">
             ☾
         </button>
 
-
         <button
-            class="login-btn"
-            onclick="window.location.href='login.html'">
-            Login
-        </button>
-
-
-        <button
-            class="signup-btn"
-            onclick="window.location.href='signup.html'">
-            Sign Up →
+            type="button"
+            class="logout-btn"
+            onclick="logoutUser()">
+            Logout
         </button>
 
     </div>
@@ -266,22 +708,17 @@
 </header>
 
 
-
 <!-- ===============================
      MY JOBS
-=============================== -->
+================================ -->
 
 <section class="my-jobs-page">
 
-
     <a
-        href="home.html"
+        href="client-dashboard.html"
         class="back-btn">
-
-        ← Back to Home
-
+        ← Back to Dashboard
     </a>
-
 
     <div class="page-header">
 
@@ -299,21 +736,15 @@
 
             </div>
 
-
-            <!-- POST JOB BUTTON -->
-
             <button
                 class="post-job-btn"
                 onclick="window.location.href='post-job.html'">
-
                 + Post a Job
-
             </button>
 
         </div>
 
     </div>
-
 
     <div id="jobsContainer">
 
@@ -326,10 +757,218 @@
 </section>
 
 
+<!-- ===============================
+     APPLICATION LIST MODAL
+================================ -->
+
+<div
+    id="applicationModal"
+    class="application-modal">
+
+    <div
+        class="application-modal-content"
+        onclick="event.stopPropagation()">
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeApplicationModal()">
+            ×
+        </button>
+
+        <div class="modal-header">
+
+            <h2>
+                👥 Job Applications
+            </h2>
+
+            <p>
+                Review the freelancers who applied for this job.
+            </p>
+
+        </div>
+
+        <div class="application-job-info">
+
+            <strong>
+                Job:
+                <span id="modalJobTitle">-</span>
+            </strong>
+
+            <strong>
+                Job ID:
+                <span id="modalJobId">-</span>
+            </strong>
+
+            <strong>
+                Budget:
+                ₹<span id="modalJobBudget">-</span>
+            </strong>
+
+        </div>
+
+        <div id="applicationsList">
+
+            <div class="loading">
+                Loading applications...
+            </div>
+
+        </div>
+
+        <div style="margin-top:20px;text-align:right;">
+
+            <button
+                type="button"
+                class="application-close-btn"
+                onclick="closeApplicationModal()">
+                ✕ Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ===============================
+     APPLICATION DETAILS MODAL
+================================ -->
+
+<div
+    id="detailsModal"
+    class="details-modal">
+
+    <div
+        class="details-modal-content"
+        onclick="event.stopPropagation()">
+
+        <button
+            type="button"
+            class="details-close"
+            onclick="closeDetailsModal()">
+            ×
+        </button>
+
+        <div class="details-header">
+
+            <h2>
+                📋 Application Details
+            </h2>
+
+            <p>
+                Review this freelancer's application.
+            </p>
+
+        </div>
+
+        <div class="freelancer-box">
+
+            <div class="freelancer-avatar">
+                👤
+            </div>
+
+            <div>
+
+                <h3 id="detailFreelancer">
+                    Freelancer
+                </h3>
+
+                <p id="detailFreelancerEmail">
+                    -
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail-box">
+
+                <span class="detail-label">
+                    Application ID
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="detailApplicationId">
+                    -
+                </span>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span class="detail-label">
+                    Job ID
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="detailJobId">
+                    -
+                </span>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span class="detail-label">
+                    Job
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="detailJobTitle">
+                    -
+                </span>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span class="detail-label">
+                    Budget
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="detailBudget">
+                    -
+                </span>
+
+            </div>
+
+            <div class="detail-box">
+
+                <span class="detail-label">
+                    Status
+                </span>
+
+                <span
+                    class="detail-value detail-status"
+                    id="detailStatus">
+                    -
+                </span>
+
+            </div>
+
+        </div>
+
+        <div
+            id="detailActions"
+            class="detail-actions">
+        </div>
+
+    </div>
+
+</div>
+
 
 <!-- ===============================
      FOOTER
-=============================== -->
+================================ -->
 
 <footer>
 
@@ -348,12 +987,31 @@
 </footer>
 
 
-
 <script>
 
-/* =========================================
+/* =====================================================
+   API
+===================================================== */
+
+const API_BASE = "http://localhost:8080";
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutUser() {
+
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("userEmail");
+
+    window.location.href = "home.html";
+}
+
+
+/* =====================================================
    LOAD MY JOBS
-========================================= */
+===================================================== */
 
 async function loadMyJobs() {
 
@@ -369,18 +1027,12 @@ async function loadMyJobs() {
         document.getElementById("jobsContainer");
 
 
-    /* ===============================
-       LOGIN CHECK
-    =============================== */
-
     if (!userEmail || !loggedInUser) {
 
         container.innerHTML = `
             <div class="empty-message">
 
-                <h2>
-                    Please Login
-                </h2>
+                <h2>Please Login</h2>
 
                 <p>
                     You need to login to view your posted jobs.
@@ -403,10 +1055,6 @@ async function loadMyJobs() {
     }
 
 
-    /* ===============================
-       CLIENT CHECK
-    =============================== */
-
     if (
         !loggedInUser.role ||
         loggedInUser.role.toUpperCase() !== "CLIENT"
@@ -415,9 +1063,7 @@ async function loadMyJobs() {
         container.innerHTML = `
             <div class="empty-message">
 
-                <h2>
-                    Client Access Only
-                </h2>
+                <h2>Client Access Only</h2>
 
                 <p>
                     Only clients can view and manage posted jobs.
@@ -430,15 +1076,11 @@ async function loadMyJobs() {
     }
 
 
-    /* ===============================
-       LOAD JOBS
-    =============================== */
-
     try {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/jobs"
+                `${API_BASE}/api/jobs`
             );
 
 
@@ -455,20 +1097,12 @@ async function loadMyJobs() {
             await response.json();
 
 
-        /* ===============================
-           FILTER CLIENT JOBS
-        =============================== */
-
         const myJobs =
             jobs.filter(
                 job =>
                     job.clientEmail === userEmail
             );
 
-
-        /* ===============================
-           NO JOBS
-        =============================== */
 
         if (myJobs.length === 0) {
 
@@ -502,10 +1136,6 @@ async function loadMyJobs() {
         }
 
 
-        /* ===============================
-           DISPLAY JOBS
-        =============================== */
-
         container.innerHTML = "";
 
 
@@ -513,7 +1143,6 @@ async function loadMyJobs() {
 
             const card =
                 document.createElement("div");
-
 
             card.className =
                 "job-card";
@@ -525,16 +1154,14 @@ async function loadMyJobs() {
                     ${escapeHTML(job.title)}
                 </h2>
 
-
                 <p>
                     ${escapeHTML(job.description)}
                 </p>
 
-
                 <div class="job-info">
 
                     <strong>
-                        Budget: ₹${job.budget}
+                        Budget: ₹${escapeHTML(job.budget)}
                     </strong>
 
                     <strong>
@@ -542,7 +1169,7 @@ async function loadMyJobs() {
                     </strong>
 
                     <strong>
-                        Job ID: ${job.id}
+                        Job ID: ${escapeHTML(job.id)}
                     </strong>
 
                     <strong>
@@ -550,7 +1177,6 @@ async function loadMyJobs() {
                     </strong>
 
                 </div>
-
 
                 <div class="job-actions">
 
@@ -562,7 +1188,6 @@ async function loadMyJobs() {
 
                     </button>
 
-
                     <button
                         class="delete-btn"
                         onclick="deleteJob(${job.id})">
@@ -570,7 +1195,6 @@ async function loadMyJobs() {
                         🗑️ Delete
 
                     </button>
-
 
                     <button
                         class="view-applications-btn"
@@ -581,9 +1205,7 @@ async function loadMyJobs() {
                     </button>
 
                 </div>
-
             `;
-
 
             container.appendChild(card);
 
@@ -591,15 +1213,9 @@ async function loadMyJobs() {
 
     }
 
-
-    /* ===============================
-       ERROR
-    =============================== */
-
     catch (error) {
 
         console.error(error);
-
 
         container.innerHTML = `
 
@@ -624,18 +1240,14 @@ async function loadMyJobs() {
                 </button>
 
             </div>
-
         `;
-
     }
-
 }
 
 
-
-/* =========================================
+/* =====================================================
    ESCAPE HTML
-========================================= */
+===================================================== */
 
 function escapeHTML(text) {
 
@@ -646,20 +1258,17 @@ function escapeHTML(text) {
         text ?? "";
 
     return div.innerHTML;
-
 }
 
 
-
-/* =========================================
+/* =====================================================
    EDIT JOB
-========================================= */
+===================================================== */
 
 async function editJob(id) {
 
     const userEmail =
         localStorage.getItem("userEmail");
-
 
     const loggedInUser =
         JSON.parse(
@@ -679,7 +1288,6 @@ async function editJob(id) {
         );
 
         return;
-
     }
 
 
@@ -687,7 +1295,7 @@ async function editJob(id) {
 
         const jobsResponse =
             await fetch(
-                "http://localhost:8080/api/jobs"
+                `${API_BASE}/api/jobs`
             );
 
 
@@ -696,7 +1304,6 @@ async function editJob(id) {
             throw new Error(
                 "Unable to load job"
             );
-
         }
 
 
@@ -718,7 +1325,6 @@ async function editJob(id) {
             );
 
             return;
-
         }
 
 
@@ -731,7 +1337,6 @@ async function editJob(id) {
             );
 
             return;
-
         }
 
 
@@ -741,10 +1346,7 @@ async function editJob(id) {
                 job.title
             );
 
-
-        if (newTitle === null) {
-            return;
-        }
+        if (newTitle === null) return;
 
 
         const newDescription =
@@ -753,10 +1355,7 @@ async function editJob(id) {
                 job.description
             );
 
-
-        if (newDescription === null) {
-            return;
-        }
+        if (newDescription === null) return;
 
 
         const newBudget =
@@ -765,10 +1364,7 @@ async function editJob(id) {
                 job.budget
             );
 
-
-        if (newBudget === null) {
-            return;
-        }
+        if (newBudget === null) return;
 
 
         const newSkills =
@@ -777,10 +1373,7 @@ async function editJob(id) {
                 job.skills
             );
 
-
-        if (newSkills === null) {
-            return;
-        }
+        if (newSkills === null) return;
 
 
         if (
@@ -794,7 +1387,6 @@ async function editJob(id) {
             );
 
             return;
-
         }
 
 
@@ -808,13 +1400,12 @@ async function editJob(id) {
             );
 
             return;
-
         }
 
 
         const response =
             await fetch(
-                `http://localhost:8080/api/jobs/${id}`,
+                `${API_BASE}/api/jobs/${id}`,
                 {
                     method: "PUT",
 
@@ -839,7 +1430,6 @@ async function editJob(id) {
 
                         clientEmail:
                             userEmail
-
                     })
                 }
             );
@@ -850,7 +1440,6 @@ async function editJob(id) {
             throw new Error(
                 "Failed to update job"
             );
-
         }
 
 
@@ -858,36 +1447,29 @@ async function editJob(id) {
             "Job updated successfully! 🎉"
         );
 
-
         loadMyJobs();
 
     }
-
 
     catch (error) {
 
         console.error(error);
 
-
         alert(
             "Unable to update job. Please try again."
         );
-
     }
-
 }
 
 
-
-/* =========================================
+/* =====================================================
    DELETE JOB
-========================================= */
+===================================================== */
 
 async function deleteJob(id) {
 
     const userEmail =
         localStorage.getItem("userEmail");
-
 
     const loggedInUser =
         JSON.parse(
@@ -907,17 +1489,15 @@ async function deleteJob(id) {
         );
 
         return;
-
     }
 
 
-    const confirmDelete =
-        confirm(
+    if (
+        !confirm(
             "Are you sure you want to delete this job?"
-        );
+        )
+    ) {
 
-
-    if (!confirmDelete) {
         return;
     }
 
@@ -926,7 +1506,7 @@ async function deleteJob(id) {
 
         const jobsResponse =
             await fetch(
-                "http://localhost:8080/api/jobs"
+                `${API_BASE}/api/jobs`
             );
 
 
@@ -935,7 +1515,6 @@ async function deleteJob(id) {
             throw new Error(
                 "Unable to verify job"
             );
-
         }
 
 
@@ -957,7 +1536,6 @@ async function deleteJob(id) {
             );
 
             return;
-
         }
 
 
@@ -970,13 +1548,12 @@ async function deleteJob(id) {
             );
 
             return;
-
         }
 
 
         const response =
             await fetch(
-                `http://localhost:8080/api/jobs/${id}`,
+                `${API_BASE}/api/jobs/${id}`,
                 {
                     method: "DELETE"
                 }
@@ -988,7 +1565,6 @@ async function deleteJob(id) {
             throw new Error(
                 "Failed to delete job"
             );
-
         }
 
 
@@ -996,46 +1572,803 @@ async function deleteJob(id) {
             "Job deleted successfully! 🗑️"
         );
 
-
         loadMyJobs();
 
     }
-
 
     catch (error) {
 
         console.error(error);
 
-
         alert(
             "Unable to delete job. Please try again."
+        );
+    }
+}
+
+
+/* =====================================================
+   VIEW APPLICATIONS
+===================================================== */
+
+async function viewApplications(jobId) {
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+    const applicationsList =
+        document.getElementById(
+            "applicationsList"
+        );
+
+
+    modal.classList.add("active");
+
+    document.body.style.overflow = "hidden";
+
+
+    applicationsList.innerHTML = `
+        <div class="loading">
+            Loading applications...
+        </div>
+    `;
+
+
+    try {
+
+        /* =========================
+           LOAD APPLICATIONS FIRST
+        ========================= */
+
+        const applicationsResponse =
+            await fetch(
+                `${API_BASE}/applications`
+            );
+
+
+        if (!applicationsResponse.ok) {
+
+            throw new Error(
+                "Applications API failed with status " +
+                applicationsResponse.status
+            );
+        }
+
+
+        const applications =
+            await applicationsResponse.json();
+
+
+        console.log(
+            "Applications received:",
+            applications
+        );
+
+
+        /* =========================
+           LOAD JOB
+        ========================= */
+
+        const jobsResponse =
+            await fetch(
+                `${API_BASE}/api/jobs`
+            );
+
+
+        if (!jobsResponse.ok) {
+
+            throw new Error(
+                "Jobs API failed with status " +
+                jobsResponse.status
+            );
+        }
+
+
+        const jobs =
+            await jobsResponse.json();
+
+
+        const job =
+            jobs.find(
+                item =>
+                    String(item.id) ===
+                    String(jobId)
+            );
+
+
+        if (!job) {
+
+            applicationsList.innerHTML = `
+                <div class="no-applications">
+
+                    <h3>
+                        Job Not Found
+                    </h3>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        /* =========================
+           JOB INFORMATION
+        ========================= */
+
+        document.getElementById(
+            "modalJobTitle"
+        ).textContent =
+            job.title || "-";
+
+
+        document.getElementById(
+            "modalJobId"
+        ).textContent =
+            job.id || "-";
+
+
+        document.getElementById(
+            "modalJobBudget"
+        ).textContent =
+            job.budget || "-";
+
+
+        /* =========================
+           FILTER APPLICATIONS
+        ========================= */
+
+        const jobApplications =
+            applications.filter(
+                application =>
+                    String(application.jobId) ===
+                    String(jobId)
+            );
+
+
+        console.log(
+            "Applications for job " +
+            jobId +
+            ":",
+            jobApplications
+        );
+
+
+        if (jobApplications.length === 0) {
+
+            applicationsList.innerHTML = `
+                <div class="no-applications">
+
+                    <h3>
+                        No Applications Yet
+                    </h3>
+
+                    <p>
+                        No freelancers have applied for this job.
+                    </p>
+
+                </div>
+            `;
+
+            return;
+        }
+
+
+        applicationsList.innerHTML = "";
+
+
+        jobApplications.forEach(
+            application => {
+
+                const status =
+                    application.status ||
+                    "Pending";
+
+
+                const lowerStatus =
+                    status.toLowerCase();
+
+
+                const statusClass =
+                    lowerStatus === "accepted"
+                        ? "status-accepted"
+                        : lowerStatus === "rejected"
+                            ? "status-rejected"
+                            : "status-pending";
+
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "application-item";
+
+
+                item.innerHTML = `
+
+                    <div class="application-item-header">
+
+                        <div>
+
+                            <h3>
+                                👤 ${escapeHTML(
+                                    application.freelancerEmail ||
+                                    "Unknown Freelancer"
+                                )}
+                            </h3>
+
+                            <div class="application-email">
+
+                                Application
+                                #${escapeHTML(application.id)}
+
+                            </div>
+
+                        </div>
+
+
+                        <span
+                            class="status-badge ${statusClass}">
+
+                            ${escapeHTML(status)}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="application-item-info">
+
+                        <div>
+
+                            <strong>Job:</strong>
+                            ${escapeHTML(job.title)}
+
+                        </div>
+
+
+                        <div>
+
+                            <strong>Budget:</strong>
+                            ₹${escapeHTML(job.budget)}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="application-item-actions">
+
+                        <button
+                            type="button"
+                            class="application-view-btn"
+                            onclick="viewApplicationDetails(
+                                ${application.id},
+                                ${job.id}
+                            )">
+
+                            👁 View
+
+                        </button>
+
+
+                        ${
+                            lowerStatus === "pending"
+                            ? `
+
+                                <button
+                                    type="button"
+                                    class="application-accept-btn"
+                                    onclick="updateApplicationStatus(
+                                        ${application.id},
+                                        'Accepted'
+                                    )">
+
+                                    ✅ Accept
+
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="application-reject-btn"
+                                    onclick="updateApplicationStatus(
+                                        ${application.id},
+                                        'Rejected'
+                                    )">
+
+                                    ❌ Reject
+
+                                </button>
+
+                            `
+                            : ""
+                        }
+
+                    </div>
+
+                `;
+
+
+                applicationsList.appendChild(
+                    item
+                );
+
+            }
         );
 
     }
 
+    catch (error) {
+
+        console.error(
+            "Application loading error:",
+            error
+        );
+
+
+        applicationsList.innerHTML = `
+
+            <div class="no-applications">
+
+                <h3>
+                    Unable to Load Applications
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        error.message ||
+                        "Unknown error"
+                    )}
+                </p>
+
+                <br>
+
+                <button
+                    class="edit-btn"
+                    onclick="viewApplications(${jobId})">
+
+                    Try Again
+
+                </button>
+
+            </div>
+
+        `;
+    }
 }
 
 
+/* =====================================================
+   VIEW APPLICATION DETAILS
+===================================================== */
 
-/* =========================================
-   VIEW APPLICATIONS
-========================================= */
+async function viewApplicationDetails(
+    applicationId,
+    jobId
+) {
 
-function viewApplications(jobId) {
+    try {
 
-    window.location.href =
-        `applications-client.html?jobId=${jobId}`;
+        const response =
+            await fetch(
+                `${API_BASE}/applications`
+            );
 
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Applications API failed with status " +
+                response.status
+            );
+        }
+
+
+        const applications =
+            await response.json();
+
+
+        const application =
+            applications.find(
+                item =>
+                    String(item.id) ===
+                    String(applicationId)
+            );
+
+
+        if (!application) {
+
+            alert(
+                "Application not found."
+            );
+
+            return;
+        }
+
+
+        const jobsResponse =
+            await fetch(
+                `${API_BASE}/api/jobs`
+            );
+
+
+        if (!jobsResponse.ok) {
+
+            throw new Error(
+                "Jobs API failed with status " +
+                jobsResponse.status
+            );
+        }
+
+
+        const jobs =
+            await jobsResponse.json();
+
+
+        const job =
+            jobs.find(
+                item =>
+                    String(item.id) ===
+                    String(jobId)
+            );
+
+
+        if (!job) {
+
+            alert(
+                "Job not found."
+            );
+
+            return;
+        }
+
+
+        document.getElementById(
+            "detailFreelancer"
+        ).textContent =
+            "Freelancer";
+
+
+        document.getElementById(
+            "detailFreelancerEmail"
+        ).textContent =
+            application.freelancerEmail || "-";
+
+
+        document.getElementById(
+            "detailApplicationId"
+        ).textContent =
+            "#" + application.id;
+
+
+        document.getElementById(
+            "detailJobId"
+        ).textContent =
+            "#" + job.id;
+
+
+        document.getElementById(
+            "detailJobTitle"
+        ).textContent =
+            job.title || "-";
+
+
+        document.getElementById(
+            "detailBudget"
+        ).textContent =
+            "₹" + (job.budget || "0");
+
+
+        const status =
+            application.status ||
+            "Pending";
+
+
+        const lowerStatus =
+            status.toLowerCase();
+
+
+        const statusElement =
+            document.getElementById(
+                "detailStatus"
+            );
+
+
+        statusElement.textContent =
+            status;
+
+
+        statusElement.className =
+            "detail-value detail-status " +
+            (
+                lowerStatus === "accepted"
+                    ? "status-accepted"
+                    : lowerStatus === "rejected"
+                        ? "status-rejected"
+                        : "status-pending"
+            );
+
+
+        const actions =
+            document.getElementById(
+                "detailActions"
+            );
+
+
+        if (
+            lowerStatus === "pending"
+        ) {
+
+            actions.innerHTML = `
+
+                <button
+                    type="button"
+                    class="detail-accept"
+                    onclick="updateApplicationStatus(
+                        ${application.id},
+                        'Accepted',
+                        true
+                    )">
+
+                    ✅ Accept
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="detail-reject"
+                    onclick="updateApplicationStatus(
+                        ${application.id},
+                        'Rejected',
+                        true
+                    )">
+
+                    ❌ Reject
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="detail-close"
+                    onclick="closeDetailsModal()">
+
+                    ✕ Close
+
+                </button>
+
+            `;
+
+        }
+
+        else {
+
+            actions.innerHTML = `
+
+                <button
+                    type="button"
+                    class="detail-close"
+                    onclick="closeDetailsModal()">
+
+                    ✕ Close
+
+                </button>
+
+            `;
+        }
+
+
+        document
+            .getElementById("detailsModal")
+            .classList
+            .add("active");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Application details error:",
+            error
+        );
+
+        alert(
+            "Unable to load application details."
+        );
+    }
 }
 
 
+/* =====================================================
+   UPDATE APPLICATION STATUS
+===================================================== */
 
-/* =========================================
+async function updateApplicationStatus(
+    applicationId,
+    newStatus,
+    fromDetailsModal = false
+) {
+
+    const confirmAction =
+        confirm(
+            `Are you sure you want to mark this application as ${newStatus}?`
+        );
+
+
+    if (!confirmAction) {
+        return;
+    }
+
+
+    const currentJobId =
+        document.getElementById(
+            "modalJobId"
+        ).textContent;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE}/applications/${applicationId}/status?status=${encodeURIComponent(newStatus)}`,
+                {
+                    method: "PUT"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Failed to update application. Status: " +
+                response.status
+            );
+        }
+
+
+        alert(
+            `Application ${newStatus.toLowerCase()} successfully!`
+        );
+
+
+        if (fromDetailsModal) {
+            closeDetailsModal();
+        }
+
+
+        closeApplicationModal();
+
+
+        if (
+            currentJobId &&
+            currentJobId !== "-"
+        ) {
+
+            await viewApplications(
+                currentJobId
+            );
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to update application status."
+        );
+    }
+}
+
+
+/* =====================================================
+   CLOSE APPLICATION MODAL
+===================================================== */
+
+function closeApplicationModal() {
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+
+    if (
+        !document
+            .getElementById("detailsModal")
+            .classList
+            .contains("active")
+    ) {
+
+        document.body.style.overflow =
+            "";
+    }
+}
+
+
+/* =====================================================
+   CLOSE DETAILS MODAL
+===================================================== */
+
+function closeDetailsModal() {
+
+    const modal =
+        document.getElementById(
+            "detailsModal"
+        );
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+
+    if (
+        !document
+            .getElementById("applicationModal")
+            .classList
+            .contains("active")
+    ) {
+
+        document.body.style.overflow =
+            "";
+    }
+}
+
+
+/* =====================================================
+   OUTSIDE CLICK
+===================================================== */
+
+document
+    .getElementById("applicationModal")
+    .addEventListener(
+        "click",
+        function() {
+
+            closeApplicationModal();
+
+        }
+    );
+
+
+document
+    .getElementById("detailsModal")
+    .addEventListener(
+        "click",
+        function() {
+
+            closeDetailsModal();
+
+        }
+    );
+
+
+/* =====================================================
    DARK MODE
-========================================= */
+===================================================== */
 
 const themeBtn =
-    document.getElementById("themeBtn");
+    document.getElementById(
+        "themeBtn"
+    );
 
 
 if (themeBtn) {
@@ -1058,7 +2391,9 @@ if (themeBtn) {
                 themeBtn.textContent =
                     "☀";
 
-            } else {
+            }
+
+            else {
 
                 themeBtn.textContent =
                     "☾";
@@ -1067,19 +2402,16 @@ if (themeBtn) {
 
         }
     );
-
 }
 
 
-
-/* =========================================
+/* =====================================================
    START
-========================================= */
+===================================================== */
 
 loadMyJobs();
 
 </script>
-
 
 </body>
 

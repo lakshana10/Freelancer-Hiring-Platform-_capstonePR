@@ -2,7 +2,9 @@ let allJobs = [];
 let selectedJobId = null;
 
 
-/* LOAD JOBS FROM DATABASE */
+/* =====================================================
+   LOAD JOBS FROM DATABASE
+===================================================== */
 
 async function loadJobs() {
 
@@ -17,47 +19,60 @@ async function loadJobs() {
 
         allJobs = await response.json();
 
-        console.log("Jobs from database:", allJobs);
+        console.log(
+            "Jobs from database:",
+            allJobs
+        );
 
         applyHomeFilters();
 
     } catch (error) {
 
-        console.error("Error:", error);
+        console.error(
+            "Error loading jobs:",
+            error
+        );
 
         const jobList =
             document.getElementById("jobList");
 
         if (jobList) {
 
-            jobList.innerHTML =
-                "<p>Unable to load jobs. Please check the backend.</p>";
+            jobList.innerHTML = `
+                <div class="job-card">
+                    <h3>Unable to load jobs</h3>
+                    <p>
+                        Please make sure the backend is running.
+                    </p>
+                </div>
+            `;
 
         }
 
     }
+
 }
 
 
-/* APPLY HOME PAGE SEARCH / CATEGORY / SELECTED JOB */
+/* =====================================================
+   APPLY HOME SEARCH / CATEGORY / SELECTED JOB
+===================================================== */
 
 function applyHomeFilters() {
 
     const params =
-        new URLSearchParams(window.location.search);
-
+        new URLSearchParams(
+            window.location.search
+        );
 
     const search =
         params.get("search");
 
-
     const category =
         params.get("category");
 
-
     selectedJobId =
         params.get("jobId");
-
 
     let filteredJobs =
         [...allJobs];
@@ -68,48 +83,60 @@ function applyHomeFilters() {
     if (selectedJobId) {
 
         filteredJobs =
-            filteredJobs.filter(function(job) {
+            filteredJobs.filter(
+                function(job) {
 
-                return String(job.id) ===
-                       String(selectedJobId);
+                    return String(job.id) ===
+                        String(selectedJobId);
 
-            });
+                }
+            );
 
     }
 
 
-    /* ================= HOME SEARCH ================= */
+    /* ================= SEARCH ================= */
 
     if (search) {
 
         const searchText =
-            search.toLowerCase().trim();
+            search
+                .toLowerCase()
+                .trim();
 
 
         filteredJobs =
-            filteredJobs.filter(function(job) {
+            filteredJobs.filter(
+                function(job) {
 
-                const jobText =
-                    (
-                        (job.title || "") + " " +
-                        (job.description || "") + " " +
-                        (job.skills || "")
-                    ).toLowerCase();
+                    const jobText =
+                        (
+                            (job.title || "") +
+                            " " +
+                            (job.description || "") +
+                            " " +
+                            (job.skills || "")
+                        ).toLowerCase();
 
 
-                return jobText.includes(searchText);
+                    return jobText.includes(
+                        searchText
+                    );
 
-            });
+                }
+            );
 
     }
 
 
-    /* ================= HOME CATEGORY ================= */
+    /* ================= CATEGORY ================= */
 
     if (category) {
 
         const categoryText =
-            category.toLowerCase().trim();
+            category
+                .toLowerCase()
+                .trim();
 
 
         const categoryKeywords = {
@@ -127,6 +154,14 @@ function applyHomeFilters() {
                 "ux",
                 "figma",
                 "design"
+            ],
+
+            "mobile development": [
+                "android",
+                "mobile",
+                "flutter",
+                "firebase",
+                "app"
             ],
 
             "content writing": [
@@ -157,37 +192,52 @@ function applyHomeFilters() {
 
 
         filteredJobs =
-            filteredJobs.filter(function(job) {
+            filteredJobs.filter(
+                function(job) {
 
-                const jobText =
-                    (
-                        (job.title || "") + " " +
-                        (job.description || "") + " " +
-                        (job.skills || "")
-                    ).toLowerCase();
+                    const jobText =
+                        (
+                            (job.title || "") +
+                            " " +
+                            (job.description || "") +
+                            " " +
+                            (job.skills || "")
+                        ).toLowerCase();
 
 
-                return keywords.some(function(keyword) {
+                    return keywords.some(
+                        function(keyword) {
 
-                    return jobText.includes(keyword);
+                            return jobText.includes(
+                                keyword
+                            );
 
-                });
+                        }
+                    );
 
-            });
+                }
+            );
 
     }
 
 
-    displayJobs(filteredJobs);
+    displayJobs(
+        filteredJobs
+    );
 
 
-    /* SHOW SEARCH IN SEARCH BOX */
+    /* ================= SHOW SEARCH VALUE ================= */
 
     const jobSearch =
-        document.getElementById("jobSearch");
+        document.getElementById(
+            "jobSearch"
+        );
 
 
-    if (jobSearch && search) {
+    if (
+        jobSearch &&
+        search
+    ) {
 
         jobSearch.value =
             search;
@@ -197,27 +247,37 @@ function applyHomeFilters() {
 }
 
 
-/* SEARCH JOBS */
+/* =====================================================
+   SEARCH JOBS
+===================================================== */
 
-async function searchJobs() {
+function searchJobs() {
 
     const keywordElement =
-        document.getElementById("jobSearch");
+        document.getElementById(
+            "jobSearch"
+        );
 
 
     const locationElement =
-        document.getElementById("locationSearch");
+        document.getElementById(
+            "locationSearch"
+        );
 
 
     const keyword =
         keywordElement
-            ? keywordElement.value.trim().toLowerCase()
+            ? keywordElement.value
+                .trim()
+                .toLowerCase()
             : "";
 
 
     const location =
         locationElement
-            ? locationElement.value.trim().toLowerCase()
+            ? locationElement.value
+                .trim()
+                .toLowerCase()
             : "";
 
 
@@ -226,7 +286,9 @@ async function searchJobs() {
         location === ""
     ) {
 
-        displayJobs(allJobs);
+        displayJobs(
+            allJobs
+        );
 
         return;
 
@@ -234,40 +296,60 @@ async function searchJobs() {
 
 
     const filteredJobs =
-        allJobs.filter(function(job) {
+        allJobs.filter(
+            function(job) {
 
-            const jobText =
-                (
-                    (job.title || "") + " " +
-                    (job.description || "") + " " +
-                    (job.skills || "")
-                ).toLowerCase();
-
-
-            return (
-
-                (keyword === "" ||
-                    jobText.includes(keyword)) &&
-
-                (location === "" ||
-                    jobText.includes(location))
-
-            );
-
-        });
+                const jobText =
+                    (
+                        (job.title || "") +
+                        " " +
+                        (job.description || "") +
+                        " " +
+                        (job.skills || "")
+                    ).toLowerCase();
 
 
-    displayJobs(filteredJobs);
+                return (
+
+                    (
+                        keyword === "" ||
+                        jobText.includes(
+                            keyword
+                        )
+                    )
+
+                    &&
+
+                    (
+                        location === "" ||
+                        jobText.includes(
+                            location
+                        )
+                    )
+
+                );
+
+            }
+        );
+
+
+    displayJobs(
+        filteredJobs
+    );
 
 }
 
 
-/* DISPLAY JOBS */
+/* =====================================================
+   DISPLAY JOBS
+===================================================== */
 
 function displayJobs(jobs) {
 
     const jobList =
-        document.getElementById("jobList");
+        document.getElementById(
+            "jobList"
+        );
 
 
     if (!jobList) {
@@ -278,13 +360,25 @@ function displayJobs(jobs) {
     jobList.innerHTML = "";
 
 
-    if (jobs.length === 0) {
+    if (
+        !jobs ||
+        jobs.length === 0
+    ) {
 
         jobList.innerHTML = `
+
             <div class="job-card">
-                <h3>No jobs found</h3>
-                <p>Try another keyword or location.</p>
+
+                <h3>
+                    No jobs found
+                </h3>
+
+                <p>
+                    Try another keyword or location.
+                </p>
+
             </div>
+
         `;
 
         return;
@@ -292,188 +386,419 @@ function displayJobs(jobs) {
     }
 
 
-    jobs.forEach(function(job) {
+    jobs.forEach(
+        function(job) {
 
-        const jobCard =
-            document.createElement("article");
+            const jobCard =
+                document.createElement(
+                    "article"
+                );
 
 
-        jobCard.className =
-            "job-card";
+            jobCard.className =
+                "job-card";
 
 
-        jobCard.innerHTML = `
+            const jobTitle =
+                String(
+                    job.title ||
+                    "Untitled Job"
+                );
 
-            <div class="job-top">
 
-                <div class="company-logo">
-                    ${(job.title || "J")
-                        .charAt(0)
-                        .toUpperCase()}
+            const jobDescription =
+                String(
+                    job.description ||
+                    "No description available."
+                );
+
+
+            const clientEmail =
+                String(
+                    job.clientEmail ||
+                    "N/A"
+                );
+
+
+            const budget =
+                Number(
+                    job.budget || 0
+                ).toLocaleString(
+                    "en-IN"
+                );
+
+
+            jobCard.innerHTML = `
+
+                <div class="job-top">
+
+                    <div class="company-logo">
+
+                        ${jobTitle
+                            .charAt(0)
+                            .toUpperCase()}
+
+                    </div>
+
+
+                    <div class="job-title">
+
+                        <span class="job-type">
+                            AVAILABLE
+                        </span>
+
+
+                        <h3>
+                            ${jobTitle}
+                        </h3>
+
+
+                        <p>
+                            Web Development • Available Now
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="save-job">
+
+                        ♡
+
+                    </button>
+
                 </div>
 
-                <div class="job-title">
 
-                    <span class="job-type">
-                        AVAILABLE
-                    </span>
+                <p class="job-description">
 
-                    <h3>
-                        ${job.title || "Untitled Job"}
-                    </h3>
+                    ${jobDescription}
 
-                    <p>
-                        Web Development • Available Now
-                    </p>
-
-                </div>
-
-                <button class="save-job">
-                    ♡
-                </button>
-
-            </div>
+                </p>
 
 
-            <p class="job-description">
-                ${job.description || "No description available."}
-            </p>
+                <div class="skills">
 
-
-            <div class="skills">
-                ${createSkills(job.skills)}
-            </div>
-
-
-            <div class="job-bottom">
-
-                <div class="budget">
-
-                    <strong>
-                        ₹${Number(job.budget)
-                            .toLocaleString("en-IN")}
-                    </strong>
-
-                    <span>
-                        Fixed Price
-                    </span>
+                    ${createSkills(
+                        job.skills
+                    )}
 
                 </div>
 
 
-                <div class="applications">
-                    Client: ${job.clientEmail || "N/A"}
+                <div class="job-bottom">
+
+
+                    <div class="budget">
+
+                        <strong>
+                            ₹${budget}
+                        </strong>
+
+
+                        <span>
+                            Fixed Price
+                        </span>
+
+                    </div>
+
+
+                    <div class="applications">
+
+                        Client:
+                        ${clientEmail}
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="apply-btn">
+
+                        Apply Now →
+
+                    </button>
+
+
                 </div>
 
-
-                <button
-                    class="apply-btn"
-                    onclick="applyJob(
-                        ${job.id},
-                        '${String(job.title || "")
-                            .replace(/'/g, "\\'")}'
-                    )">
-
-                    Apply Now →
-
-                </button>
-
-            </div>
-
-        `;
+            `;
 
 
-        jobList.appendChild(jobCard);
-
-    });
-
-
-    /* SAVE BUTTONS */
-
-    document
-        .querySelectorAll(".save-job")
-        .forEach(function(button) {
-
-            button.addEventListener(
-                "click",
-                function() {
-
-                    if (
-                        button.textContent.trim() === "♡"
-                    ) {
-
-                        button.textContent = "♥";
-
-                        button.style.color =
-                            "#6845e8";
-
-                    } else {
-
-                        button.textContent = "♡";
-
-                        button.style.color =
-                            "#888";
-
-                    }
-
-                }
+            jobList.appendChild(
+                jobCard
             );
 
-        });
+
+            /* =================================================
+               APPLY BUTTON
+            ================================================= */
+
+            const applyButton =
+                jobCard.querySelector(
+                    ".apply-btn"
+                );
+
+
+            if (applyButton) {
+
+                applyButton.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        console.log(
+                            "Apply clicked:",
+                            job.id,
+                            jobTitle
+                        );
+
+
+                        applyJob(
+                            job.id,
+                            jobTitle
+                        );
+
+                    }
+                );
+
+            }
+
+
+            /* =================================================
+               SAVE BUTTON
+            ================================================= */
+
+            const saveButton =
+                jobCard.querySelector(
+                    ".save-job"
+                );
+
+
+            if (saveButton) {
+
+                saveButton.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+
+                        if (
+                            saveButton
+                                .textContent
+                                .trim()
+                            === "♡"
+                        ) {
+
+                            saveButton.textContent =
+                                "♥";
+
+
+                            saveButton.style.color =
+                                "#6845e8";
+
+                        }
+
+                        else {
+
+                            saveButton.textContent =
+                                "♡";
+
+
+                            saveButton.style.color =
+                                "#888";
+
+                        }
+
+                    }
+                );
+
+            }
+
+        }
+    );
 
 }
 
 
-/* CREATE SKILL TAGS */
+/* =====================================================
+   CREATE SKILL TAGS
+===================================================== */
 
 function createSkills(skills) {
 
     if (!skills) {
+
         return "";
+
     }
 
 
-    return skills
+    return String(skills)
         .split(",")
-        .map(function(skill) {
+        .map(
+            function(skill) {
 
-            return `
-                <span>
-                    ${skill.trim()}
-                </span>
-            `;
+                return `
 
-        })
+                    <span>
+                        ${skill.trim()}
+                    </span>
+
+                `;
+
+            }
+        )
         .join("");
 
 }
 
 
-/* APPLY JOB */
+/* =====================================================
+   GET LOGGED-IN USER EMAIL
+===================================================== */
 
-async function applyJob(jobId, jobName) {
+function getLoggedInUserEmail() {
 
-    try {
+    /* ================= CHECK userEmail ================= */
 
-        const userEmail =
-            localStorage.getItem("userEmail");
-
-
-        if (!userEmail) {
-
-            alert(
-                "Please login before applying for a job."
-            );
+    let email =
+        localStorage.getItem(
+            "userEmail"
+        );
 
 
-            window.location.href =
-                "login.html";
+    if (email) {
+
+        return email;
+
+    }
 
 
-            return;
+    /* ================= CHECK loggedInUser ================= */
+
+    const loggedInUser =
+        localStorage.getItem(
+            "loggedInUser"
+        );
+
+
+    if (loggedInUser) {
+
+        try {
+
+            const user =
+                JSON.parse(
+                    loggedInUser
+                );
+
+
+            email =
+                user.email ||
+                user.userEmail ||
+                "";
+
+
+            if (email) {
+
+                localStorage.setItem(
+                    "userEmail",
+                    email
+                );
+
+
+                return email;
+
+            }
 
         }
 
+        catch (error) {
+
+            console.error(
+                "Invalid loggedInUser data:",
+                error
+            );
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+   APPLY FOR JOB
+===================================================== */
+
+async function applyJob(
+    jobId,
+    jobName
+) {
+
+    console.log(
+        "================================="
+    );
+
+
+    console.log(
+        "APPLY JOB FUNCTION CALLED"
+    );
+
+
+    console.log(
+        "Job ID:",
+        jobId
+    );
+
+
+    console.log(
+        "Job Name:",
+        jobName
+    );
+
+
+    /* ================= GET USER EMAIL ================= */
+
+    const userEmail =
+        getLoggedInUserEmail();
+
+
+    console.log(
+        "Logged-in email:",
+        userEmail
+    );
+
+
+    /* ================= NOT LOGGED IN ================= */
+
+    if (!userEmail) {
+
+        showApplicationModal(
+            "Login Required",
+            "Please login before applying for a job."
+        );
+
+
+        return;
+
+    }
+
+
+    try {
+
+        /* ================= SEND APPLICATION ================= */
 
         const response =
             await fetch(
@@ -483,8 +808,12 @@ async function applyJob(jobId, jobName) {
                     method: "POST",
 
                     headers: {
-                        "Content-Type": "application/json"
+
+                        "Content-Type":
+                            "application/json"
+
                     },
+
 
                     body: JSON.stringify({
 
@@ -492,7 +821,7 @@ async function applyJob(jobId, jobName) {
                             userEmail,
 
                         jobId:
-                            jobId,
+                            Number(jobId),
 
                         jobTitle:
                             jobName
@@ -503,34 +832,59 @@ async function applyJob(jobId, jobName) {
             );
 
 
-        if (!response.ok) {
-
-            const errorText =
-                await response.text();
+        const responseText =
+            await response.text();
 
 
-            throw new Error(
-                errorText ||
-                "Application failed"
+        console.log(
+            "Backend status:",
+            response.status
+        );
+
+
+        console.log(
+            "Backend response:",
+            responseText
+        );
+
+
+        /* ================= SUCCESS ================= */
+
+        if (response.ok) {
+
+            showApplicationModal(
+                "Application Submitted",
+                "Your application has been submitted successfully!"
             );
+
+
+            return;
 
         }
 
 
-        alert(
-            "Application submitted successfully!"
+        /* ================= BACKEND ERROR ================= */
+
+        throw new Error(
+            responseText ||
+            "Application failed."
         );
 
+    }
 
-    } catch (error) {
 
-        alert(
-            error.message
-        );
-
+    catch (error) {
 
         console.error(
+            "Application error:",
             error
+        );
+
+
+        showApplicationModal(
+            "Application Status",
+            error.message ||
+            "Unable to submit application."
         );
 
     }
@@ -538,7 +892,91 @@ async function applyJob(jobId, jobName) {
 }
 
 
-/* CLEAR FILTERS */
+/* =====================================================
+   APPLICATION POPUP
+===================================================== */
+
+function showApplicationModal(
+    title,
+    message
+) {
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+
+    const titleElement =
+        document.getElementById(
+            "applicationModalTitle"
+        );
+
+
+    const messageElement =
+        document.getElementById(
+            "applicationModalMessage"
+        );
+
+
+    /* ================= SAFETY FALLBACK ================= */
+
+    if (!modal) {
+
+        alert(message);
+
+        return;
+
+    }
+
+
+    if (titleElement) {
+
+        titleElement.textContent =
+            title;
+
+    }
+
+
+    if (messageElement) {
+
+        messageElement.textContent =
+            message;
+
+    }
+
+
+    modal.style.display =
+        "flex";
+
+}
+
+
+/* =====================================================
+   CLOSE APPLICATION POPUP
+===================================================== */
+
+function closeApplicationModal() {
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+
+    if (modal) {
+
+        modal.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   CLEAR FILTERS
+===================================================== */
 
 function clearFilters() {
 
@@ -558,21 +996,57 @@ function clearFilters() {
     );
 
 
-    displayJobs(allJobs);
+    const jobSearch =
+        document.getElementById(
+            "jobSearch"
+        );
+
+
+    const locationSearch =
+        document.getElementById(
+            "locationSearch"
+        );
+
+
+    if (jobSearch) {
+
+        jobSearch.value =
+            "";
+
+    }
+
+
+    if (locationSearch) {
+
+        locationSearch.value =
+            "";
+
+    }
+
+
+    displayJobs(
+        allJobs
+    );
 
 }
 
 
-/* SORT JOBS */
+/* =====================================================
+   SORT JOBS
+===================================================== */
 
 function sortJobs() {
 
     const sortElement =
-        document.getElementById("sortJobs");
+        document.getElementById(
+            "sortJobs"
+        );
 
 
     if (!sortElement) {
+
         return;
+
     }
 
 
@@ -584,13 +1058,24 @@ function sortJobs() {
         [...allJobs];
 
 
-    if (value === "budget") {
+    /* ================= HIGHEST BUDGET ================= */
+
+    if (
+        value === "budget"
+    ) {
 
         sortedJobs.sort(
             function(a, b) {
 
-                return Number(b.budget) -
-                       Number(a.budget);
+                return (
+                    Number(
+                        b.budget || 0
+                    ) -
+
+                    Number(
+                        a.budget || 0
+                    )
+                );
 
             }
         );
@@ -598,12 +1083,51 @@ function sortJobs() {
     }
 
 
-    displayJobs(sortedJobs);
+    /* ================= MOST APPLICATIONS ================= */
+
+    else if (
+        value === "applications"
+    ) {
+
+        sortedJobs.sort(
+            function(a, b) {
+
+                return (
+                    Number(
+                        b.applicationCount || 0
+                    ) -
+
+                    Number(
+                        a.applicationCount || 0
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ================= MOST RECENT ================= */
+
+    else {
+
+        sortedJobs =
+            [...allJobs];
+
+    }
+
+
+    displayJobs(
+        sortedJobs
+    );
 
 }
 
 
-/* LOAD JOBS WHEN PAGE OPENS */
+/* =====================================================
+   PAGE LOAD
+===================================================== */
 
 document.addEventListener(
     "DOMContentLoaded",

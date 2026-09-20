@@ -87,6 +87,91 @@
             font-weight: 600;
         }
 
+        /* CLIENT NAVBAR */
+
+        .navbar {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar .logo {
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .navbar nav a.active {
+            font-weight: 700;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            background: #f1f1f5;
+            color: #444;
+        }
+
+        .logout-btn:hover {
+            background: #e7e7ec;
+            color: #dc2626;
+        }
+
+        @media (max-width: 1100px) {
+
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 15px 20px;
+            }
+
+            .navbar nav {
+                gap: 12px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar nav {
+                justify-content: center;
+                gap: 10px;
+            }
+
+        }
+
     </style>
 
 </head>
@@ -95,13 +180,13 @@
 <body>
 
 
-<!-- ===============================
-     NAVBAR
-=============================== -->
+<!-- =====================================================
+     CLIENT NAVBAR
+===================================================== -->
 
 <header class="navbar">
 
-    <div class="logo">
+    <a href="client-dashboard.html" class="logo">
 
         <span class="logo-icon">✣</span>
 
@@ -109,45 +194,41 @@
             Freelance<span>Hub</span>
         </span>
 
-    </div>
+    </a>
 
 
     <nav>
 
-        <a href="home.html">
-            Home
+        <a href="client-dashboard.html">
+            Dashboard
         </a>
 
-        <a href="jobs.html">
-            Find Jobs
-        </a>
-
-        <a href="my-applications.html">
-            My Applications
+        <a href="post-job.html" class="active">
+            Post Job
         </a>
 
         <a href="my-jobs.html">
             My Jobs
         </a>
 
+        <a href="applications-client.html">
+            Applications Received
+        </a>
+
+        <a href="client-contracts.html">
+            My Contracts
+        </a>
+
+        <a href="my-payments.html">
+            My Payments
+        </a>
+
+        <a href="my-reviews.html">
+            My Reviews
+        </a>
+
         <a href="profile.html">
             My Profile
-        </a>
-
-        <a href="freelancers.html">
-            Freelancers
-        </a>
-
-        <a href="home.html#categories">
-            Categories
-        </a>
-
-        <a href="home.html#how-it-works">
-            How It Works
-        </a>
-
-        <a href="home.html#pricing">
-            Pricing
         </a>
 
     </nav>
@@ -156,6 +237,7 @@
     <div class="nav-actions">
 
         <button
+            type="button"
             class="icon-btn"
             id="themeBtn">
 
@@ -165,19 +247,11 @@
 
 
         <button
-            class="login-btn"
-            onclick="window.location.href='login.html'">
+            type="button"
+            class="logout-btn"
+            onclick="logoutUser()">
 
-            Login
-
-        </button>
-
-
-        <button
-            class="signup-btn"
-            onclick="window.location.href='signup.html'">
-
-            Sign Up →
+            Logout
 
         </button>
 
@@ -187,9 +261,9 @@
 
 
 
-<!-- ===============================
+<!-- =====================================================
      POST JOB SECTION
-=============================== -->
+===================================================== -->
 
 <section class="post-job-page">
 
@@ -197,10 +271,10 @@
 
 
         <a
-            href="home.html"
+            href="client-dashboard.html"
             class="back-btn">
 
-            ← Back to Home
+            ← Back to Dashboard
 
         </a>
 
@@ -218,9 +292,9 @@
 
 
 
-        <!-- ===============================
+        <!-- =================================================
              JOB FORM
-        =============================== -->
+        ================================================= -->
 
         <form id="postJobForm">
 
@@ -320,9 +394,9 @@
 
 
 
-<!-- ===============================
+<!-- =====================================================
      FOOTER
-=============================== -->
+===================================================== -->
 
 <footer>
 
@@ -346,11 +420,32 @@
 
 
 
-<!-- ===============================
+<!-- =====================================================
      POST JOB JAVASCRIPT
-=============================== -->
+===================================================== -->
 
 <script>
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logoutUser() {
+
+    localStorage.removeItem("loggedInUser");
+
+    localStorage.removeItem("userEmail");
+
+    window.location.href = "home.html";
+
+}
+
+
+
+/* =====================================================
+   POST JOB FORM
+===================================================== */
 
 document
     .getElementById("postJobForm")
@@ -359,12 +454,13 @@ document
         event.preventDefault();
 
 
-        /* ===============================
+        /* =================================================
            GET LOGIN INFORMATION
-        =============================== */
+        ================================================= */
 
         const userEmail =
             localStorage.getItem("userEmail");
+
 
         const loggedInUser =
             JSON.parse(
@@ -373,9 +469,9 @@ document
 
 
 
-        /* ===============================
+        /* =================================================
            LOGIN CHECK
-        =============================== */
+        ================================================= */
 
         if (!userEmail || !loggedInUser) {
 
@@ -387,13 +483,14 @@ document
                 "login.html";
 
             return;
+
         }
 
 
 
-        /* ===============================
+        /* =================================================
            CLIENT ROLE CHECK
-        =============================== */
+        ================================================= */
 
         if (
             !loggedInUser.role ||
@@ -405,13 +502,14 @@ document
             );
 
             return;
+
         }
 
 
 
-        /* ===============================
+        /* =================================================
            GET FORM VALUES
-        =============================== */
+        ================================================= */
 
         const title =
             document
@@ -443,9 +541,9 @@ document
 
 
 
-        /* ===============================
+        /* =================================================
            VALIDATION
-        =============================== */
+        ================================================= */
 
         if (title === "") {
 
@@ -454,6 +552,7 @@ document
             );
 
             return;
+
         }
 
 
@@ -464,6 +563,7 @@ document
             );
 
             return;
+
         }
 
 
@@ -474,6 +574,7 @@ document
             );
 
             return;
+
         }
 
 
@@ -484,13 +585,14 @@ document
             );
 
             return;
+
         }
 
 
 
-        /* ===============================
+        /* =================================================
            JOB DATA
-        =============================== */
+        ================================================= */
 
         const job = {
 
@@ -508,9 +610,9 @@ document
 
 
 
-        /* ===============================
+        /* =================================================
            SEND TO SPRING BOOT
-        =============================== */
+        ================================================= */
 
         try {
 
@@ -518,23 +620,27 @@ document
                 await fetch(
                     "http://localhost:8080/api/jobs",
                     {
+
                         method: "POST",
 
                         headers: {
+
                             "Content-Type":
                                 "application/json"
+
                         },
 
                         body:
                             JSON.stringify(job)
+
                     }
                 );
 
 
 
-            /* ===============================
+            /* =================================================
                SUCCESS
-            =============================== */
+            ================================================= */
 
             if (response.ok) {
 
@@ -563,13 +669,14 @@ document
 
 
                 return;
+
             }
 
 
 
-            /* ===============================
+            /* =================================================
                ERROR RESPONSE
-            =============================== */
+            ================================================= */
 
             let errorMessage =
                 "Unable to post job. Please try again.";
@@ -588,7 +695,9 @@ document
 
                 }
 
-            } catch (error) {
+            }
+
+            catch (error) {
 
                 try {
 
@@ -603,7 +712,9 @@ document
 
                     }
 
-                } catch (e) {
+                }
+
+                catch (e) {
 
                     console.error(e);
 
@@ -618,9 +729,9 @@ document
 
 
 
-        /* ===============================
+        /* =================================================
            BACKEND CONNECTION ERROR
-        =============================== */
+        ================================================= */
 
         catch (error) {
 
@@ -640,9 +751,9 @@ document
 
 
 
-/* ===============================
+/* =====================================================
    DARK MODE
-=============================== */
+===================================================== */
 
 const themeBtn =
     document.getElementById("themeBtn");
@@ -668,7 +779,9 @@ if (themeBtn) {
                 themeBtn.textContent =
                     "☀";
 
-            } else {
+            }
+
+            else {
 
                 themeBtn.textContent =
                     "☾";

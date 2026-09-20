@@ -71,7 +71,7 @@ function signupUser() {
    POST JOB
 ========================================= */
 
-function postJob() {
+window.postJob = function() {
 
     const user =
         JSON.parse(localStorage.getItem("loggedInUser"));
@@ -97,7 +97,7 @@ function postJob() {
 
     window.location.href = "post-job.html";
 
-}
+};
 
 
 /* =========================================
@@ -139,6 +139,8 @@ if (themeBtn) {
     });
 
 }
+
+
 /* =========================================
    LOGGED-IN USER
 ========================================= */
@@ -195,6 +197,7 @@ function logoutUser() {
     alert("You have been logged out successfully.");
 
     window.location.href = "home.html";
+
 }
 
 

@@ -28,9 +28,7 @@ async function loadReviews() {
                     Login to view your reviews.
                 </p>
 
-                <a
-                    href="login.html"
-                    class="jobs-btn">
+                <a href="login.html" class="jobs-btn">
                     Login
                 </a>
 
@@ -43,20 +41,27 @@ async function loadReviews() {
 
     try {
 
+        /*
+         * CLIENT REVIEWS
+         * Reviews given by this client
+         */
+
         const response = await fetch(
-            `${API_URL}/freelancer/${encodeURIComponent(userEmail)}`
+            `${API_URL}/client/${encodeURIComponent(userEmail)}`
         );
 
 
         if (!response.ok) {
+
             throw new Error("Failed to load reviews");
+
         }
 
 
         const reviews = await response.json();
 
 
-        /* ================= RATING SUMMARY ================= */
+        /* ================= SUMMARY ================= */
 
         if (reviews.length === 0) {
 
@@ -77,11 +82,12 @@ async function loadReviews() {
                 <div>
 
                     <h3>
-                        No ratings yet
+                        No Reviews Given Yet
                     </h3>
 
                     <div class="rating-count">
-                        Complete projects to receive client reviews.
+                        Complete a project and give a review
+                        to a freelancer.
                     </div>
 
                 </div>
@@ -128,7 +134,7 @@ async function loadReviews() {
                 <div>
 
                     <h3>
-                        Overall Rating
+                        Your Given Ratings
                     </h3>
 
                     <div class="rating-count">
@@ -139,6 +145,7 @@ async function loadReviews() {
                 </div>
 
             `;
+
         }
 
 
@@ -159,8 +166,8 @@ async function loadReviews() {
                     </h2>
 
                     <p>
-                        Your client reviews will appear here
-                        after completed projects.
+                        Reviews you give to freelancers
+                        will appear here.
                     </p>
 
                 </div>
@@ -168,6 +175,7 @@ async function loadReviews() {
             `;
 
             return;
+
         }
 
 
@@ -206,10 +214,12 @@ async function loadReviews() {
                         </div>
 
                         <div class="review-client">
-                            Client: ${review.clientEmail}
+                            Freelancer:
+                            ${review.freelancerEmail || "Not available"}
                         </div>
 
                     </div>
+
 
                     <div class="stars">
                         ${stars}
@@ -219,9 +229,8 @@ async function loadReviews() {
 
 
                 <p class="review-comment">
-                    "${review.comment}"
+                    "${review.comment || "No comment"}"
                 </p>
-
 
             `;
 
@@ -258,7 +267,9 @@ async function loadReviews() {
                 <button
                     class="jobs-btn"
                     onclick="loadReviews()">
+
                     Try Again
+
                 </button>
 
             </div>

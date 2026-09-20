@@ -1,9 +1,7 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -12,25 +10,133 @@
     <link rel="stylesheet" href="../css/style.css">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
 
-        /* ================= CLIENT DASHBOARD ================= */
+        body {
+            margin: 0;
+            background: #f6f8fc;
+            font-family: Arial, sans-serif;
+            color: #111827;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .client-navbar {
+            width: 100%;
+            min-height: 72px;
+            padding: 0 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: white;
+            border-bottom: 1px solid #e8ebf2;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .client-navbar .logo {
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1f4ed8;
+        }
+
+        .logo-icon {
+            margin-right: 7px;
+        }
+
+        .client-navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .client-navbar nav a {
+            text-decoration: none;
+            white-space: nowrap;
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: 0.2s ease;
+        }
+
+        .client-navbar nav a:hover {
+            color: #1f4ed8;
+            background: #eef3ff;
+        }
+
+        .client-navbar nav a.active {
+            color: #1f4ed8;
+            background: #eef3ff;
+        }
+
+        /* ================= LOGOUT ================= */
+
+        .logout-btn {
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            background: #feecec;
+            color: #dc2626;
+        }
+
+        .logout-btn:hover {
+            background: #fde0e0;
+        }
+
+        /* ================= DASHBOARD ================= */
 
         .dashboard-container {
             max-width: 1200px;
             margin: 40px auto;
-            padding: 0 25px;
+            padding: 0 25px 60px;
         }
 
+        /* ================= WELCOME ================= */
+
         .welcome-section {
+            background: linear-gradient(
+                135deg,
+                #1f4ed8,
+                #315bdc
+            );
+
+            color: white;
+            border-radius: 20px;
+            padding: 32px;
             margin-bottom: 30px;
+
+            box-shadow:
+                0 8px 25px rgba(
+                    31,
+                    78,
+                    216,
+                    0.18
+                );
         }
 
         .welcome-section h1 {
-            margin-bottom: 8px;
+            margin: 0 0 8px;
+            font-size: 30px;
         }
 
         .welcome-section p {
-            color: #777;
+            margin: 0;
+            opacity: 0.9;
+            font-size: 15px;
         }
 
         /* ================= STATS ================= */
@@ -46,7 +152,21 @@
             background: white;
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            border: 1px solid #edf0f5;
+
+            box-shadow:
+                0 5px 20px rgba(
+                    0,
+                    0,
+                    0,
+                    0.06
+                );
+
+            transition: 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
         }
 
         .stat-card h3 {
@@ -55,10 +175,11 @@
             color: #777;
         }
 
-        .stat-card .stat-number {
+        .stat-number {
             font-size: 30px;
             font-weight: 700;
             margin-top: 10px;
+            color: #111827;
         }
 
         /* ================= SECTIONS ================= */
@@ -68,14 +189,24 @@
             padding: 25px;
             border-radius: 15px;
             margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            border: 1px solid #edf0f5;
+
+            box-shadow:
+                0 5px 20px rgba(
+                    0,
+                    0,
+                    0,
+                    0.06
+                );
         }
 
         .dashboard-section h2 {
             margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
         }
 
-        /* ================= JOB LIST ================= */
+        /* ================= JOBS ================= */
 
         .job-item {
             display: flex;
@@ -92,6 +223,7 @@
 
         .job-info h3 {
             margin: 0 0 6px;
+            font-size: 16px;
         }
 
         .job-info p {
@@ -105,16 +237,15 @@
             border-radius: 20px;
             font-size: 13px;
             font-weight: 600;
-        }
-
-        .job-status.active {
             background: #e8f7ee;
             color: #15803d;
+            white-space: nowrap;
         }
 
-        .job-status.closed {
-            background: #f1f1f1;
-            color: #666;
+        .empty-text {
+            color: #777;
+            text-align: center;
+            padding: 25px;
         }
 
         /* ================= QUICK ACTIONS ================= */
@@ -129,17 +260,21 @@
             text-decoration: none;
             color: inherit;
             border: 1px solid #eee;
+            background: #fafbfe;
             padding: 20px;
             border-radius: 12px;
             transition: 0.2s;
         }
 
         .action-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            background: #eef3ff;
+            border-color: #d9e2ff;
         }
 
         .action-card h3 {
             margin: 0 0 8px;
+            font-size: 16px;
         }
 
         .action-card p {
@@ -148,85 +283,14 @@
             font-size: 14px;
         }
 
-        /* ================= PROFILE ================= */
-
-        .profile-card {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .profile-info h3 {
-            margin: 0 0 6px;
-        }
-
-        .profile-info p {
-            margin: 0;
-            color: #777;
-        }
-
-        .profile-btn {
-            text-decoration: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            background: #6845e8;
-            color: white;
-            font-weight: 600;
-        }
-
-        /* ================= NAVBAR ================= */
-
-        .client-navbar {
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .client-navbar .logo {
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .client-navbar nav {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .client-navbar nav a {
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .client-navbar nav a.active {
-            font-weight: 700;
-        }
-
-        .logout-btn {
-            border: none;
-            padding: 9px 14px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            background: #f1f1f5;
-            color: #444;
-        }
-
-        .logout-btn:hover {
-            background: #e7e7ec;
-            color: #dc2626;
-        }
-
         /* ================= RESPONSIVE ================= */
 
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
+
+            .client-navbar {
+                padding: 15px 20px;
+                align-items: flex-start;
+            }
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -235,18 +299,17 @@
             .quick-actions {
                 grid-template-columns: repeat(2, 1fr);
             }
-
         }
 
         @media (max-width: 700px) {
 
             .client-navbar {
                 flex-direction: column;
-                padding: 15px;
+                align-items: center;
             }
 
             .client-navbar nav {
-                gap: 10px;
+                justify-content: center;
             }
 
             .stats-grid {
@@ -261,496 +324,674 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
-
-            .profile-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
         }
 
+        @media (max-width: 480px) {
+
+            .dashboard-container {
+                margin-top: 25px;
+                padding: 0 15px 40px;
+            }
+
+            .welcome-section {
+                padding: 25px;
+            }
+
+            .welcome-section h1 {
+                font-size: 25px;
+            }
+
+            .client-navbar nav a {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
     </style>
 
 </head>
 
-
 <body>
 
+    <!-- ================= NAVBAR ================= -->
 
-<!-- ================= CLIENT NAVBAR ================= -->
-
-<header class="navbar client-navbar">
-
-
-    <!-- LOGO -->
-
-    <a
-        href="./client-dashboard.html"
-        class="logo">
-
-        <span class="logo-icon">
-            ✣
-        </span>
-
-        Freelance<span>Hub</span>
-
-    </a>
-
-
-    <!-- NAVIGATION -->
-
-    <nav>
+    <header class="client-navbar">
 
         <a
             href="./client-dashboard.html"
-            class="active">
-
-            Dashboard
-
+            class="logo"
+        >
+            <span class="logo-icon">✣</span>
+            Freelance<span>Hub</span>
         </a>
 
-        <a href="./post-job.html">
-            Post Job
-        </a>
+        <nav>
 
-        <a href="./my-jobs.html">
-            My Jobs
-        </a>
+            <a
+                href="./client-dashboard.html"
+                class="active"
+            >
+                Dashboard
+            </a>
 
-        <a href="./applications-client.html">
-            Applications Received
-        </a>
+            <a href="./post-job.html">
+                Post Job
+            </a>
 
-        <a href="./my-contracts-client.html">
-            My Contracts
-        </a>
+            <a href="./my-jobs.html">
+                My Jobs
+            </a>
 
-        <a href="./my-payments-client.html">
-            My Payments
-        </a>
+            <a href="./applications-client.html">
+                Applications Received
+            </a>
 
-        <a href="./profile.html">
-            My Profile
-        </a>
+            <a href="./client-contracts.html">
+                My Contracts
+            </a>
 
-    </nav>
+            <a href="./my-payments.html">
+                My Payments
+            </a>
 
+            <a href="./my-reviews.html">
+                My Reviews
+            </a>
 
-    <!-- LOGOUT -->
+            <a href="./profile.html">
+                My Profile
+            </a>
 
-    <div>
+        </nav>
 
         <button
             type="button"
             class="logout-btn"
-            onclick="logoutUser()">
-
+            onclick="logoutUser()"
+        >
             Logout
-
         </button>
 
-    </div>
-
-</header>
+    </header>
 
 
+    <!-- ================= MAIN ================= -->
 
-<!-- ================= DASHBOARD ================= -->
+    <main class="dashboard-container">
 
-<main class="dashboard-container">
+        <!-- WELCOME -->
 
+        <section class="welcome-section">
 
-    <!-- WELCOME -->
-
-    <section class="welcome-section">
-
-        <h1>
-            Welcome back,
-            <span id="clientName">
-                Client
-            </span>!
-        </h1>
-
-        <p>
-            Manage your jobs, applications and contracts from one place.
-        </p>
-
-    </section>
-
-
-
-    <!-- ================= STATS ================= -->
-
-    <section class="stats-grid">
-
-
-        <div class="stat-card">
-
-            <h3>
-                Total Jobs
-            </h3>
-
-            <div
-                class="stat-number"
-                id="totalJobs">
-
-                0
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Active Jobs
-            </h3>
-
-            <div
-                class="stat-number"
-                id="activeJobs">
-
-                0
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Applications Received
-            </h3>
-
-            <div
-                class="stat-number"
-                id="applicationsReceived">
-
-                0
-
-            </div>
-
-        </div>
-
-
-        <div class="stat-card">
-
-            <h3>
-                Active Contracts
-            </h3>
-
-            <div
-                class="stat-number"
-                id="activeContracts">
-
-                0
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= RECENT JOBS ================= -->
-
-    <section class="dashboard-section">
-
-        <h2>
-            Recent Jobs
-        </h2>
-
-        <div id="recentJobs">
+            <h1>
+                Welcome back,
+                <span id="clientName">
+                    Client
+                </span>! 👋
+            </h1>
 
             <p>
-                Loading jobs...
+                Manage your jobs, applications,
+                contracts, payments and reviews
+                from one place.
             </p>
 
-        </div>
-
-    </section>
+        </section>
 
 
+        <!-- STATS -->
 
-    <!-- ================= QUICK ACTIONS ================= -->
+        <section class="stats-grid">
 
-    <section class="dashboard-section">
-
-        <h2>
-            Quick Actions
-        </h2>
-
-
-        <div class="quick-actions">
-
-
-            <a
-                href="./post-job.html"
-                class="action-card">
+            <div class="stat-card">
 
                 <h3>
-                    ➕ Post a Job
+                    Total Jobs
                 </h3>
 
-                <p>
-                    Create a new project and find freelancers.
-                </p>
-
-            </a>
-
-
-            <a
-                href="./my-jobs.html"
-                class="action-card">
-
-                <h3>
-                    📋 My Jobs
-                </h3>
-
-                <p>
-                    View and manage your posted jobs.
-                </p>
-
-            </a>
-
-
-            <a
-                href="./applications-client.html"
-                class="action-card">
-
-                <h3>
-                    📩 Applications
-                </h3>
-
-                <p>
-                    Review applications from freelancers.
-                </p>
-
-            </a>
-
-
-            <a
-                href="./my-contracts-client.html"
-                class="action-card">
-
-                <h3>
-                    📄 Contracts
-                </h3>
-
-                <p>
-                    Manage your active contracts.
-                </p>
-
-            </a>
-
-
-            <a
-                href="./my-payments-client.html"
-                class="action-card">
-
-                <h3>
-                    💳 Payments
-                </h3>
-
-                <p>
-                    View and manage payments.
-                </p>
-
-            </a>
-
-
-            <a
-                href="./profile.html"
-                class="action-card">
-
-                <h3>
-                    👤 My Profile
-                </h3>
-
-                <p>
-                    Update your client profile.
-                </p>
-
-            </a>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= PROFILE ================= -->
-
-    <section class="dashboard-section">
-
-        <h2>
-            My Profile
-        </h2>
-
-        <div class="profile-card">
-
-
-            <div class="profile-info">
-
-                <h3 id="profileName">
-                    Client
-                </h3>
-
-                <p id="profileEmail">
-                    —
-                </p>
+                <div
+                    class="stat-number"
+                    id="totalJobs"
+                >
+                    0
+                </div>
 
             </div>
 
 
-            <a
-                href="./profile.html"
-                class="profile-btn">
+            <div class="stat-card">
 
-                View Profile →
+                <h3>
+                    Active Jobs
+                </h3>
 
-            </a>
+                <div
+                    class="stat-number"
+                    id="activeJobs"
+                >
+                    0
+                </div>
 
-        </div>
-
-    </section>
-
-
-</main>
-
-
-
-<!-- ================= JAVASCRIPT ================= -->
-
-<script>
-
-    const loggedInUser =
-        JSON.parse(
-            localStorage.getItem("loggedInUser")
-        );
+            </div>
 
 
-    /* ================= LOGIN CHECK ================= */
+            <div class="stat-card">
 
-    if (!loggedInUser) {
+                <h3>
+                    Applications Received
+                </h3>
 
-        alert("Please login first.");
+                <div
+                    class="stat-number"
+                    id="applicationsReceived"
+                >
+                    0
+                </div>
 
-        window.location.href =
-            "./login.html";
-
-    }
-
-
-    /* ================= DISPLAY USER ================= */
-
-    if (loggedInUser) {
-
-        document.getElementById("clientName").textContent =
-            loggedInUser.name || "Client";
-
-        document.getElementById("profileName").textContent =
-            loggedInUser.name || "Client";
-
-        document.getElementById("profileEmail").textContent =
-            loggedInUser.email || "";
-
-    }
+            </div>
 
 
-    /* ================= LOAD CLIENT JOBS ================= */
+            <div class="stat-card">
 
-    async function loadClientJobs() {
+                <h3>
+                    Active Contracts
+                </h3>
+
+                <div
+                    class="stat-number"
+                    id="activeContracts"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT JOBS -->
+
+        <section class="dashboard-section">
+
+            <h2>
+                Recent Jobs
+            </h2>
+
+            <div id="recentJobs">
+
+                <p class="empty-text">
+                    Loading jobs...
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="dashboard-section">
+
+            <h2>
+                Quick Actions
+            </h2>
+
+            <div class="quick-actions">
+
+                <a
+                    href="./post-job.html"
+                    class="action-card"
+                >
+                    <h3>
+                        ➕ Post a Job
+                    </h3>
+
+                    <p>
+                        Create a new project
+                        and find freelancers.
+                    </p>
+                </a>
+
+
+                <a
+                    href="./my-jobs.html"
+                    class="action-card"
+                >
+                    <h3>
+                        📋 My Jobs
+                    </h3>
+
+                    <p>
+                        View and manage
+                        your posted jobs.
+                    </p>
+                </a>
+
+
+                <a
+                    href="./applications-client.html"
+                    class="action-card"
+                >
+                    <h3>
+                        📩 Applications
+                    </h3>
+
+                    <p>
+                        Review applications
+                        from freelancers.
+                    </p>
+                </a>
+
+
+                <a
+                    href="./client-contracts.html"
+                    class="action-card"
+                >
+                    <h3>
+                        📄 Contracts
+                    </h3>
+
+                    <p>
+                        Manage your
+                        active contracts.
+                    </p>
+                </a>
+
+
+                <a
+                    href="./profile.html"
+                    class="action-card"
+                >
+                    <h3>
+                        👤 My Profile
+                    </h3>
+
+                    <p>
+                        Update your
+                        client profile.
+                    </p>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        /* ================= LOGIN CHECK ================= */
+
+        const loggedInUser =
+            JSON.parse(
+                localStorage.getItem("loggedInUser")
+            );
+
 
         if (!loggedInUser) {
-            return;
+
+            alert("Please login first.");
+
+            window.location.href =
+                "./login.html";
+
         }
 
-        try {
 
-            const response =
-                await fetch(
-                    "http://localhost:8080/api/jobs"
-                );
+        /* ================= CLIENT NAME ================= */
+
+        if (loggedInUser) {
+
+            document.getElementById(
+                "clientName"
+            ).textContent =
+                loggedInUser.name || "Client";
+        }
 
 
-            if (!response.ok) {
+        /* ================= LOAD CLIENT JOBS ================= */
 
-                throw new Error(
-                    "Unable to load jobs"
-                );
+        async function loadClientJobs() {
 
+            if (!loggedInUser) {
+                return;
             }
 
+            try {
 
-            const jobs =
-                await response.json();
-
-
-            const clientJobs =
-                jobs.filter(function(job) {
-
-                    return (
-                        job.clientEmail &&
-                        job.clientEmail.toLowerCase() ===
-                        loggedInUser.email.toLowerCase()
+                const response =
+                    await fetch(
+                        "http://localhost:8080/api/jobs"
                     );
 
-                });
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load jobs"
+                    );
+                }
+
+                const jobs =
+                    await response.json();
+
+                const clientJobs =
+                    jobs.filter(function (job) {
+
+                        return (
+                            job.clientEmail &&
+                            job.clientEmail.toLowerCase() ===
+                            loggedInUser.email.toLowerCase()
+                        );
+
+                    });
 
 
-            document.getElementById("totalJobs").textContent =
-                clientJobs.length;
+                document.getElementById(
+                    "totalJobs"
+                ).textContent =
+                    clientJobs.length;
 
 
-            document.getElementById("activeJobs").textContent =
-                clientJobs.length;
+                const activeJobs =
+                    clientJobs.filter(function (job) {
+
+                        if (!job.status) {
+                            return true;
+                        }
+
+                        return (
+                            job.status.toLowerCase() !==
+                            "closed"
+                        );
+
+                    });
 
 
-            const recentJobs =
-                clientJobs.slice(-5).reverse();
+                document.getElementById(
+                    "activeJobs"
+                ).textContent =
+                    activeJobs.length;
 
 
-            const container =
-                document.getElementById("recentJobs");
+                const recentJobs =
+                    clientJobs
+                        .slice()
+                        .reverse()
+                        .slice(0, 5);
 
 
-            if (recentJobs.length === 0) {
+                const container =
+                    document.getElementById(
+                        "recentJobs"
+                    );
+
+
+                if (recentJobs.length === 0) {
+
+                    container.innerHTML =
+                        `<p class="empty-text">
+                            No jobs posted yet.
+                        </p>`;
+
+                    return;
+                }
+
 
                 container.innerHTML =
-                    "<p>No jobs posted yet.</p>";
+                    recentJobs
+                        .map(function (job) {
 
+                            const status =
+                                job.status ||
+                                "Active";
+
+
+                            return `
+
+                                <div class="job-item">
+
+                                    <div class="job-info">
+
+                                        <h3>
+                                            ${escapeHTML(
+                                                job.title ||
+                                                "Untitled Job"
+                                            )}
+                                        </h3>
+
+                                        <p>
+                                            Job #${job.id}
+                                            &nbsp; • &nbsp;
+                                            Budget ₹${Number(
+                                                job.budget || 0
+                                            ).toLocaleString(
+                                                "en-IN"
+                                            )}
+                                        </p>
+
+                                    </div>
+
+                                    <span class="job-status">
+                                        ${escapeHTML(status)}
+                                    </span>
+
+                                </div>
+
+                            `;
+
+                        })
+                        .join("");
+
+            } catch (error) {
+
+                console.error(
+                    "Jobs error:",
+                    error
+                );
+
+                document.getElementById(
+                    "recentJobs"
+                ).innerHTML =
+                    `<p class="empty-text">
+                        Unable to load jobs.
+                    </p>`;
+            }
+        }
+
+
+        /* ================= LOAD APPLICATIONS ================= */
+
+        async function loadApplications() {
+
+            if (!loggedInUser) {
                 return;
-
             }
 
+            try {
 
-            container.innerHTML =
-                recentJobs.map(function(job) {
+                const response =
+                    await fetch(
+                        "http://localhost:8080/applications"
+                    );
 
-                    return `
+                if (!response.ok) {
+                    return;
+                }
 
-                        <div class="job-item">
+                const applications =
+                    await response.json();
 
-                            <div class="job-info">
 
-                                <h3>
-                                    ${escapeHTML(
-                                        job.title ||
-                                        "Untitled Job"
-                                    )}
-                                </h3>
+                const clientJobsResponse =
+                    await fetch(
+                        "http://localhost:8080/api/jobs"
+                    );
 
-                                <p>
-                                    Job #${job.id}
-                                    &nbsp; • &nbsp;
-                                    Budget ₹${Number(
-                                        job.budget || 0
-                                    ).toLocaleString("en-IN")}
-                                </p>
+                if (!clientJobsResponse.ok) {
+                    return;
+                }
 
-                            </div>
-```
+                const jobs =
+                    await clientJobsResponse.json();
+
+
+                const clientJobIds =
+                    jobs
+                        .filter(function (job) {
+
+                            return (
+                                job.clientEmail &&
+                                job.clientEmail.toLowerCase() ===
+                                loggedInUser.email.toLowerCase()
+                            );
+
+                        })
+                        .map(function (job) {
+
+                            return Number(job.id);
+
+                        });
+
+
+                const clientApplications =
+                    applications.filter(function (
+                        application
+                    ) {
+
+                        return clientJobIds.includes(
+                            Number(application.jobId)
+                        );
+
+                    });
+
+
+                document.getElementById(
+                    "applicationsReceived"
+                ).textContent =
+                    clientApplications.length;
+
+            } catch (error) {
+
+                console.error(
+                    "Applications error:",
+                    error
+                );
+
+                document.getElementById(
+                    "applicationsReceived"
+                ).textContent = "0";
+            }
+        }
+
+
+        /* ================= LOAD CONTRACTS ================= */
+
+        async function loadContracts() {
+
+            if (!loggedInUser) {
+                return;
+            }
+
+            try {
+
+                const response =
+                    await fetch(
+                        "http://localhost:8080/api/contracts/client/" +
+                        encodeURIComponent(
+                            loggedInUser.email
+                        )
+                    );
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Unable to load contracts"
+                    );
+                }
+
+                const contracts =
+                    await response.json();
+
+
+                const activeContracts =
+                    contracts.filter(function (
+                        contract
+                    ) {
+
+                        return (
+                            contract.status &&
+                            contract.status.toLowerCase() ===
+                            "active"
+                        );
+
+                    });
+
+
+                document.getElementById(
+                    "activeContracts"
+                ).textContent =
+                    activeContracts.length;
+
+            } catch (error) {
+
+                console.error(
+                    "Contracts error:",
+                    error
+                );
+
+                document.getElementById(
+                    "activeContracts"
+                ).textContent = "0";
+            }
+        }
+
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        /* ================= LOGOUT ================= */
+
+        function logoutUser() {
+
+            localStorage.removeItem(
+                "loggedInUser"
+            );
+
+            localStorage.removeItem(
+                "userEmail"
+            );
+
+            localStorage.removeItem(
+                "userRole"
+            );
+
+            window.location.href =
+                "home.html";
+        }
+
+
+        /* ================= START ================= */
+
+        loadClientJobs();
+
+        loadApplications();
+
+        loadContracts();
+
+    </script>
+
+</body>
+
+</html>

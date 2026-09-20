@@ -2,45 +2,150 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>My Profile - FreelanceHub</title>
 
     <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        .navbar {
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .navbar .logo {
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .navbar nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .navbar nav a {
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .navbar nav a.active {
+            font-weight: 700;
+        }
+
+        .navbar .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            background: #f1f1f5;
+            color: #444;
+        }
+
+        .logout-btn:hover {
+            background: #e7e7ec;
+            color: #dc2626;
+        }
+
+        @media (max-width: 1100px) {
+
+            .navbar {
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 15px 20px;
+            }
+
+            .navbar nav {
+                gap: 12px;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar nav {
+                justify-content: center;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
+<!-- ================= NAVBAR ================= -->
+
 <header class="navbar">
 
-    <div class="logo">
-        <span class="logo-icon">✣</span>
-        <span>Freelance<span>Hub</span></span>
-    </div>
 
-    <nav>
-        <a href="home.html">Home</a>
-        <a href="jobs.html">Find Jobs</a>
-        <a href="my-applications.html">My Applications</a>
-        <a href="my-jobs.html">My Jobs</a>
-        <a href="freelancers.html">Freelancers</a>
+    <!-- LOGO -->
+
+    <a
+        href="#"
+        class="logo"
+        id="dashboardLink">
+
+        <span class="logo-icon">
+            ✣
+        </span>
+
+        <span>
+            Freelance<span>Hub</span>
+        </span>
+
+    </a>
+
+
+    <!-- NAVIGATION -->
+
+    <nav id="mainNav">
+
+        <!-- Navigation will be created by JavaScript -->
+
     </nav>
+
+
+    <!-- LOGOUT -->
 
     <div class="nav-actions">
 
-        <button class="icon-btn" id="themeBtn">☾</button>
-
         <button
-            class="login-btn"
-            onclick="window.location.href='login.html'">
-            Login
-        </button>
+            type="button"
+            class="logout-btn"
+            onclick="logoutUser()">
 
-        <button
-            class="signup-btn"
-            onclick="window.location.href='signup.html'">
-            Sign Up →
+            Logout
+
         </button>
 
     </div>
@@ -48,39 +153,69 @@
 </header>
 
 
+
+<!-- ================= PROFILE PAGE ================= -->
+
 <section class="profile-page">
+
 
     <div class="page-header">
 
-        <h1>My Profile</h1>
+        <h1>
+            My Profile
+        </h1>
 
-        <p>Update your freelancer profile.</p>
+        <p id="profileDescription">
+            Update your profile information.
+        </p>
 
     </div>
 
+
     <div class="profile-form">
 
-        <label>Skills</label>
+
+        <label>
+            Skills
+        </label>
+
         <input
             type="text"
             id="skills"
             placeholder="Java, HTML, CSS, JavaScript">
 
-        <label>Experience</label>
+
+
+        <label>
+            Experience
+        </label>
+
         <input
             type="text"
             id="experience"
             placeholder="1 Year">
 
-        <label>Bio</label>
+
+
+        <label>
+            Bio
+        </label>
+
         <textarea
             id="bio"
             rows="5"
             placeholder="Tell clients about yourself"></textarea>
 
-        <button onclick="updateProfile()">
+
+
+        <button
+            type="button"
+            onclick="updateProfile()">
+
             Save Profile
+
         </button>
+
 
         <p id="message"></p>
 
@@ -89,20 +224,165 @@
 </section>
 
 
+
+<!-- ================= FOOTER ================= -->
+
 <footer>
 
     <div class="footer-logo">
         ✣ FreelanceHub
     </div>
 
-    <p>Connect. Collaborate. Create.</p>
+    <p>
+        Connect. Collaborate. Create.
+    </p>
 
-    <p>© 2026 FreelanceHub. All rights reserved.</p>
+    <p>
+        © 2026 FreelanceHub. All rights reserved.
+    </p>
 
 </footer>
 
 
+
+<!-- ================= PROFILE JAVASCRIPT ================= -->
+
 <script src="../js/profile.js"></script>
+
+
+<script>
+
+    /* ================= GET LOGGED-IN USER ================= */
+
+    const loggedInUser =
+        JSON.parse(localStorage.getItem("loggedInUser"));
+
+    const userRole =
+        loggedInUser?.role || "";
+
+
+
+    /* ================= NAVBAR ================= */
+
+    const dashboardLink =
+        document.getElementById("dashboardLink");
+
+    const mainNav =
+        document.getElementById("mainNav");
+
+
+
+    /* ================= CLIENT NAVBAR ================= */
+
+    if (userRole === "CLIENT") {
+
+        dashboardLink.href =
+            "./client-dashboard.html";
+
+        mainNav.innerHTML = `
+
+            <a href="./client-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="./post-job.html">
+                Post Job
+            </a>
+
+            <a href="./my-jobs.html">
+                My Jobs
+            </a>
+
+            <a href="./applications-client.html">
+                Applications Received
+            </a>
+
+            <a href="./client-contracts.html">
+                My Contracts
+            </a>
+
+            <a href="./my-payments.html">
+                My Payments
+            </a>
+
+            <a href="./my-reviews.html">
+                My Reviews
+            </a>
+
+            <a href="./profile.html" class="active">
+                My Profile
+            </a>
+
+        `;
+
+        document.getElementById("profileDescription").innerText =
+            "Update your client profile.";
+
+    }
+
+
+
+    /* ================= FREELANCER NAVBAR ================= */
+
+    else {
+
+        dashboardLink.href =
+            "./freelancer-dashboard.html";
+
+        mainNav.innerHTML = `
+
+            <a href="./freelancer-dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="./jobs.html">
+                Find Jobs
+            </a>
+
+            <a href="./my-applications.html">
+                My Applications
+            </a>
+
+            <a href="./my-contracts.html">
+                My Contracts
+            </a>
+
+            <a href="./my-payments.html">
+                My Payments
+            </a>
+
+            <a href="./my-reviews.html">
+                My Reviews
+            </a>
+
+            <a href="./profile.html" class="active">
+                My Profile
+            </a>
+
+        `;
+
+        document.getElementById("profileDescription").innerText =
+            "Update your freelancer profile.";
+
+    }
+
+
+
+    /* ================= LOGOUT ================= */
+
+    function logoutUser() {
+
+        localStorage.removeItem("loggedInUser");
+
+        localStorage.removeItem("userEmail");
+
+        window.location.href =
+            "./home.html";
+
+    }
+
+</script>
+
 
 </body>
 

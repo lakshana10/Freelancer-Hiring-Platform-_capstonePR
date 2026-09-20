@@ -1,5 +1,6 @@
 package com.freelancer.backend.controller;
 
+import com.freelancer.backend.service.EmailService;
 import com.freelancer.backend.service.OTPService;
 
 import org.springframework.http.ResponseEntity;
@@ -14,9 +15,14 @@ import java.util.Map;
 public class OTPController {
 
     private final OTPService otpService;
+    private final EmailService emailService;
 
-    public OTPController(OTPService otpService) {
+    public OTPController(
+            OTPService otpService,
+            EmailService emailService) {
+
         this.otpService = otpService;
+        this.emailService = emailService;
     }
 
 
@@ -41,30 +47,31 @@ public class OTPController {
             String email =
                     request.getEmail().trim();
 
+            // Generate and save OTP
             String otp =
                     otpService.generateOTP(email);
+
+            // Send OTP to Gmail
+            emailService.sendOTPEmail(email, otp);
 
             Map<String, Object> response =
                     new HashMap<>();
 
             response.put(
                     "message",
-                    "OTP generated successfully."
-            );
-
-            response.put(
-                    "otp",
-                    otp
+                    "OTP sent successfully to your email."
             );
 
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
 
+            e.printStackTrace();
+
             return ResponseEntity
                     .internalServerError()
                     .body(
-                        "Failed to generate OTP: "
+                        "Failed to send OTP: "
                         + e.getMessage()
                     );
         }
@@ -86,7 +93,9 @@ public class OTPController {
 
                 return ResponseEntity
                         .badRequest()
-                        .body("Email and OTP are required.");
+                        .body(
+                            "Email and OTP are required."
+                        );
             }
 
             boolean verified =
@@ -104,7 +113,9 @@ public class OTPController {
 
             return ResponseEntity
                     .badRequest()
-                    .body("Invalid or expired OTP.");
+                    .body(
+                        "Invalid or expired OTP."
+                    );
 
         } catch (Exception e) {
 

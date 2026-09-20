@@ -1,45 +1,42 @@
-const container =
-    document.getElementById("clientApplicationsContainer");
-
-const userEmail =
-    localStorage.getItem("userEmail");
-
-const params =
-    new URLSearchParams(window.location.search);
-
-const jobId =
-    params.get("jobId");
+let allApplications = [];
+let clientApplications = [];
+let clientJobs = [];
 
 
-// =========================================
-// LOAD APPLICATIONS
-// =========================================
+// ================= GET LOGGED IN USER =================
 
-async function loadApplications() {
+function getLoggedInUser() {
 
-    if (!userEmail) {
+    const user =
+        localStorage.getItem("loggedInUser");
+
+    if (!user) {
 
         window.location.href =
             "login.html";
 
-        return;
+        return null;
     }
 
+    return JSON.parse(user);
+}
 
-    if (!jobId) {
 
-        container.innerHTML =
-            "<p>Job not selected.</p>";
+// ================= LOAD DATA =================
 
+async function loadApplications() {
+
+    const user =
+        getLoggedInUser();
+
+    if (!user) {
         return;
     }
 
 
     try {
 
-        // =========================================
-        // GET JOBS
-        // =========================================
+        // ================= GET JOBS =================
 
         const jobsResponse =
             await fetch(
@@ -50,9 +47,8 @@ async function loadApplications() {
         if (!jobsResponse.ok) {
 
             throw new Error(
-                "Failed to load jobs"
+                "Unable to load jobs"
             );
-
         }
 
 
@@ -60,47 +56,24 @@ async function loadApplications() {
             await jobsResponse.json();
 
 
-        const job =
-            jobs.find(
-                j =>
-                    String(j.id) ===
-                    String(jobId)
+        // ================= CLIENT JOBS =================
+
+        clientJobs =
+            jobs.filter(
+                job =>
+                    job.clientEmail &&
+                    job.clientEmail.toLowerCase() ===
+                    user.email.toLowerCase()
             );
 
 
-        // =========================================
-        // CHECK CLIENT OWNERSHIP
-        // =========================================
-
-        if (
-            !job ||
-            job.clientEmail !== userEmail
-        ) {
-
-            container.innerHTML = `
-
-                <div class="no-applications">
-
-                    <h2>
-                        Access Denied
-                    </h2>
-
-                    <p>
-                        You are not authorized
-                        to view these applications.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-        }
+        console.log(
+            "Client jobs:",
+            clientJobs
+        );
 
 
-        // =========================================
-        // GET APPLICATIONS
-        // =========================================
+        // ================= GET APPLICATIONS =================
 
         const applicationsResponse =
             await fetch(
@@ -111,134 +84,164 @@ async function loadApplications() {
         if (!applicationsResponse.ok) {
 
             throw new Error(
-                "Failed to load applications"
+                "Unable to load applications"
             );
-
         }
 
 
-        const applications =
+        allApplications =
             await applicationsResponse.json();
 
 
-        const jobApplications =
-            applications.filter(
+        console.log(
+            "All applications:",
+            allApplications
+        );
+
+
+        // ================= CLIENT APPLICATIONS =================
+
+        clientApplications =
+            allApplications.filter(
                 application =>
-                    String(application.jobId) ===
-                    String(jobId)
+                    clientJobs.some(
+                        job =>
+                            Number(job.id) ===
+                            Number(application.jobId)
+                    )
             );
 
 
-        // =========================================
-        // GET FREELANCERS
-        // =========================================
-
-        const usersResponse =
-            await fetch(
-                "http://localhost:8080/api/users"
-            );
+        console.log(
+            "Client applications:",
+            clientApplications
+        );
 
 
-        if (!usersResponse.ok) {
+        // ================= UPDATE STATISTICS =================
 
-            throw new Error(
-                "Failed to load freelancers"
-            );
-
-        }
+        updateStatistics();
 
 
-        const users =
-            await usersResponse.json();
-
-
-        // =========================================
-        // ADD FREELANCER DETAILS
-        // =========================================
-
-        const enrichedApplications =
-            jobApplications.map(
-                application => {
-
-                    const freelancer =
-                        users.find(
-                            user =>
-                                user.email ===
-                                application.freelancerEmail
-                        );
-
-
-                    return {
-                        ...application,
-                        freelancer:
-                            freelancer
-                    };
-
-                }
-            );
-
+        // ================= DISPLAY =================
 
         displayApplications(
-            enrichedApplications
+            clientApplications
         );
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Error loading applications:",
+            error
+        );
 
-
-        container.innerHTML = `
-
-            <div class="no-applications">
-
-                <h2>
-                    Unable to Load Applications
-                </h2>
-
-                <p>
-                    Please make sure the backend
-                    is running.
-                </p>
-
-                <button
-                    class="jobs-btn"
-                    onclick="loadApplications()">
-
-                    Try Again
-
-                </button>
-
-            </div>
-
-        `;
-
+        showErrorMessage();
     }
-
 }
 
 
-// =========================================
-// DISPLAY APPLICATIONS
-// =========================================
+// ================= STATISTICS =================
+
+function updateStatistics() {
+
+    const total =
+        clientApplications.length;
+
+
+    const pending =
+        clientApplications.filter(
+            app =>
+                app.status &&
+                app.status.toLowerCase() ===
+                "pending"
+        ).length;
+
+
+    const accepted =
+        clientApplications.filter(
+            app =>
+                app.status &&
+                app.status.toLowerCase() ===
+                "accepted"
+        ).length;
+
+
+    const rejected =
+        clientApplications.filter(
+            app =>
+                app.status &&
+                app.status.toLowerCase() ===
+                "rejected"
+        ).length;
+
+
+    document.getElementById(
+        "totalApplications"
+    ).textContent = total;
+
+
+    document.getElementById(
+        "pendingApplications"
+    ).textContent = pending;
+
+
+    document.getElementById(
+        "acceptedApplications"
+    ).textContent = accepted;
+
+
+    document.getElementById(
+        "rejectedApplications"
+    ).textContent = rejected;
+}
+
+
+// ================= DISPLAY APPLICATIONS =================
 
 function displayApplications(
     applications
 ) {
 
-    if (applications.length === 0) {
+    const container =
+        document.getElementById(
+            "clientApplicationsContainer"
+        );
+
+
+    if (!container) {
+
+        console.error(
+            "clientApplicationsContainer not found!"
+        );
+
+        return;
+    }
+
+
+    // ================= EMPTY =================
+
+    if (
+        !applications ||
+        applications.length === 0
+    ) {
 
         container.innerHTML = `
 
-            <div class="no-applications">
+            <div class="empty-message">
 
-                <h2>
-                    No Applications Yet
-                </h2>
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No Applications Found
+                </h3>
 
                 <p>
-                    No freelancer has applied
-                    for this job.
+                    There are no freelancer applications
+                    matching your search.
                 </p>
 
             </div>
@@ -249,244 +252,508 @@ function displayApplications(
     }
 
 
-    container.innerHTML = "";
+    // ================= CREATE CARDS =================
 
+    container.innerHTML =
+        applications.map(
+            application => {
 
-    applications.forEach(
-        application => {
 
-            const freelancer =
-                application.freelancer;
+                const status =
+                    application.status ||
+                    "Pending";
 
 
-            const card =
-                document.createElement("div");
+                const statusLower =
+                    status.toLowerCase();
 
 
-            card.className =
-                "client-application-card";
+                const statusClass =
+                    statusLower === "accepted"
+                        ? "status-accepted"
+                        : statusLower === "rejected"
+                            ? "status-rejected"
+                            : "status-pending";
 
 
-            const freelancerName =
-                freelancer
-                    ? freelancer.name
-                    : application.freelancerEmail;
+                const job =
+                    clientJobs.find(
+                        j =>
+                            Number(j.id) ===
+                            Number(application.jobId)
+                    );
 
 
-            const skills =
-                freelancer?.skills ||
-                "Not added";
+                const jobTitle =
+                    application.jobTitle ||
+                    (
+                        job
+                            ? job.title
+                            : "Unknown Job"
+                    );
 
 
-            const experience =
-                freelancer?.experience ||
-                "Not added";
+                const freelancerEmail =
+                    application.freelancerEmail ||
+                    "Unknown Freelancer";
 
 
-            const bio =
-                freelancer?.bio ||
-                "No bio available";
+                return `
 
+                    <div
+                        class="application-card"
+                        data-status="${escapeHTML(
+                            status
+                        )}"
+                        data-search="${escapeHTML(
+                            freelancerEmail +
+                            " " +
+                            jobTitle
+                        ).toLowerCase()}"
+                    >
 
-            const jobTitle =
-                application.jobTitle ||
-                "Untitled Job";
 
+                        <!-- HEADER -->
 
-            const status =
-                application.status ||
-                "Pending";
+                        <div class="application-header">
 
+                            <div class="freelancer-info">
 
-            card.innerHTML = `
+                                <div class="freelancer-avatar">
+                                    👤
+                                </div>
 
-                <div class="application-profile">
+                                <div>
 
-                    <div class="application-avatar">
-                        ✣
-                    </div>
+                                    <h3>
+                                        Freelancer
+                                    </h3>
 
-                    <div>
+                                    <div class="applicant-email">
+                                        ${escapeHTML(
+                                            freelancerEmail
+                                        )}
+                                    </div>
 
-                        <h2>
-                            ${escapeHTML(
-                                freelancerName
-                            )}
-                        </h2>
+                                </div>
 
-                        <p class="application-email">
-                            ${escapeHTML(
-                                application.freelancerEmail
-                            )}
-                        </p>
+                            </div>
 
-                    </div>
 
-                </div>
-
-
-                <div class="application-details">
-
-                    <div>
-
-                        <strong>
-                            Skills
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(
-                                skills
-                            )}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Experience
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(
-                                experience
-                            )}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            About
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(
-                                bio
-                            )}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Job
-                        </strong>
-
-                        <p>
-                            ${escapeHTML(
-                                jobTitle
-                            )}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Application ID
-                        </strong>
-
-                        <p>
-                            #${application.id}
-                        </p>
-
-                    </div>
-
-
-                    <div>
-
-                        <strong>
-                            Status
-                        </strong>
-
-                        <p class="application-status">
-
-                            ${escapeHTML(
-                                status
-                            )}
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="application-actions">
-
-                    ${
-                        status === "Pending"
-                        ? `
-
-                            <button
-                                onclick="updateStatus(
-                                    ${application.id},
-                                    'Accepted'
-                                )">
-
-                                ✓ Accept
-
-                            </button>
-
-
-                            <button
-                                onclick="updateStatus(
-                                    ${application.id},
-                                    'Rejected'
-                                )">
-
-                                ✕ Reject
-
-                            </button>
-
-                        `
-                        : `
-
-                            <span>
-                                Application ${escapeHTML(status)}
+                            <span
+                                class="status ${statusClass}"
+                            >
+                                ${escapeHTML(status)}
                             </span>
 
-                        `
-                    }
-
-                </div>
-
-            `;
+                        </div>
 
 
-            container.appendChild(card);
+                        <!-- JOB -->
 
-        }
-    );
+                        <div class="job-section">
 
+                            <h4>
+                                ${escapeHTML(
+                                    jobTitle
+                                )}
+                            </h4>
+
+
+                            <p>
+                                Application ID:
+                                <strong>
+                                    #${application.id}
+                                </strong>
+                            </p>
+
+
+                            ${
+                                job
+                                    ? `
+
+                                        <div class="job-meta">
+
+                                            <span>
+                                                💰 Budget:
+                                                ₹${escapeHTML(
+                                                    String(
+                                                        job.budget ||
+                                                        "N/A"
+                                                    )
+                                                )}
+                                            </span>
+
+                                            <span>
+                                                📅 Job ID:
+                                                ${job.id}
+                                            </span>
+
+                                        </div>
+
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="application-actions">
+
+
+                            <!-- VIEW -->
+
+                            <button
+                                type="button"
+                                class="view-btn"
+                                onclick="viewApplication(${Number(
+                                    application.id
+                                )})"
+                            >
+                                👁 View
+                            </button>
+
+
+                            <!-- ACCEPT / REJECT -->
+
+                            ${
+                                statusLower ===
+                                "pending"
+
+                                    ? `
+
+                                        <button
+                                            type="button"
+                                            class="accept-btn"
+                                            onclick="updateApplicationStatus(
+                                                ${Number(application.id)},
+                                                'Accepted'
+                                            )"
+                                        >
+                                            ✅ Accept
+                                        </button>
+
+
+                                        <button
+                                            type="button"
+                                            class="reject-btn"
+                                            onclick="updateApplicationStatus(
+                                                ${Number(application.id)},
+                                                'Rejected'
+                                            )"
+                                        >
+                                            ❌ Reject
+                                        </button>
+
+                                      `
+
+                                    : ""
+                            }
+
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        ).join("");
 }
 
 
-// =========================================
-// UPDATE APPLICATION STATUS
-// =========================================
+// =====================================================
+// VIEW APPLICATION - MODAL POPUP
+// =====================================================
 
-async function updateStatus(
-    id,
-    status
+function viewApplication(
+    applicationId
 ) {
+
+    console.log(
+        "Opening application:",
+        applicationId
+    );
+
+
+    // Find application
+
+    const application =
+        clientApplications.find(
+            app =>
+                Number(app.id) ===
+                Number(applicationId)
+        );
+
+
+    if (!application) {
+
+        alert(
+            "Application not found."
+        );
+
+        return;
+    }
+
+
+    // Find job
+
+    const job =
+        clientJobs.find(
+            j =>
+                Number(j.id) ===
+                Number(application.jobId)
+        );
+
+
+    const jobTitle =
+        application.jobTitle ||
+        (
+            job
+                ? job.title
+                : "Unknown Job"
+        );
+
+
+    const budget =
+        job && job.budget
+            ? job.budget
+            : "N/A";
+
+
+    const status =
+        application.status ||
+        "Pending";
+
+
+    const statusLower =
+        status.toLowerCase();
+
+
+    // ================= FILL MODAL =================
+
+    document.getElementById(
+        "modalFreelancer"
+    ).textContent =
+        "Freelancer";
+
+
+    document.getElementById(
+        "modalFreelancerEmail"
+    ).textContent =
+        application.freelancerEmail ||
+        "Unknown Freelancer";
+
+
+    document.getElementById(
+        "modalApplicationId"
+    ).textContent =
+        "#" + application.id;
+
+
+    document.getElementById(
+        "modalJobTitle"
+    ).textContent =
+        jobTitle;
+
+
+    document.getElementById(
+        "modalJobId"
+    ).textContent =
+        "#" + application.jobId;
+
+
+    document.getElementById(
+        "modalBudget"
+    ).textContent =
+        "₹" + budget;
+
+
+    // ================= STATUS =================
+
+    const modalStatus =
+        document.getElementById(
+            "modalStatus"
+        );
+
+
+    modalStatus.textContent =
+        status;
+
+
+    modalStatus.className =
+        "modal-detail-value modal-status " +
+        statusLower;
+
+
+    // ================= MODAL ACTIONS =================
+
+    const modalActions =
+        document.getElementById(
+            "modalActions"
+        );
+
+
+    if (
+        statusLower ===
+        "pending"
+    ) {
+
+        modalActions.innerHTML = `
+
+            <button
+                type="button"
+                class="modal-close-action"
+                onclick="closeApplicationModal()"
+            >
+                ✕ Close
+            </button>
+
+
+            <button
+                type="button"
+                class="modal-accept-action"
+                onclick="updateApplicationStatus(
+                    ${Number(application.id)},
+                    'Accepted',
+                    true
+                )"
+            >
+                ✅ Accept
+            </button>
+
+
+            <button
+                type="button"
+                class="modal-reject-action"
+                onclick="updateApplicationStatus(
+                    ${Number(application.id)},
+                    'Rejected',
+                    true
+                )"
+            >
+                ❌ Reject
+            </button>
+
+        `;
+
+    } else {
+
+        const statusText =
+            statusLower === "accepted"
+                ? "🟢 Accepted"
+                : "🔴 Rejected";
+
+
+        modalActions.innerHTML = `
+
+            <div
+                style="
+                    margin-right:auto;
+                    font-weight:600;
+                    color:#64748b;
+                    display:flex;
+                    align-items:center;
+                "
+            >
+                ${statusText}
+            </div>
+
+
+            <button
+                type="button"
+                class="modal-close-action"
+                onclick="closeApplicationModal()"
+            >
+                ✕ Close
+            </button>
+
+        `;
+    }
+
+
+    // ================= OPEN MODAL =================
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+
+    modal.classList.add(
+        "active"
+    );
+
+
+    // Prevent background scrolling
+
+    document.body.style.overflow =
+        "hidden";
+}
+
+
+// =====================================================
+// CLOSE APPLICATION MODAL
+// =====================================================
+
+function closeApplicationModal() {
+
+    const modal =
+        document.getElementById(
+            "applicationModal"
+        );
+
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove(
+        "active"
+    );
+
+
+    document.body.style.overflow =
+        "";
+}
+
+
+// =====================================================
+// UPDATE STATUS
+// =====================================================
+
+async function updateApplicationStatus(
+    applicationId,
+    newStatus,
+    fromModal = false
+) {
+
+    const confirmMessage =
+        newStatus === "Accepted"
+
+            ? "Are you sure you want to accept this application?"
+
+            : "Are you sure you want to reject this application?";
+
+
+    if (!confirm(
+        confirmMessage
+    )) {
+
+        return;
+    }
+
 
     try {
 
-        // =========================================
-        // UPDATE APPLICATION
-        // =========================================
-
         const response =
             await fetch(
-                `http://localhost:8080/applications/${id}/status?status=${encodeURIComponent(status)}`,
+                `http://localhost:8080/applications/${applicationId}/status?status=${encodeURIComponent(
+                    newStatus
+                )}`,
                 {
                     method: "PUT"
                 }
@@ -496,200 +763,294 @@ async function updateStatus(
         if (!response.ok) {
 
             throw new Error(
-                "Failed to update application status"
+                "Unable to update application status"
             );
-
         }
 
 
-        // =========================================
-        // ACCEPT → CREATE CONTRACT
-        // =========================================
-
-        if (status === "Accepted") {
-
-            const applicationsResponse =
-                await fetch(
-                    "http://localhost:8080/applications"
-                );
+        alert(
+            `Application ${newStatus.toLowerCase()} successfully!`
+        );
 
 
-            if (!applicationsResponse.ok) {
+        // Close modal if opened from modal
 
-                throw new Error(
-                    "Failed to get applications"
-                );
+        if (fromModal) {
 
-            }
-
-
-            const applications =
-                await applicationsResponse.json();
-
-
-            const application =
-                applications.find(
-                    app =>
-                        String(app.id) ===
-                        String(id)
-                );
-
-
-            if (!application) {
-
-                throw new Error(
-                    "Application not found"
-                );
-
-            }
-
-
-            // =========================================
-            // CHECK EXISTING CONTRACT
-            // =========================================
-
-            const existingContractsResponse =
-                await fetch(
-                    `http://localhost:8080/api/contracts/client/${encodeURIComponent(userEmail)}`
-                );
-
-
-            if (
-                existingContractsResponse.ok
-            ) {
-
-                const existingContracts =
-                    await existingContractsResponse.json();
-
-
-                const alreadyExists =
-                    existingContracts.some(
-                        contract =>
-                            String(contract.jobId) ===
-                            String(application.jobId) &&
-                            contract.freelancerEmail ===
-                            application.freelancerEmail
-                    );
-
-
-                if (alreadyExists) {
-
-                    alert(
-                        "A contract already exists for this freelancer and job."
-                    );
-
-                    loadApplications();
-
-                    return;
-                }
-
-            }
-
-
-            // =========================================
-            // CREATE CONTRACT
-            // =========================================
-
-            const contract = {
-
-                jobId:
-                    application.jobId,
-
-                jobTitle:
-                    application.jobTitle,
-
-                clientEmail:
-                    userEmail,
-
-                freelancerEmail:
-                    application.freelancerEmail,
-
-                status:
-                    "ACTIVE"
-
-            };
-
-
-            const contractResponse =
-                await fetch(
-                    "http://localhost:8080/api/contracts",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify(contract)
-                    }
-                );
-
-
-            if (!contractResponse.ok) {
-
-                throw new Error(
-                    "Failed to create contract"
-                );
-
-            }
-
-
-            alert(
-                "Freelancer accepted and contract created successfully!"
-            );
-
-
-        } else {
-
-            alert(
-                "Application rejected."
-            );
-
+            closeApplicationModal();
         }
 
 
-        // =========================================
-        // REFRESH
-        // =========================================
+        // Reload data
 
-        loadApplications();
+        await loadApplications();
 
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Status update error:",
+            error
+        );
 
 
         alert(
-            "Unable to update application status."
+            "Unable to update application status. Please check whether Spring Boot is running."
+        );
+    }
+}
+
+
+// ================= SEARCH =================
+
+function searchApplications() {
+
+    const searchInput =
+        document.getElementById(
+            "applicationSearch"
         );
 
+
+    const searchText =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
+
+
+    const filtered =
+        clientApplications.filter(
+            application => {
+
+
+                const job =
+                    clientJobs.find(
+                        j =>
+                            Number(j.id) ===
+                            Number(application.jobId)
+                    );
+
+
+                const jobTitle =
+                    application.jobTitle ||
+                    (
+                        job
+                            ? job.title
+                            : ""
+                    );
+
+
+                const freelancer =
+                    application.freelancerEmail ||
+                    "";
+
+
+                return (
+
+                    freelancer
+                        .toLowerCase()
+                        .includes(searchText)
+
+                    ||
+
+                    jobTitle
+                        .toLowerCase()
+                        .includes(searchText)
+
+                );
+
+            }
+        );
+
+
+    applyStatusFilter(
+        filtered
+    );
+}
+
+
+// ================= STATUS FILTER =================
+
+function filterApplications() {
+
+    searchApplications();
+}
+
+
+// ================= APPLY STATUS FILTER =================
+
+function applyStatusFilter(
+    applications
+) {
+
+    const filter =
+        document.getElementById(
+            "statusFilter"
+        );
+
+
+    const selectedStatus =
+        filter
+            ? filter.value
+            : "ALL";
+
+
+    let filtered =
+        applications;
+
+
+    if (
+        selectedStatus !==
+        "ALL"
+    ) {
+
+        filtered =
+            applications.filter(
+                application => {
+
+                    const status =
+                        application.status ||
+                        "Pending";
+
+
+                    return (
+                        status.toLowerCase() ===
+                        selectedStatus.toLowerCase()
+                    );
+
+                }
+            );
     }
 
+
+    displayApplications(
+        filtered
+    );
 }
 
 
-// =========================================
-// SAFE HTML
-// =========================================
+// ================= HTML ESCAPE =================
 
-function escapeHTML(value) {
+function escapeHTML(
+    value
+) {
 
-    const div =
-        document.createElement("div");
+    if (
+        value === null ||
+        value === undefined
+    ) {
 
-    div.textContent =
-        value ?? "";
+        return "";
+    }
 
-    return div.innerHTML;
 
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
 
 
-// =========================================
-// START
-// =========================================
+// ================= ERROR =================
 
-loadApplications();
+function showErrorMessage() {
+
+    const container =
+        document.getElementById(
+            "clientApplicationsContainer"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    container.innerHTML = `
+
+        <div class="empty-message">
+
+            <div class="empty-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Unable to Load Applications
+            </h3>
+
+            <p>
+                Please make sure Spring Boot is running.
+            </p>
+
+        </div>
+
+    `;
+}
+
+
+// ================= EVENT LISTENERS =================
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const searchInput =
+            document.getElementById(
+                "applicationSearch"
+            );
+
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        if (searchInput) {
+
+            searchInput.addEventListener(
+                "input",
+                searchApplications
+            );
+
+        }
+
+
+        if (statusFilter) {
+
+            statusFilter.addEventListener(
+                "change",
+                searchApplications
+            );
+
+        }
+
+
+        loadApplications();
+
+    }
+);

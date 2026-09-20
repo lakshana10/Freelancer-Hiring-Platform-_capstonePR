@@ -1,10 +1,34 @@
-const API_URL = "http://localhost:8080/api/contracts";
-const PAYMENT_API_URL = "http://localhost:8080/api/payments";
+// =========================================
+// CONTRACTS
+// =========================================
 
-const userEmail = localStorage.getItem("userEmail");
+const API_URL =
+    "http://localhost:8080/api/contracts";
+
+const PAYMENT_API_URL =
+    "http://localhost:8080/api/payments";
+
+
+// =========================================
+// GET LOGGED-IN USER
+// =========================================
+
+const loggedInUser =
+    JSON.parse(
+        localStorage.getItem("loggedInUser")
+    );
+
+const userEmail =
+    localStorage.getItem("userEmail") ||
+    (loggedInUser
+        ? loggedInUser.email
+        : null);
+
 
 const container =
-    document.getElementById("contractsContainer");
+    document.getElementById(
+        "contractsContainer"
+    );
 
 
 // =========================================
@@ -22,7 +46,9 @@ async function loadContracts() {
                     🔐
                 </div>
 
-                <h2>Please Login</h2>
+                <h2>
+                    Please Login
+                </h2>
 
                 <p>
                     You need to login to view your contracts.
@@ -31,7 +57,9 @@ async function loadContracts() {
                 <a
                     href="login.html"
                     class="jobs-btn">
+
                     Login
+
                 </a>
 
             </div>
@@ -43,9 +71,12 @@ async function loadContracts() {
 
     try {
 
-        const response = await fetch(
-            `${API_URL}/freelancer/${encodeURIComponent(userEmail)}`
-        );
+        const response =
+            await fetch(
+                `${API_URL}/freelancer/${encodeURIComponent(
+                    userEmail
+                )}`
+            );
 
 
         if (!response.ok) {
@@ -60,6 +91,10 @@ async function loadContracts() {
         const contracts =
             await response.json();
 
+
+        // =========================================
+        // NO CONTRACTS
+        // =========================================
 
         if (contracts.length === 0) {
 
@@ -82,7 +117,9 @@ async function loadContracts() {
                     <a
                         href="jobs.html"
                         class="jobs-btn">
+
                         Find Jobs →
+
                     </a>
 
                 </div>
@@ -94,6 +131,10 @@ async function loadContracts() {
 
         container.innerHTML = "";
 
+
+        // =========================================
+        // DISPLAY CONTRACTS
+        // =========================================
 
         contracts.forEach(contract => {
 
@@ -225,7 +266,9 @@ async function loadContracts() {
 
                         <button
                             class="details-btn"
-                            onclick="showContractDetails(${contract.id})">
+                            onclick="showContractDetails(
+                                ${contract.id}
+                            )">
 
                             View Details
 
@@ -246,6 +289,17 @@ async function loadContracts() {
 
                         </button>
 
+
+                        <button
+                            class="message-btn"
+                            onclick="openMessage(
+                                '${escapeValue(contract.clientEmail)}'
+                            )">
+
+                            💬 Message Client
+
+                        </button>
+
                     </div>
 
                 </div>
@@ -260,11 +314,13 @@ async function loadContracts() {
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Contract loading error:",
+            error
+        );
 
 
         container.innerHTML = `
-
             <div class="no-contracts">
 
                 <div class="empty-icon">
@@ -288,10 +344,62 @@ async function loadContracts() {
                 </button>
 
             </div>
-
         `;
 
     }
+
+}
+
+
+// =========================================
+// MESSAGE CLIENT
+// =========================================
+
+function openMessage(clientEmail) {
+
+    if (!clientEmail) {
+
+        alert(
+            "Client email not found."
+        );
+
+        return;
+    }
+
+
+    if (
+        !loggedInUser ||
+        !loggedInUser.email
+    ) {
+
+        alert(
+            "Please login first."
+        );
+
+        window.location.href =
+            "login.html";
+
+        return;
+    }
+
+
+    if (
+        loggedInUser.role &&
+        loggedInUser.role !== "FREELANCER"
+    ) {
+
+        alert(
+            "Only freelancers can message clients from this page."
+        );
+
+        return;
+    }
+
+
+    window.location.href =
+        `messages.html?receiver=${encodeURIComponent(
+            clientEmail
+        )}`;
 
 }
 
@@ -320,12 +428,16 @@ function escapeHTML(value) {
 function escapeValue(value) {
 
     if (!value) {
+
         return "";
+
     }
+
 
     return String(value)
         .replace(/\\/g, "\\\\")
         .replace(/'/g, "\\'");
+
 }
 
 
@@ -336,16 +448,21 @@ function escapeValue(value) {
 function showContractDetails(id) {
 
     const cards =
-        document.querySelectorAll(".contract-card");
+        document.querySelectorAll(
+            ".contract-card"
+        );
 
 
-    let selectedContract = null;
+    let selectedContract =
+        null;
 
 
     cards.forEach(card => {
 
         const number =
-            card.querySelector(".contract-number");
+            card.querySelector(
+                ".contract-number"
+            );
 
 
         if (
@@ -355,7 +472,8 @@ function showContractDetails(id) {
             )
         ) {
 
-            selectedContract = card;
+            selectedContract =
+                card;
 
         }
 
@@ -369,7 +487,6 @@ function showContractDetails(id) {
         );
 
         return;
-
     }
 
 
@@ -412,17 +529,23 @@ function showContractDetails(id) {
     alert(
         "Contract Details\n\n" +
 
-        "Contract ID: #" + id +
+        "Contract ID: #" +
+        id +
 
-        "\nJob Title: " + title +
+        "\nJob Title: " +
+        title +
 
-        "\nJob ID: " + jobId +
+        "\nJob ID: " +
+        jobId +
 
-        "\nClient: " + client +
+        "\nClient: " +
+        client +
 
-        "\nFreelancer: " + freelancer +
+        "\nFreelancer: " +
+        freelancer +
 
-        "\nStatus: " + status
+        "\nStatus: " +
+        status
     );
 
 }
@@ -447,7 +570,9 @@ async function createPayment(
 
 
     if (amountInput === null) {
+
         return;
+
     }
 
 
@@ -465,7 +590,6 @@ async function createPayment(
         );
 
         return;
-
     }
 
 
@@ -490,7 +614,9 @@ async function createPayment(
             await existingResponse.json();
 
 
-        if (existingPayments.length > 0) {
+        if (
+            existingPayments.length > 0
+        ) {
 
             alert(
                 "A payment already exists for this contract."
@@ -531,15 +657,22 @@ async function createPayment(
             await fetch(
                 PAYMENT_API_URL,
                 {
-                    method: "POST",
+
+                    method:
+                        "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body:
-                        JSON.stringify(payment)
+                        JSON.stringify(
+                            payment
+                        )
+
                 }
             );
 
@@ -564,7 +697,10 @@ async function createPayment(
 
     } catch (error) {
 
-        console.error(error);
+        console.error(
+            "Payment error:",
+            error
+        );
 
 
         alert(
@@ -581,7 +717,9 @@ async function createPayment(
 // =========================================
 
 const themeBtn =
-    document.getElementById("themeBtn");
+    document.getElementById(
+        "themeBtn"
+    );
 
 
 if (themeBtn) {

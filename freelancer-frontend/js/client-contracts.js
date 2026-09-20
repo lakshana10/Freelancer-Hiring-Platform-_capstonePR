@@ -1,11 +1,13 @@
 const API_URL = "http://localhost:8080/api/contracts";
 
 const userEmail = localStorage.getItem("userEmail");
+
 const container = document.getElementById("contractsContainer");
 
 async function loadClientContracts() {
 
     if (!userEmail) {
+
         container.innerHTML = `
             <div class="no-contracts">
                 <div class="empty-icon">🔐</div>
@@ -14,6 +16,7 @@ async function loadClientContracts() {
                 <a href="login.html" class="jobs-btn">Login</a>
             </div>
         `;
+
         return;
     }
 
@@ -57,6 +60,7 @@ async function loadClientContracts() {
             const status = contract.status || "ACTIVE";
 
             card.innerHTML = `
+
                 <div class="contract-top">
 
                     <div class="contract-title-section">
@@ -175,6 +179,15 @@ async function loadClientContracts() {
 
                         </button>
 
+
+                        <button
+                            class="message-btn"
+                            onclick="openMessage('${escapeValue(contract.freelancerEmail)}')">
+
+                            💬 Message Freelancer
+
+                        </button>
+
                     </div>
 
                 </div>
@@ -189,6 +202,7 @@ async function loadClientContracts() {
         console.error(error);
 
         container.innerHTML = `
+
             <div class="no-contracts">
 
                 <div class="empty-icon">
@@ -300,23 +314,87 @@ function showContractDetails(id) {
     });
 
 
-    alert(
-        "CONTRACT DETAILS\n\n" +
+    /* OPEN THE HTML POPUP */
 
-        "Contract ID: #" + id + "\n" +
+    const modal =
+        document.getElementById("contractDetailsModal");
 
-        "Job Title: " + jobTitle + "\n" +
 
-        "Job ID: " + jobId + "\n" +
+    if (!modal) {
 
-        "Client: " + clientEmail + "\n" +
+        alert("Contract details popup not found.");
 
-        "Freelancer: " + freelancerEmail + "\n" +
+        return;
 
-        "Status: " + status
-    );
+    }
+
+
+    document.getElementById("modalContractId").textContent =
+        "#" + id;
+
+
+    document.getElementById("modalJobTitle").textContent =
+        jobTitle;
+
+
+    document.getElementById("modalJobId").textContent =
+        jobId;
+
+
+    document.getElementById("modalClientEmail").textContent =
+        clientEmail;
+
+
+    document.getElementById("modalFreelancerEmail").textContent =
+        freelancerEmail;
+
+
+    document.getElementById("modalContractStatus").textContent =
+        status;
+
+
+    modal.classList.add("active");
+
+    document.body.style.overflow = "hidden";
 
 }
+
+
+/* =========================================
+   CLOSE CONTRACT DETAILS POPUP
+========================================= */
+
+function closeContractDetails() {
+
+    const modal =
+        document.getElementById("contractDetailsModal");
+
+
+    if (modal) {
+
+        modal.classList.remove("active");
+
+    }
+
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* =========================================
+   CLOSE POPUP WITH ESC KEY
+========================================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        closeContractDetails();
+
+    }
+
+});
 
 
 /* =========================================
@@ -327,6 +405,47 @@ function giveReview(contractId) {
 
     window.location.href =
         `give-review.html?contractId=${contractId}`;
+
+}
+
+
+/* =========================================
+   MESSAGE FREELANCER
+========================================= */
+
+function openMessage(freelancerEmail) {
+
+    if (!freelancerEmail || freelancerEmail === "-") {
+
+        alert("Freelancer email not found.");
+
+        return;
+
+    }
+
+
+    window.location.href =
+        `messages.html?receiver=${encodeURIComponent(freelancerEmail)}`;
+
+}
+
+
+/* =========================================
+   ESCAPE VALUE
+========================================= */
+
+function escapeValue(value) {
+
+    if (!value) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
 
 }
 

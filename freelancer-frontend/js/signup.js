@@ -41,7 +41,7 @@ function togglePassword(inputId, button) {
 
 document
     .getElementById("generateOtpBtn")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const email =
             document.getElementById("email").value.trim();
@@ -61,7 +61,7 @@ document
         try {
 
             this.disabled = true;
-            this.textContent = "Generating...";
+            this.textContent = "Sending...";
 
 
             const response = await fetch(
@@ -87,23 +87,24 @@ document
 
                 alert(
                     data.message ||
-                    "Failed to generate OTP."
+                    "Failed to send OTP."
                 );
 
                 return;
             }
 
 
-            // Temporary testing
-            // OTP will later be sent through Gmail
+            // ===============================
+            // OTP SENT SUCCESSFULLY
+            // ===============================
 
             alert(
-                "Your OTP is: " + data.otp
+                "OTP sent successfully to your email. Please check your Gmail."
             );
 
 
             otpMessage.textContent =
-                "OTP generated. Please enter the OTP.";
+                "✓ OTP sent successfully. Please check your email.";
 
             otpMessage.style.color = "green";
 
@@ -116,6 +117,7 @@ document
                 "OTP generation error:",
                 error
             );
+
 
             alert(
                 "Cannot connect to the server. Please make sure Spring Boot is running."
@@ -137,7 +139,7 @@ document
 
 document
     .getElementById("verifyOtpBtn")
-    .addEventListener("click", async function() {
+    .addEventListener("click", async function () {
 
         const email =
             document.getElementById("email").value.trim();
@@ -231,6 +233,7 @@ document
                 error
             );
 
+
             alert(
                 "Cannot connect to the server. Please make sure Spring Boot is running."
             );
@@ -251,7 +254,7 @@ document
 
 document
     .getElementById("signupForm")
-    .addEventListener("submit", async function(event) {
+    .addEventListener("submit", async function (event) {
 
         event.preventDefault();
 

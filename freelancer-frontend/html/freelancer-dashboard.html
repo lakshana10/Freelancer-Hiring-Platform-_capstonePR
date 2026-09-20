@@ -33,14 +33,20 @@
             width: 100%;
             min-height: 72px;
             padding: 0 35px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             background: white;
+
             border-bottom: 1px solid #e8ebf2;
+
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+
             position: sticky;
             top: 0;
+
             z-index: 1000;
         }
 
@@ -48,9 +54,12 @@
         .dashboard-logo {
             display: flex;
             align-items: center;
+
             font-size: 24px;
             font-weight: 800;
+
             color: #1f4ed8;
+
             white-space: nowrap;
         }
 
@@ -64,20 +73,29 @@
         .dashboard-nav {
             display: flex;
             align-items: center;
+
             gap: 5px;
+
             flex-wrap: wrap;
+
             justify-content: flex-end;
         }
 
 
         .dashboard-nav a {
             text-decoration: none;
+
             color: #4b5563;
+
             font-size: 14px;
             font-weight: 600;
+
             padding: 10px 12px;
+
             border-radius: 8px;
+
             white-space: nowrap;
+
             transition: 0.2s ease;
         }
 
@@ -94,15 +112,24 @@
         }
 
 
+        /* ================= LOGOUT ================= */
+
         .logout-btn {
             border: none;
+
             background: #feecec;
+
             color: #dc2626;
+
             padding: 9px 14px;
+
             border-radius: 8px;
+
             font-size: 13px;
             font-weight: 700;
+
             cursor: pointer;
+
             margin-left: 5px;
         }
 
@@ -116,7 +143,9 @@
 
         .dashboard-container {
             max-width: 1200px;
+
             margin: 40px auto;
+
             padding: 0 20px 60px;
         }
 
@@ -131,39 +160,70 @@
             );
 
             color: white;
+
             border-radius: 20px;
+
             padding: 32px;
+
             margin-bottom: 28px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 25px;
-            box-shadow: 0 8px 25px rgba(31, 78, 216, 0.18);
+
+            box-shadow:
+                0 8px 25px rgba(
+                    31,
+                    78,
+                    216,
+                    0.18
+                );
         }
 
 
         .welcome-text h1 {
             margin: 0 0 8px;
+
             font-size: 30px;
         }
 
 
         .welcome-text p {
             margin: 0;
+
             opacity: 0.9;
+
             font-size: 15px;
         }
 
 
         .welcome-icon {
             width: 70px;
+
             height: 70px;
+
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.15);
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 35px;
+
             flex-shrink: 0;
         }
 
@@ -172,43 +232,74 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
             gap: 18px;
+
             margin-bottom: 30px;
         }
 
 
         .stat-card {
             background: white;
+
             padding: 22px;
+
             border-radius: 15px;
+
             border: 1px solid #edf0f5;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+
+            box-shadow:
+                0 4px 15px rgba(
+                    0,
+                    0,
+                    0,
+                    0.05
+                );
+
             transition: 0.2s ease;
         }
 
 
         .stat-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+
+            box-shadow:
+                0 8px 22px rgba(
+                    0,
+                    0,
+                    0,
+                    0.08
+                );
         }
 
 
         .stat-top {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 15px;
         }
 
 
         .stat-icon {
             width: 45px;
+
             height: 45px;
+
             border-radius: 12px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             font-size: 21px;
         }
 
@@ -235,13 +326,16 @@
 
         .stat-card h3 {
             margin: 0;
+
             font-size: 28px;
         }
 
 
         .stat-card p {
             margin: 5px 0 0;
+
             color: #6b7280;
+
             font-size: 13px;
         }
 
@@ -250,39 +344,60 @@
 
         .content-grid {
             display: grid;
-            grid-template-columns: 1.5fr 1fr;
+
+            grid-template-columns:
+                1.5fr 1fr;
+
             gap: 22px;
+
             margin-bottom: 30px;
         }
 
 
         .dashboard-card {
             background: white;
+
             border-radius: 16px;
+
             padding: 25px;
+
             border: 1px solid #edf0f5;
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+
+            box-shadow:
+                0 5px 18px rgba(
+                    0,
+                    0,
+                    0,
+                    0.05
+                );
         }
 
 
         .card-header {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             margin-bottom: 20px;
         }
 
 
         .card-header h2 {
             margin: 0;
+
             font-size: 19px;
         }
 
 
         .view-link {
             text-decoration: none;
+
             color: #1f4ed8;
+
             font-size: 13px;
+
             font-weight: 700;
         }
 
@@ -291,11 +406,17 @@
 
         .application-item {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
             gap: 15px;
+
             padding: 15px 0;
-            border-bottom: 1px solid #edf0f3;
+
+            border-bottom:
+                1px solid #edf0f3;
         }
 
 
@@ -306,48 +427,61 @@
 
         .application-info h4 {
             margin: 0 0 5px;
+
             font-size: 15px;
         }
 
 
         .application-info p {
             margin: 0;
+
             color: #777;
+
             font-size: 12px;
         }
 
 
         .status {
             padding: 6px 11px;
+
             border-radius: 20px;
+
             font-size: 11px;
+
             font-weight: 700;
+
             white-space: nowrap;
         }
 
 
         .status.pending {
             background: #fff4d6;
+
             color: #996c00;
         }
 
 
         .status.accepted {
             background: #e7f8ee;
+
             color: #198754;
         }
 
 
         .status.rejected {
             background: #feecec;
+
             color: #dc2626;
         }
 
 
         .loading-text {
             color: #777;
+
             font-size: 14px;
+
             text-align: center;
+
             padding: 25px;
         }
 
@@ -356,83 +490,60 @@
 
         .quick-actions {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+
+            grid-template-columns:
+                1fr 1fr;
+
             gap: 12px;
         }
 
 
         .quick-action {
             text-decoration: none;
+
             background: #f8f9fc;
+
             border: 1px solid #edf0f5;
+
             border-radius: 12px;
+
             padding: 18px;
+
             color: #111827;
+
             transition: 0.2s ease;
         }
 
 
         .quick-action:hover {
             background: #eef3ff;
+
             border-color: #d9e2ff;
+
             transform: translateY(-2px);
         }
 
 
         .quick-action-icon {
             font-size: 24px;
+
             margin-bottom: 9px;
         }
 
 
         .quick-action h4 {
             margin: 0 0 5px;
+
             font-size: 14px;
         }
 
 
         .quick-action p {
             margin: 0;
+
             color: #777;
+
             font-size: 11px;
-        }
-
-
-        /* ================= PROFILE CARD ================= */
-
-        .profile-card {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            background: #f8f9fc;
-            padding: 18px;
-            border-radius: 13px;
-        }
-
-
-        .profile-avatar {
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: #eaf0ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 27px;
-            flex-shrink: 0;
-        }
-
-
-        .profile-info h3 {
-            margin: 0 0 5px;
-            font-size: 17px;
-        }
-
-
-        .profile-info p {
-            margin: 0;
-            color: #777;
-            font-size: 13px;
         }
 
 
@@ -442,7 +553,9 @@
 
             .dashboard-navbar {
                 padding: 15px 20px;
+
                 align-items: flex-start;
+
                 gap: 15px;
             }
 
@@ -453,7 +566,8 @@
 
 
             .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns:
+                    repeat(2, 1fr);
             }
 
 
@@ -468,6 +582,7 @@
 
             .dashboard-navbar {
                 flex-direction: column;
+
                 align-items: center;
             }
 
@@ -479,6 +594,7 @@
 
             .welcome-section {
                 flex-direction: column;
+
                 align-items: flex-start;
             }
 
@@ -499,7 +615,9 @@
 
             .dashboard-container {
                 margin-top: 25px;
-                padding: 0 15px 40px;
+
+                padding:
+                    0 15px 40px;
             }
 
 
@@ -515,7 +633,8 @@
 
             .dashboard-nav a {
                 font-size: 12px;
-                padding: 8px 8px;
+
+                padding: 8px;
             }
 
         }
@@ -534,7 +653,9 @@
 
         <div class="dashboard-logo">
 
-            <span class="logo-icon">✣</span>
+            <span class="logo-icon">
+                ✣
+            </span>
 
             <span>
                 Freelance<span>Hub</span>
@@ -545,38 +666,49 @@
 
         <nav class="dashboard-nav">
 
-            <a href="freelancer-dashboard.html"
-               class="active">
+            <a
+                href="freelancer-dashboard.html"
+                class="active"
+            >
                 Dashboard
             </a>
+
 
             <a href="jobs.html">
                 Find Jobs
             </a>
 
+
             <a href="my-applications.html">
                 My Applications
             </a>
+
 
             <a href="my-contracts.html">
                 My Contracts
             </a>
 
+
             <a href="my-payments.html">
                 My Payments
             </a>
+
 
             <a href="my-reviews.html">
                 My Reviews
             </a>
 
+
             <a href="profile.html">
                 My Profile
             </a>
 
+
             <button
+                type="button"
                 class="logout-btn"
-                onclick="logoutUser()">
+                onclick="logoutUser()"
+            >
                 Logout
             </button>
 
@@ -597,11 +729,22 @@
             <div class="welcome-text">
 
                 <h1>
-                    Welcome back, <span id="userName">Freelancer</span>! 👋
+
+                    Welcome back,
+
+                    <span id="userName">
+                        Freelancer
+                    </span>!
+
+                    👋
+
                 </h1>
 
+
                 <p>
-                    Manage your applications, contracts, payments and freelance work from one place.
+                    Manage your applications,
+                    contracts, payments and
+                    freelance work from one place.
                 </p>
 
             </div>
@@ -629,9 +772,11 @@
 
                 </div>
 
+
                 <h3 id="totalApplications">
                     0
                 </h3>
+
 
                 <p>
                     Total Applications
@@ -650,9 +795,11 @@
 
                 </div>
 
+
                 <h3 id="pendingApplications">
                     0
                 </h3>
+
 
                 <p>
                     Pending Applications
@@ -671,9 +818,11 @@
 
                 </div>
 
+
                 <h3 id="acceptedApplications">
                     0
                 </h3>
+
 
                 <p>
                     Accepted Applications
@@ -692,9 +841,11 @@
 
                 </div>
 
+
                 <h3 id="activeContracts">
-                    —
+                    0
                 </h3>
+
 
                 <p>
                     Active Contracts
@@ -711,7 +862,7 @@
         <section class="content-grid">
 
 
-            <!-- RECENT APPLICATIONS -->
+            <!-- ================= RECENT APPLICATIONS ================= -->
 
             <div class="dashboard-card">
 
@@ -721,9 +872,11 @@
                         Recent Applications
                     </h2>
 
+
                     <a
                         href="my-applications.html"
-                        class="view-link">
+                        class="view-link"
+                    >
                         View All →
                     </a>
 
@@ -741,7 +894,7 @@
             </div>
 
 
-            <!-- QUICK ACTIONS -->
+            <!-- ================= QUICK ACTIONS ================= -->
 
             <div class="dashboard-card">
 
@@ -759,7 +912,8 @@
 
                     <a
                         href="jobs.html"
-                        class="quick-action">
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             🔍
@@ -778,14 +932,15 @@
 
                     <a
                         href="my-applications.html"
-                        class="quick-action">
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             📄
                         </div>
 
                         <h4>
-                            Applications
+                            My Applications
                         </h4>
 
                         <p>
@@ -797,14 +952,15 @@
 
                     <a
                         href="my-contracts.html"
-                        class="quick-action">
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             💼
                         </div>
 
                         <h4>
-                            Contracts
+                            My Contracts
                         </h4>
 
                         <p>
@@ -814,20 +970,63 @@
                     </a>
 
 
+                    <!-- MESSAGING QUICK ACTION -->
+
                     <a
-                        href="my-payments.html"
-                        class="quick-action">
+                        href="messages.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
-                            💳
+                            💬
                         </div>
 
                         <h4>
-                            Payments
+                            Messages
                         </h4>
 
                         <p>
-                            Track your payments
+                            Chat with clients
+                        </p>
+
+                    </a>
+
+
+                    <a
+                        href="my-reviews.html"
+                        class="quick-action"
+                    >
+
+                        <div class="quick-action-icon">
+                            ⭐
+                        </div>
+
+                        <h4>
+                            My Reviews
+                        </h4>
+
+                        <p>
+                            View your client reviews
+                        </p>
+
+                    </a>
+
+
+                    <a
+                        href="profile.html"
+                        class="quick-action"
+                    >
+
+                        <div class="quick-action-icon">
+                            👤
+                        </div>
+
+                        <h4>
+                            My Profile
+                        </h4>
+
+                        <p>
+                            Update your profile
                         </p>
 
                     </a>
@@ -837,49 +1036,6 @@
 
             </div>
 
-
-        </section>
-
-
-        <!-- ================= PROFILE ================= -->
-
-        <section class="dashboard-card">
-
-            <div class="card-header">
-
-                <h2>
-                    My Profile
-                </h2>
-
-                <a
-                    href="profile.html"
-                    class="view-link">
-                    View Profile →
-                </a>
-
-            </div>
-
-
-            <div class="profile-card">
-
-                <div class="profile-avatar">
-                    👤
-                </div>
-
-
-                <div class="profile-info">
-
-                    <h3 id="profileName">
-                        Freelancer
-                    </h3>
-
-                    <p id="profileEmail">
-                        Loading email...
-                    </p>
-
-                </div>
-
-            </div>
 
         </section>
 
@@ -891,33 +1047,37 @@
 
     <script>
 
+
         /* ================= USER ================= */
 
         const loggedInUser =
             JSON.parse(
-                localStorage.getItem("loggedInUser")
+                localStorage.getItem(
+                    "loggedInUser"
+                )
             );
 
 
         if (!loggedInUser) {
 
-            alert("Please login first.");
+            alert(
+                "Please login first."
+            );
 
-            window.location.href = "login.html";
-
+            window.location.href =
+                "login.html";
         }
 
 
+        /* ================= USER NAME ================= */
+
         if (loggedInUser) {
 
-            document.getElementById("userName").textContent =
-                loggedInUser.name || "Freelancer";
-
-            document.getElementById("profileName").textContent =
-                loggedInUser.name || "Freelancer";
-
-            document.getElementById("profileEmail").textContent =
-                loggedInUser.email || "";
+            document.getElementById(
+                "userName"
+            ).textContent =
+                loggedInUser.name ||
+                "Freelancer";
 
         }
 
@@ -936,7 +1096,9 @@
                 const response =
                     await fetch(
                         "http://localhost:8080/applications/freelancer/"
-                        + loggedInUser.email
+                        + encodeURIComponent(
+                            loggedInUser.email
+                        )
                     );
 
 
@@ -961,36 +1123,53 @@
 
                 const pending =
                     applications.filter(
-                        app =>
-                            app.status &&
-                            app.status.toLowerCase() === "pending"
+                        function (app) {
+
+                            return (
+                                app.status &&
+                                app.status
+                                    .toLowerCase() ===
+                                "pending"
+                            );
+
+                        }
                     ).length;
 
 
                 const accepted =
                     applications.filter(
-                        app =>
-                            app.status &&
-                            app.status.toLowerCase() === "accepted"
+                        function (app) {
+
+                            return (
+                                app.status &&
+                                app.status
+                                    .toLowerCase() ===
+                                "accepted"
+                            );
+
+                        }
                     ).length;
 
 
                 document.getElementById(
                     "totalApplications"
-                ).textContent = total;
+                ).textContent =
+                    total;
 
 
                 document.getElementById(
                     "pendingApplications"
-                ).textContent = pending;
+                ).textContent =
+                    pending;
 
 
                 document.getElementById(
                     "acceptedApplications"
-                ).textContent = accepted;
+                ).textContent =
+                    accepted;
 
 
-                /* ================= RECENT ================= */
+                /* ================= RECENT APPLICATIONS ================= */
 
                 const container =
                     document.getElementById(
@@ -998,7 +1177,9 @@
                     );
 
 
-                if (applications.length === 0) {
+                if (
+                    applications.length === 0
+                ) {
 
                     container.innerHTML = `
                         <div class="loading-text">
@@ -1007,57 +1188,78 @@
                     `;
 
                     return;
-
                 }
 
 
                 const recent =
-                    applications.slice(-4).reverse();
+                    applications
+                        .slice()
+                        .reverse()
+                        .slice(0, 4);
 
 
                 container.innerHTML =
-                    recent.map(application => {
+                    recent
+                        .map(
+                            function (application) {
 
-                        const status =
-                            application.status || "Pending";
-
-                        const statusClass =
-                            status.toLowerCase();
+                                const status =
+                                    application.status ||
+                                    "Pending";
 
 
-                        return `
+                                const statusClass =
+                                    status.toLowerCase();
 
-                            <div class="application-item">
 
-                                <div class="application-info">
+                                return `
 
-                                    <h4>
-                                        ${escapeHTML(
-                                            application.jobTitle ||
-                                            "Untitled Job"
-                                        )}
-                                    </h4>
+                                    <div class="application-item">
 
-                                    <p>
-                                        Application #${application.id}
-                                    </p>
+                                        <div class="application-info">
 
-                                </div>
+                                            <h4>
+                                                ${escapeHTML(
+                                                    application.jobTitle ||
+                                                    "Untitled Job"
+                                                )}
+                                            </h4>
 
-                                <span class="status ${statusClass}">
-                                    ${escapeHTML(status)}
-                                </span>
+                                            <p>
+                                                Application #${application.id}
+                                            </p>
 
-                            </div>
+                                        </div>
 
-                        `;
 
-                    }).join("");
+                                        <span
+                                            class="status ${escapeHTML(
+                                                statusClass
+                                            )}"
+                                        >
+                                            ${escapeHTML(
+                                                status
+                                            )}
+                                        </span>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        )
+                        .join("");
 
             }
+
+
             catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Applications error:",
+                    error
+                );
+
 
                 document.getElementById(
                     "recentApplications"
@@ -1086,7 +1288,9 @@
                 const response =
                     await fetch(
                         "http://localhost:8080/api/contracts/freelancer/"
-                        + loggedInUser.email
+                        + encodeURIComponent(
+                            loggedInUser.email
+                        )
                     );
 
 
@@ -1105,24 +1309,39 @@
 
                 const activeContracts =
                     contracts.filter(
-                        contract =>
-                            contract.status &&
-                            contract.status.toLowerCase() === "active"
+                        function (contract) {
+
+                            return (
+                                contract.status &&
+                                contract.status
+                                    .toLowerCase() ===
+                                "active"
+                            );
+
+                        }
                     ).length;
 
 
                 document.getElementById(
                     "activeContracts"
-                ).textContent = activeContracts;
+                ).textContent =
+                    activeContracts;
 
             }
+
+
             catch (error) {
 
-                console.error(error);
+                console.error(
+                    "Contracts error:",
+                    error
+                );
+
 
                 document.getElementById(
                     "activeContracts"
-                ).textContent = "0";
+                ).textContent =
+                    "0";
 
             }
 
@@ -1134,11 +1353,31 @@
         function escapeHTML(value) {
 
             return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
 
         }
 
@@ -1147,9 +1386,21 @@
 
         function logoutUser() {
 
-            localStorage.removeItem("loggedInUser");
+            localStorage.removeItem(
+                "loggedInUser"
+            );
 
-            window.location.href = "home.html";
+            localStorage.removeItem(
+                "userEmail"
+            );
+
+            localStorage.removeItem(
+                "userRole"
+            );
+
+
+            window.location.href =
+                "home.html";
 
         }
 

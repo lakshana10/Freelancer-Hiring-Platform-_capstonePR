@@ -8,6 +8,7 @@
     <title>My Client Contracts - FreelanceHub</title>
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +21,9 @@
             color: #11152b;
         }
 
-        /* NAVBAR */
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .contract-navbar {
             background: #11152b;
@@ -55,7 +58,9 @@
             color: #aab4ff;
         }
 
-        /* PAGE */
+        /* =========================
+           PAGE
+        ========================= */
 
         .page-header {
             text-align: center;
@@ -72,7 +77,9 @@
             font-size: 15px;
         }
 
-        /* CONTRACT CONTAINER */
+        /* =========================
+           CONTRACT CONTAINER
+        ========================= */
 
         .contracts-container {
             width: 90%;
@@ -80,7 +87,9 @@
             margin: 20px auto 60px;
         }
 
-        /* CONTRACT CARD */
+        /* =========================
+           CONTRACT CARD
+        ========================= */
 
         .contract-card {
             background: white;
@@ -125,7 +134,9 @@
             font-size: 13px;
         }
 
-        /* STATUS */
+        /* =========================
+           STATUS
+        ========================= */
 
         .status {
             background: #eaf8ef;
@@ -146,7 +157,9 @@
             margin-right: 5px;
         }
 
-        /* DETAILS */
+        /* =========================
+           DETAILS
+        ========================= */
 
         .contract-details {
             display: grid;
@@ -175,7 +188,9 @@
             word-break: break-word;
         }
 
-        /* FOOTER */
+        /* =========================
+           FOOTER
+        ========================= */
 
         .contract-footer {
             border-top: 1px solid #eee;
@@ -197,7 +212,9 @@
             flex-wrap: wrap;
         }
 
-        /* BUTTONS */
+        /* =========================
+           BUTTONS
+        ========================= */
 
         .details-btn,
         .review-btn,
@@ -239,7 +256,9 @@
             background: #252b4d;
         }
 
-        /* EMPTY */
+        /* =========================
+           EMPTY
+        ========================= */
 
         .no-contracts {
             background: white;
@@ -263,7 +282,190 @@
             margin-bottom: 20px;
         }
 
-        /* RESPONSIVE */
+        /* =========================
+           CONTRACT DETAILS POPUP
+        ========================= */
+
+        .contract-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 5000;
+        }
+
+        .contract-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* BLURRED BACKGROUND */
+
+        .contract-modal-overlay {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(10, 10, 25, 0.42);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* POPUP */
+
+        .contract-modal-box {
+            position: relative;
+            z-index: 2;
+
+            width: 90%;
+            max-width: 560px;
+
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.25);
+
+            animation: contractPopup 0.25s ease;
+        }
+
+        @keyframes contractPopup {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        .contract-modal-close {
+            position: absolute;
+
+            top: 15px;
+            right: 17px;
+
+            width: 34px;
+            height: 34px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #f1f1f6;
+
+            color: #333;
+
+            font-size: 23px;
+            line-height: 30px;
+
+            cursor: pointer;
+        }
+
+        .contract-modal-close:hover {
+            background: #e5e5ee;
+        }
+
+        .contract-modal-icon {
+            width: 58px;
+            height: 58px;
+
+            border-radius: 14px;
+
+            background: #eef0ff;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+        .contract-modal-box h2 {
+            font-size: 24px;
+            margin-bottom: 7px;
+            color: #11152b;
+        }
+
+        .contract-modal-subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .contract-details-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .contract-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 14px 16px;
+
+            background: #f7f8fc;
+
+            border-radius: 10px;
+        }
+
+        .contract-detail-row span {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .contract-detail-row strong {
+            color: #11152b;
+            font-size: 14px;
+            text-align: right;
+            word-break: break-word;
+        }
+
+        .modal-status {
+            color: #198754 !important;
+        }
+
+        .contract-modal-ok {
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #11152b;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .contract-modal-ok:hover {
+            background: #252b4d;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
 
         @media (max-width: 800px) {
 
@@ -279,6 +481,7 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+
         }
 
         @media (max-width: 550px) {
@@ -312,14 +515,33 @@
             .review-btn {
                 flex: 1;
             }
+
+            .contract-modal-box {
+                width: 92%;
+                padding: 25px 20px;
+            }
+
+            .contract-detail-row {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .contract-detail-row strong {
+                text-align: left;
+            }
+
         }
+
     </style>
 
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
+    <!-- =========================
+         NAVBAR
+    ========================= -->
 
     <nav class="contract-navbar">
 
@@ -354,7 +576,9 @@
     </nav>
 
 
-    <!-- PAGE HEADER -->
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
 
     <section class="page-header">
 
@@ -367,9 +591,13 @@
     </section>
 
 
-    <!-- CONTRACTS -->
+    <!-- =========================
+         CONTRACTS
+    ========================= -->
 
-    <main class="contracts-container" id="contractsContainer">
+    <main
+        class="contracts-container"
+        id="contractsContainer">
 
         <div class="no-contracts">
 
@@ -377,7 +605,9 @@
                 ⏳
             </div>
 
-            <h2>Loading Contracts...</h2>
+            <h2>
+                Loading Contracts...
+            </h2>
 
             <p>
                 Please wait while your contracts are loaded.
@@ -388,9 +618,189 @@
     </main>
 
 
-    <!-- JAVASCRIPT -->
+    <!-- =========================
+         CONTRACT DETAILS MODAL
+    ========================= -->
+
+    <div
+        id="contractDetailsModal"
+        class="contract-modal">
+
+        <div
+            class="contract-modal-overlay"
+            onclick="closeContractDetails()">
+        </div>
+
+        <div class="contract-modal-box">
+
+            <button
+                class="contract-modal-close"
+                onclick="closeContractDetails()">
+
+                ×
+
+            </button>
+
+            <div class="contract-modal-icon">
+                📄
+            </div>
+
+            <h2>
+                Contract Details
+            </h2>
+
+            <p class="contract-modal-subtitle">
+                Complete information about this contract
+            </p>
+
+            <div class="contract-details-content">
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Contract ID
+                    </span>
+
+                    <strong id="modalContractId">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Job Title
+                    </span>
+
+                    <strong id="modalJobTitle">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Job ID
+                    </span>
+
+                    <strong id="modalJobId">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Client
+                    </span>
+
+                    <strong id="modalClientEmail">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Freelancer
+                    </span>
+
+                    <strong id="modalFreelancerEmail">
+                        -
+                    </strong>
+
+                </div>
+
+                <div class="contract-detail-row">
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong
+                        id="modalContractStatus"
+                        class="modal-status">
+
+                        -
+
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <button
+                class="contract-modal-ok"
+                onclick="closeContractDetails()">
+
+                Close
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
 
     <script src="../js/client-contracts.js"></script>
+
+    <script>
+
+        function openContractDetails(contract) {
+
+            document.getElementById("modalContractId").textContent =
+                "#" + (contract.id ?? "-");
+
+            document.getElementById("modalJobTitle").textContent =
+                contract.jobTitle || "Not available";
+
+            document.getElementById("modalJobId").textContent =
+                "#" + (contract.jobId ?? "-");
+
+            document.getElementById("modalClientEmail").textContent =
+                contract.clientEmail || "Not available";
+
+            document.getElementById("modalFreelancerEmail").textContent =
+                contract.freelancerEmail || "Not available";
+
+            document.getElementById("modalContractStatus").textContent =
+                contract.status || "Not available";
+
+            document.getElementById("contractDetailsModal")
+                .classList.add("active");
+
+            document.body.style.overflow = "hidden";
+        }
+
+
+        function closeContractDetails() {
+
+            document.getElementById("contractDetailsModal")
+                .classList.remove("active");
+
+            document.body.style.overflow = "";
+        }
+
+
+        /* ESC KEY */
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+                closeContractDetails();
+            }
+
+        });
+
+    </script>
 
 </body>
 

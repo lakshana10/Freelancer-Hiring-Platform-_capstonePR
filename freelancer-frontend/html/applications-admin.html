@@ -3,113 +3,1261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Applications - FreelanceHub</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #f4f7fb;
-            margin: 0;
-            padding: 30px;
+            color: #1f2937;
+            min-height: 100vh;
         }
 
-        h1 {
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #ffffff;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 45px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
             color: #123c69;
+        }
+
+        .admin-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-right: 20px;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #ffffff;
+            background: #123c69;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            background: #0d2f52;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
         }
 
         .back {
             display: inline-block;
-            margin-bottom: 20px;
-            color: #123c69;
             text-decoration: none;
+            color: #123c69;
             font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            color: #123c69;
+            margin-bottom: 7px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .refresh-btn {
+            border: none;
+            background: #123c69;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .refresh-btn:hover {
+            background: #0d2f52;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+            border-left: 5px solid #123c69;
+        }
+
+        .stat-card.pending {
+            border-left-color: #f59e0b;
+        }
+
+        .stat-card.accepted {
+            border-left-color: #16a34a;
+        }
+
+        .stat-card.rejected {
+            border-left-color: #dc2626;
+        }
+
+        .stat-title {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #123c69;
+        }
+
+        /* ================= TOOLBAR ================= */
+
+        .toolbar {
+            background: white;
+            padding: 18px;
+            border-radius: 14px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+            display: flex;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .search-box {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: #123c69;
+        }
+
+        .filter-box {
+            width: 190px;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 9px;
+            font-size: 14px;
+            outline: none;
+            background: white;
+        }
+
+        /* ================= APPLICATION CARDS ================= */
+
+        #applications {
+            display: grid;
+            gap: 18px;
         }
 
         .application {
             background: white;
-            padding: 20px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+            transition: 0.2s ease;
         }
 
-        .application p {
-            margin: 8px 0;
+        .application:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
         }
+
+        .application-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .application-id {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 7px;
+        }
+
+        .job-title {
+            color: #123c69;
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .detail {
+            background: #f8fafc;
+            padding: 13px;
+            border-radius: 9px;
+        }
+
+        .detail-label {
+            display: block;
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: bold;
+            color: #334155;
+            word-break: break-word;
+        }
+
+        /* ================= STATUS ================= */
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status.pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .status.accepted {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .status.rejected {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 17px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .accept-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .accept-btn:hover {
+            background: #15803d;
+        }
+
+        .reject-btn {
+            background: #dc2626;
+            color: white;
+        }
+
+        .reject-btn:hover {
+            background: #b91c1c;
+        }
+
+        .disabled-btn {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        /* ================= EMPTY / LOADING ================= */
 
         .empty {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
+            padding: 45px 25px;
+            border-radius: 14px;
+            text-align: center;
+            color: #64748b;
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        /* ================= POPUP ================= */
+
+        .popup-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 20px;
+        }
+
+        .popup {
+            background: white;
+            width: 100%;
+            max-width: 430px;
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.20);
+            animation: popupIn 0.2s ease;
+        }
+
+        @keyframes popupIn {
+            from {
+                opacity: 0;
+                transform: scale(0.94);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .popup-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .popup h2 {
+            color: #123c69;
+            margin-bottom: 10px;
+        }
+
+        .popup p {
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .popup-btn {
+            border: none;
+            padding: 11px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .confirm-btn {
+            background: #123c69;
+            color: white;
+        }
+
+        .cancel-btn {
+            background: #e5e7eb;
+            color: #334155;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .admin-label {
+                display: none;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .toolbar {
+                flex-direction: column;
+            }
+
+            .filter-box {
+                width: 100%;
+            }
+
+            .application-top {
+                flex-direction: column;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .navbar {
+                height: auto;
+                padding: 18px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <a class="back" href="admin.html">← Back to Admin Dashboard</a>
+    <!-- ================= NAVBAR ================= -->
 
-    <h1>Applications</h1>
+    <nav class="navbar">
 
-    <div id="applications">
-        Loading applications...
+        <div class="logo">
+            ✣ FreelanceHub
+        </div>
+
+        <div>
+            <span class="admin-label">
+                Administrator
+            </span>
+
+            <a class="logout"
+               href="admin.html">
+                ← Dashboard
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="container">
+
+        <a class="back" href="admin.html">
+            ← Back to Admin Dashboard
+        </a>
+
+
+        <div class="page-header">
+
+            <div>
+                <h1>Applications</h1>
+
+                <p>
+                    Review and manage freelancer applications.
+                </p>
+            </div>
+
+            <button class="refresh-btn"
+                    onclick="loadApplications()">
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <!-- ================= STATS ================= -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-title">
+                    Total Applications
+                </div>
+
+                <div class="stat-number"
+                     id="totalCount">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card pending">
+
+                <div class="stat-title">
+                    Pending
+                </div>
+
+                <div class="stat-number"
+                     id="pendingCount">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card accepted">
+
+                <div class="stat-title">
+                    Accepted
+                </div>
+
+                <div class="stat-number"
+                     id="acceptedCount">
+                    0
+                </div>
+
+            </div>
+
+
+            <div class="stat-card rejected">
+
+                <div class="stat-title">
+                    Rejected
+                </div>
+
+                <div class="stat-number"
+                     id="rejectedCount">
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= SEARCH / FILTER ================= -->
+
+        <div class="toolbar">
+
+            <input
+                type="text"
+                id="searchInput"
+                class="search-box"
+                placeholder="🔍 Search by job title or freelancer email..."
+                oninput="filterApplications()"
+            >
+
+            <select
+                id="statusFilter"
+                class="filter-box"
+                onchange="filterApplications()">
+
+                <option value="ALL">
+                    All Status
+                </option>
+
+                <option value="Pending">
+                    Pending
+                </option>
+
+                <option value="Accepted">
+                    Accepted
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- ================= APPLICATIONS ================= -->
+
+        <div id="applications">
+
+            <div class="empty">
+                <div class="empty-icon">⏳</div>
+                Loading applications...
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================= POPUP ================= -->
+
+    <div id="popupOverlay"
+         class="popup-overlay">
+
+        <div class="popup">
+
+            <div id="popupIcon"
+                 class="popup-icon">
+                ⚠️
+            </div>
+
+            <h2 id="popupTitle">
+                Confirm Action
+            </h2>
+
+            <p id="popupMessage">
+                Are you sure?
+            </p>
+
+            <div class="popup-buttons">
+
+                <button
+                    class="popup-btn cancel-btn"
+                    onclick="closePopup()">
+                    Cancel
+                </button>
+
+                <button
+                    id="popupConfirm"
+                    class="popup-btn confirm-btn">
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 
+
     <script>
+
+        let allApplications = [];
+
+        let pendingAction = null;
+
+
+        /* ================= LOAD APPLICATIONS ================= */
+
         async function loadApplications() {
-            const container = document.getElementById("applications");
+
+            const container =
+                document.getElementById("applications");
+
+            container.innerHTML = `
+                <div class="empty">
+                    <div class="empty-icon">⏳</div>
+                    Loading applications...
+                </div>
+            `;
 
             try {
-                const response = await fetch("http://localhost:8080/applications");
+
+                const response =
+                    await fetch(
+                        "http://localhost:8080/applications"
+                    );
 
                 if (!response.ok) {
-                    throw new Error("Failed to load applications");
+
+                    throw new Error(
+                        "Failed to load applications"
+                    );
+
                 }
 
-                const applications = await response.json();
+                allApplications =
+                    await response.json();
 
-                if (applications.length === 0) {
-                    container.innerHTML = '<div class="empty">No applications found.</div>';
-                    return;
-                }
 
-                container.innerHTML = applications.map(application => `
-                    <div class="application">
-                        <p><strong>Application ID:</strong> ${application.id ?? "N/A"}</p>
-                        <p><strong>Job Title:</strong> ${application.jobTitle ?? "N/A"}</p>
-                        <p><strong>Freelancer Email:</strong> ${application.freelancerEmail ?? "N/A"}</p>
-                        <p><strong>Status:</strong> ${application.status ?? "Pending"}</p>
-                        <button onclick="updateStatus(${application.id}, 'Accepted')">Accept</button>
-                        <button onclick="updateStatus(${application.id}, 'Rejected')">Reject</button>
-                    </div>
-                `).join("");
+                updateStatistics();
+
+                filterApplications();
 
             } catch (error) {
-                container.innerHTML =
-                    '<div class="empty">Unable to load applications. Please make sure Spring Boot is running.</div>';
+
+                container.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Unable to load applications
+                        </h3>
+
+                        <p>
+                            Please make sure Spring Boot
+                            is running on port 8080.
+                        </p>
+
+                    </div>
+                `;
+
                 console.error(error);
-            }
-        }
-async function updateStatus(id, status) {
-    try {
-        const response = await fetch(
-            `http://localhost:8080/applications/${id}/status?status=${status}`,
-            {
-                method: "PUT"
-            }
-        );
 
-        if (!response.ok) {
-            throw new Error("Failed to update status");
+            }
+
         }
 
-        alert("Application status updated to " + status);
+
+        /* ================= STATISTICS ================= */
+
+        function updateStatistics() {
+
+            const total =
+                allApplications.length;
+
+            const pending =
+                allApplications.filter(
+                    app =>
+                        String(app.status)
+                            .toLowerCase() === "pending"
+                ).length;
+
+            const accepted =
+                allApplications.filter(
+                    app =>
+                        String(app.status)
+                            .toLowerCase() === "accepted"
+                ).length;
+
+            const rejected =
+                allApplications.filter(
+                    app =>
+                        String(app.status)
+                            .toLowerCase() === "rejected"
+                ).length;
+
+
+            document.getElementById("totalCount")
+                .textContent = total;
+
+            document.getElementById("pendingCount")
+                .textContent = pending;
+
+            document.getElementById("acceptedCount")
+                .textContent = accepted;
+
+            document.getElementById("rejectedCount")
+                .textContent = rejected;
+
+        }
+
+
+        /* ================= FILTER ================= */
+
+        function filterApplications() {
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                ).value
+                .toLowerCase()
+                .trim();
+
+
+            const status =
+                document.getElementById(
+                    "statusFilter"
+                ).value;
+
+
+            const filtered =
+                allApplications.filter(application => {
+
+                    const jobTitle =
+                        String(
+                            application.jobTitle ?? ""
+                        ).toLowerCase();
+
+                    const freelancerEmail =
+                        String(
+                            application.freelancerEmail ?? ""
+                        ).toLowerCase();
+
+                    const applicationStatus =
+                        String(
+                            application.status ?? "Pending"
+                        );
+
+
+                    const matchesSearch =
+                        jobTitle.includes(search) ||
+                        freelancerEmail.includes(search);
+
+
+                    const matchesStatus =
+                        status === "ALL" ||
+                        applicationStatus === status;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesStatus
+                    );
+
+                });
+
+
+            displayApplications(filtered);
+
+        }
+
+
+        /* ================= DISPLAY ================= */
+
+        function displayApplications(applications) {
+
+            const container =
+                document.getElementById(
+                    "applications"
+                );
+
+
+            if (applications.length === 0) {
+
+                container.innerHTML = `
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🔍
+                        </div>
+
+                        <h3>
+                            No applications found
+                        </h3>
+
+                        <p>
+                            Try changing your search
+                            or status filter.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                applications.map(application => {
+
+                    const status =
+                        application.status ??
+                        "Pending";
+
+
+                    const statusClass =
+                        String(status)
+                            .toLowerCase();
+
+
+                    const isFinalStatus =
+                        status === "Accepted" ||
+                        status === "Rejected";
+
+
+                    return `
+
+                        <div class="application">
+
+                            <div class="application-top">
+
+                                <div>
+
+                                    <div class="application-id">
+                                        Application #${application.id ?? "N/A"}
+                                    </div>
+
+                                    <div class="job-title">
+                                        ${escapeHtml(
+                                            application.jobTitle ??
+                                            "Untitled Job"
+                                        )}
+                                    </div>
+
+                                </div>
+
+
+                                <span class="status ${statusClass}">
+                                    ${escapeHtml(status)}
+                                </span>
+
+                            </div>
+
+
+                            <div class="details">
+
+                                <div class="detail">
+
+                                    <span class="detail-label">
+                                        Freelancer Email
+                                    </span>
+
+                                    <span class="detail-value">
+                                        ${escapeHtml(
+                                            application.freelancerEmail ??
+                                            "N/A"
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="detail">
+
+                                    <span class="detail-label">
+                                        Job ID
+                                    </span>
+
+                                    <span class="detail-value">
+                                        #${application.jobId ?? "N/A"}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="actions">
+
+                                ${
+                                    isFinalStatus
+
+                                    ?
+
+                                    `
+                                    <button
+                                        class="btn disabled-btn"
+                                        disabled>
+                                        ${status === "Accepted"
+                                            ? "✓ Accepted"
+                                            : "✕ Rejected"}
+                                    </button>
+                                    `
+
+                                    :
+
+                                    `
+
+                                    <button
+                                        class="btn accept-btn"
+                                        onclick="confirmStatusChange(
+                                            ${application.id},
+                                            'Accepted'
+                                        )">
+                                        ✓ Accept
+                                    </button>
+
+
+                                    <button
+                                        class="btn reject-btn"
+                                        onclick="confirmStatusChange(
+                                            ${application.id},
+                                            'Rejected'
+                                        )">
+                                        ✕ Reject
+                                    </button>
+
+                                    `
+                                }
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+        /* ================= CONFIRMATION ================= */
+
+        function confirmStatusChange(id, status) {
+
+            pendingAction = {
+                id: id,
+                status: status
+            };
+
+
+            document.getElementById(
+                "popupIcon"
+            ).textContent =
+                status === "Accepted"
+                    ? "✅"
+                    : "⚠️";
+
+
+            document.getElementById(
+                "popupTitle"
+            ).textContent =
+                status === "Accepted"
+                    ? "Accept Application?"
+                    : "Reject Application?";
+
+
+            document.getElementById(
+                "popupMessage"
+            ).textContent =
+                status === "Accepted"
+                    ? "Are you sure you want to accept this application?"
+                    : "Are you sure you want to reject this application?";
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).textContent =
+                status === "Accepted"
+                    ? "Yes, Accept"
+                    : "Yes, Reject";
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).style.background =
+                status === "Accepted"
+                    ? "#16a34a"
+                    : "#dc2626";
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).onclick =
+                executeStatusChange;
+
+
+            document.getElementById(
+                "popupOverlay"
+            ).style.display =
+                "flex";
+
+        }
+
+
+        /* ================= EXECUTE STATUS CHANGE ================= */
+
+        async function executeStatusChange() {
+
+            if (!pendingAction) {
+                return;
+            }
+
+
+            const id =
+                pendingAction.id;
+
+            const status =
+                pendingAction.status;
+
+
+            closePopup();
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `http://localhost:8080/applications/${id}/status?status=${status}`,
+                        {
+                            method: "PUT"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Failed to update status"
+                    );
+
+                }
+
+
+                showMessagePopup(
+                    "Success",
+                    `Application status updated to ${status}.`,
+                    "success"
+                );
+
+
+                await loadApplications();
+
+
+            } catch (error) {
+
+                console.error(error);
+
+
+                showMessagePopup(
+                    "Update Failed",
+                    "Unable to update application status.",
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        /* ================= MESSAGE POPUP ================= */
+
+        function showMessagePopup(
+            title,
+            message,
+            type
+        ) {
+
+            document.getElementById(
+                "popupIcon"
+            ).textContent =
+                type === "success"
+                    ? "✅"
+                    : "❌";
+
+
+            document.getElementById(
+                "popupTitle"
+            ).textContent =
+                title;
+
+
+            document.getElementById(
+                "popupMessage"
+            ).textContent =
+                message;
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).textContent =
+                "OK";
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).style.background =
+                type === "success"
+                    ? "#123c69"
+                    : "#dc2626";
+
+
+            document.getElementById(
+                "popupConfirm"
+            ).onclick =
+                closePopup;
+
+
+            document.querySelector(
+                ".cancel-btn"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "popupOverlay"
+            ).style.display =
+                "flex";
+
+        }
+
+
+        /* ================= CLOSE POPUP ================= */
+
+        function closePopup() {
+
+            document.getElementById(
+                "popupOverlay"
+            ).style.display =
+                "none";
+
+
+            document.querySelector(
+                ".cancel-btn"
+            ).style.display =
+                "inline-block";
+
+
+            pendingAction = null;
+
+        }
+
+
+        /* ================= ESCAPE HTML ================= */
+
+        function escapeHtml(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* ================= INITIAL LOAD ================= */
+
         loadApplications();
 
-    } catch (error) {
-        alert("Unable to update application status.");
-        console.error(error);
-    }
-}
-        loadApplications();
     </script>
 
 </body>
