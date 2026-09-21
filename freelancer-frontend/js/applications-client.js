@@ -40,7 +40,7 @@ async function loadApplications() {
 
         const jobsResponse =
             await fetch(
-                "http://localhost:8080/api/jobs"
+                "https://freelancer-backend-9cw6.onrender.com/api/jobs"
             );
 
 
@@ -77,7 +77,7 @@ async function loadApplications() {
 
         const applicationsResponse =
             await fetch(
-                "http://localhost:8080/applications"
+                "https://freelancer-backend-9cw6.onrender.com/applications"
             );
 
 
@@ -751,7 +751,7 @@ async function updateApplicationStatus(
 
         const response =
             await fetch(
-                `http://localhost:8080/applications/${applicationId}/status?status=${encodeURIComponent(
+                `https://freelancer-backend-9cw6.onrender.com/applications/${applicationId}/status?status=${encodeURIComponent(
                     newStatus
                 )}`,
                 {

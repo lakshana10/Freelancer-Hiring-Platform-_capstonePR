@@ -127,7 +127,7 @@ form.addEventListener("submit", async function(event) {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/users/login",
+            "https://freelancer-backend-9cw6.onrender.com/api/users/login",
             {
                 method: "POST",
                 headers: {

@@ -2,7 +2,7 @@
 // NOTIFICATIONS
 // ===============================
 
-const API_URL = "http://localhost:8080/api/notifications";
+const API_URL = "https://freelancer-backend-9cw6.onrender.com/api/notifications";
 
 const container =
     document.getElementById("notificationsContainer");

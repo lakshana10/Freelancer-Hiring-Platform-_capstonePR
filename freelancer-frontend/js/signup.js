@@ -65,7 +65,7 @@ document
 
 
             const response = await fetch(
-                "http://localhost:8080/api/otp/generate",
+                "https://freelancer-backend-9cw6.onrender.com/api/otp/generate",
                 {
                     method: "POST",
 
@@ -174,7 +174,7 @@ document
 
 
             const response = await fetch(
-                "http://localhost:8080/api/otp/verify",
+                "https://freelancer-backend-9cw6.onrender.com/api/otp/verify",
                 {
                     method: "POST",
 
@@ -383,7 +383,7 @@ document
             // ===============================
 
             const response = await fetch(
-                "http://localhost:8080/api/users/signup",
+                "https://freelancer-backend-9cw6.onrender.com/api/users/signup",
                 {
                     method: "POST",
 

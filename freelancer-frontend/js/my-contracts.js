@@ -3,10 +3,10 @@
 // =========================================
 
 const API_URL =
-    "http://localhost:8080/api/contracts";
+    "https://freelancer-backend-9cw6.onrender.com/api/contracts";
 
 const PAYMENT_API_URL =
-    "http://localhost:8080/api/payments";
+    "https://freelancer-backend-9cw6.onrender.com/api/payments";
 
 
 // =========================================

@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/payments";
+const API_URL = "https://freelancer-backend-9cw6.onrender.com/api/payments";
 
 const userEmail = localStorage.getItem("userEmail");
 

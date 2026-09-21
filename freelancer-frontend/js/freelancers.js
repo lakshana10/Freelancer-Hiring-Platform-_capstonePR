@@ -7,7 +7,7 @@ async function loadFreelancers() {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/users"
+            "https://freelancer-backend-9cw6.onrender.com/api/users"
         );
 
         if (!response.ok) {

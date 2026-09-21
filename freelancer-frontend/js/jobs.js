@@ -11,7 +11,7 @@ async function loadJobs() {
     try {
 
         const response =
-            await fetch("http://localhost:8080/api/jobs");
+            await fetch("https://freelancer-backend-9cw6.onrender.com/api/jobs");
 
         if (!response.ok) {
             throw new Error("Failed to fetch jobs");
@@ -802,7 +802,7 @@ async function applyJob(
 
         const response =
             await fetch(
-                "http://localhost:8080/applications/apply",
+                "https://freelancer-backend-9cw6.onrender.com/applications/apply",
                 {
 
                     method: "POST",

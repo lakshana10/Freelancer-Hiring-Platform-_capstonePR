@@ -9,7 +9,7 @@ async function loadProfile() {
     try {
 
         const response = await fetch(
-            "http://localhost:8080/api/users"
+            "https://freelancer-backend-9cw6.onrender.com/api/users"
         );
 
         const users = await response.json();
@@ -52,7 +52,7 @@ async function updateProfile() {
     try {
 
         const response = await fetch(
-            `http://localhost:8080/api/users/${encodeURIComponent(userEmail)}`,
+            `https://freelancer-backend-9cw6.onrender.com/api/users/${encodeURIComponent(userEmail)}`,
             {
                 method: "PUT",
                 headers: {

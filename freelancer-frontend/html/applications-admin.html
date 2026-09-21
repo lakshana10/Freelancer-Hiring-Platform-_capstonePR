@@ -707,7 +707,7 @@
 
                 const response =
                     await fetch(
-                        "http://localhost:8080/applications"
+                        "https://freelancer-backend-9cw6.onrender.com/applications"
                     );
 
                 if (!response.ok) {
@@ -1115,7 +1115,7 @@
 
                 const response =
                     await fetch(
-                        `http://localhost:8080/applications/${id}/status?status=${status}`,
+                        `https://freelancer-backend-9cw6.onrender.com/applications/${id}/status?status=${status}`,
                         {
                             method: "PUT"
                         }

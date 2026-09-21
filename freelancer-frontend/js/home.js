@@ -162,7 +162,7 @@ async function loadLatestJobs() {
 
         const response =
             await fetch(
-                "http://localhost:8080/api/jobs"
+                "https://freelancer-backend-9cw6.onrender.com/api/jobs"
             );
 
         if (!response.ok) {

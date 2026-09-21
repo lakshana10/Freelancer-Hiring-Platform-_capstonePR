@@ -670,7 +670,7 @@
 
                 const response =
                     await fetch(
-                        "http://localhost:8080/api/jobs"
+                        "https://freelancer-backend-9cw6.onrender.com/api/jobs"
                     );
 
                 if (!response.ok) {
@@ -820,7 +820,7 @@
 
                 const response =
                     await fetch(
-                        "http://localhost:8080/applications"
+                        "https://freelancer-backend-9cw6.onrender.com/applications"
                     );
 
                 if (!response.ok) {
@@ -833,7 +833,7 @@
 
                 const clientJobsResponse =
                     await fetch(
-                        "http://localhost:8080/api/jobs"
+                        "https://freelancer-backend-9cw6.onrender.com/api/jobs"
                     );
 
                 if (!clientJobsResponse.ok) {
@@ -905,7 +905,7 @@
 
                 const response =
                     await fetch(
-                        "http://localhost:8080/api/contracts/client/" +
+                        "https://freelancer-backend-9cw6.onrender.com/api/contracts/client/" +
                         encodeURIComponent(
                             loggedInUser.email
                         )
