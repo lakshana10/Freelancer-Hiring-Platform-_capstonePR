@@ -12,224 +12,72 @@
 
     <style>
 
-        /* ================= FREELANCER NAVBAR ================= */
+        /* ================= NAVBAR ================= */
 
-        .freelancer-navbar {
+        .navbar {
             width: 100%;
-            height: 72px;
-            min-height: 72px;
-
-            padding: 0 35px;
-
+            box-sizing: border-box;
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            gap: 20px;
-
-            background: #ffffff;
-
-            border-bottom: 1px solid #e8ebf2;
-
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-
-            position: sticky;
-            top: 0;
-            left: 0;
-
-            z-index: 1000;
-
-            box-sizing: border-box;
-        }
-
-        .freelancer-navbar .logo {
-            display: flex;
-            align-items: center;
-
-            text-decoration: none;
-            white-space: nowrap;
-
-            font-size: 24px;
-            font-weight: 800;
-
-            color: #1f4ed8;
-
-            flex-shrink: 0;
-        }
-
-        .freelancer-navbar .logo-icon {
-            margin-right: 7px;
-        }
-
-        .freelancer-navbar nav {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            gap: 5px;
-
-            flex: 1;
-            min-width: 0;
-
-            white-space: nowrap;
-        }
-
-        .freelancer-navbar nav a {
-            text-decoration: none;
-            white-space: nowrap;
-
-            color: #4b5563;
-
-            font-size: 14px;
-            font-weight: 600;
-
-            padding: 10px 12px;
-
-            border-radius: 8px;
-
-            transition: 0.2s ease;
-        }
-
-        .freelancer-navbar nav a:hover {
-            color: #1f4ed8;
-            background: #eef3ff;
-        }
-
-        .freelancer-navbar nav a.active {
-            color: #1f4ed8;
-            background: #eef3ff;
-        }
-
-        .freelancer-navbar .logout-btn {
-            flex-shrink: 0;
-
-            border: none;
-
-            padding: 9px 14px;
-
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            background: #feecec;
-            color: #dc2626;
-
-            text-decoration: none;
-        }
-
-        .freelancer-navbar .logout-btn:hover {
-            background: #fde0e0;
-        }
-
-
-        /* ================= PUBLIC NAVBAR ================= */
-
-        .public-navbar {
-            width: 100%;
-            box-sizing: border-box;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
             gap: 20px;
         }
 
-        .public-navbar .logo {
+        .navbar .logo {
             text-decoration: none;
             white-space: nowrap;
         }
 
-        .public-navbar nav {
+        .navbar nav {
             display: flex;
             align-items: center;
             gap: 18px;
-
             flex-wrap: wrap;
             justify-content: center;
         }
 
-        .public-navbar nav a {
+        .navbar nav a {
             text-decoration: none;
             white-space: nowrap;
         }
 
-        .public-navbar nav a.active {
+        .navbar nav a.active {
             font-weight: 700;
         }
 
-        .public-navbar .nav-actions {
+        .navbar .nav-actions {
             display: flex;
             align-items: center;
-
             gap: 10px;
-
             white-space: nowrap;
         }
 
-        .public-navbar .nav-actions #userSection {
+        .navbar .nav-actions #userSection {
             display: flex;
             align-items: center;
-
             gap: 10px;
         }
 
         .notification-btn {
             border: none;
             background: transparent;
-
             cursor: pointer;
-
             font-size: 20px;
         }
 
 
         /* ================= RESPONSIVE NAVBAR ================= */
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1100px) {
 
-            .freelancer-navbar {
-                padding: 0 20px;
-                gap: 10px;
-            }
-
-            .freelancer-navbar nav {
-                gap: 2px;
-            }
-
-            .freelancer-navbar nav a {
-                padding: 9px 8px;
-                font-size: 13px;
-            }
-
-        }
-
-
-        @media (max-width: 950px) {
-
-            .freelancer-navbar {
-                height: auto;
-                min-height: 72px;
-
-                padding: 12px 20px;
-
+            .navbar {
                 flex-wrap: wrap;
+                justify-content: center;
+                padding: 15px 20px;
             }
 
-            .freelancer-navbar nav {
-                order: 3;
-
-                width: 100%;
-                flex-basis: 100%;
-
-                justify-content: center;
-
-                overflow-x: auto;
-
-                padding-bottom: 3px;
+            .navbar nav {
+                gap: 12px;
             }
 
         }
@@ -237,35 +85,12 @@
 
         @media (max-width: 700px) {
 
-            .freelancer-navbar {
-                height: auto;
-
+            .navbar {
                 flex-direction: column;
-
-                align-items: center;
-
-                padding: 15px;
-            }
-
-            .freelancer-navbar nav {
-                order: initial;
-
-                width: 100%;
-
-                display: none;
-            }
-
-            .freelancer-navbar .logout-btn {
-                margin-top: 5px;
-            }
-
-            .public-navbar {
-                flex-direction: column;
-
                 gap: 15px;
             }
 
-            .public-navbar nav {
+            .navbar nav {
                 justify-content: center;
                 gap: 10px;
             }
@@ -509,7 +334,7 @@
 
 <!-- ================= NAVBAR ================= -->
 
-<header id="publicNavbar" class="navbar public-navbar">
+<header class="navbar">
 
 
     <!-- LOGO -->
@@ -525,7 +350,8 @@
     </a>
 
 
-    <!-- PUBLIC NAV -->
+
+    <!-- ================= PUBLIC NAVBAR ================= -->
 
     <nav id="publicNav">
 
@@ -556,12 +382,10 @@
     </nav>
 
 
-    <!-- FREELANCER NAV -->
 
-    <nav
-        id="freelancerNav"
-        class="freelancer-navbar-links"
-        style="display: none;">
+    <!-- ================= FREELANCER NAVBAR ================= -->
+
+    <nav id="freelancerNav" style="display: none;">
 
         <a href="./freelancer-dashboard.html">
             Dashboard
@@ -591,12 +415,20 @@
             My Profile
         </a>
 
+        <a href="#" onclick="logoutUser(); return false;">
+            Logout
+        </a>
+
     </nav>
 
 
-    <!-- NAV ACTIONS -->
 
-    <div class="nav-actions" id="publicActions">
+    <!-- ================= NAV ACTIONS ================= -->
+
+    <div class="nav-actions">
+
+
+        <!-- THEME -->
 
         <button
             type="button"
@@ -608,6 +440,9 @@
         </button>
 
 
+
+        <!-- NOTIFICATION -->
+
         <button
             type="button"
             class="icon-btn notification-btn">
@@ -616,6 +451,9 @@
 
         </button>
 
+
+
+        <!-- PUBLIC LOGIN / SIGNUP -->
 
         <div id="userSection">
 
@@ -642,19 +480,6 @@
 
     </div>
 
-
-    <!-- FREELANCER LOGOUT -->
-
-    <button
-        id="freelancerLogout"
-        class="logout-btn"
-        style="display: none;"
-        onclick="logoutUser()">
-
-        Logout
-
-    </button>
-
 </header>
 
 
@@ -665,8 +490,11 @@
 
     <div class="hero-content">
 
+
         <span class="small-title">
+
             ✦ OPPORTUNITIES AWAIT
+
         </span>
 
 
@@ -686,15 +514,18 @@
         </p>
 
 
+
         <!-- SEARCH -->
 
         <div class="search-container">
+
 
             <div class="search-input">
 
                 <span>
                     ⌕
                 </span>
+
 
                 <input
                     type="text"
@@ -704,11 +535,13 @@
             </div>
 
 
+
             <div class="location-input">
 
                 <span>
                     ⌖
                 </span>
+
 
                 <input
                     type="text"
@@ -716,6 +549,7 @@
                     placeholder="Location / Remote">
 
             </div>
+
 
 
             <button
@@ -743,6 +577,7 @@
 
     <aside class="filters">
 
+
         <div class="filter-header">
 
             <h3>
@@ -759,6 +594,7 @@
             </button>
 
         </div>
+
 
 
         <!-- CATEGORY -->
@@ -827,6 +663,7 @@
         </div>
 
 
+
         <!-- JOB TYPE -->
 
         <div class="filter-section">
@@ -854,6 +691,7 @@
             </label>
 
         </div>
+
 
 
         <!-- EXPERIENCE -->
@@ -894,6 +732,7 @@
         </div>
 
 
+
         <!-- WORK LOCATION -->
 
         <div class="filter-section">
@@ -930,7 +769,9 @@
 
     <section class="job-results">
 
+
         <div class="results-top">
+
 
             <div>
 
@@ -946,25 +787,31 @@
             </div>
 
 
+
             <select
                 id="sortJobs"
                 onchange="sortJobs()">
+
 
                 <option value="latest">
                     Most Recent
                 </option>
 
+
                 <option value="budget">
                     Highest Budget
                 </option>
+
 
                 <option value="applications">
                     Most Applications
                 </option>
 
+
             </select>
 
         </div>
+
 
 
         <!-- JOBS FROM DATABASE -->
@@ -1036,6 +883,7 @@
 
 <footer>
 
+
     <div class="footer-logo">
 
         Freelance<span>Hub</span>
@@ -1071,33 +919,25 @@
             localStorage.getItem("loggedInUser");
 
 
-        const publicNavbar =
-            document.getElementById("publicNavbar");
-
         const publicNav =
             document.getElementById("publicNav");
+
 
         const freelancerNav =
             document.getElementById("freelancerNav");
 
-        const publicActions =
-            document.getElementById("publicActions");
 
-        const freelancerLogout =
-            document.getElementById("freelancerLogout");
+        const userSection =
+            document.getElementById("userSection");
 
 
         if (!loggedInUser) {
-
-            publicNavbar.classList.add("navbar");
 
             publicNav.style.display = "flex";
 
             freelancerNav.style.display = "none";
 
-            publicActions.style.display = "flex";
-
-            freelancerLogout.style.display = "none";
+            userSection.style.display = "flex";
 
             return;
 
@@ -1116,33 +956,21 @@
                     === "FREELANCER"
             ) {
 
-                publicNavbar.classList.remove("navbar");
-
-                publicNavbar.classList.add("freelancer-navbar");
-
                 publicNav.style.display = "none";
 
                 freelancerNav.style.display = "flex";
 
-                publicActions.style.display = "none";
-
-                freelancerLogout.style.display = "block";
+                userSection.style.display = "none";
 
             }
 
             else {
 
-                publicNavbar.classList.add("navbar");
-
-                publicNavbar.classList.remove("freelancer-navbar");
-
                 publicNav.style.display = "flex";
 
                 freelancerNav.style.display = "none";
 
-                publicActions.style.display = "flex";
-
-                freelancerLogout.style.display = "none";
+                userSection.style.display = "flex";
 
             }
 
@@ -1155,17 +983,12 @@
                 error
             );
 
-            publicNavbar.classList.add("navbar");
-
-            publicNavbar.classList.remove("freelancer-navbar");
 
             publicNav.style.display = "flex";
 
             freelancerNav.style.display = "none";
 
-            publicActions.style.display = "flex";
-
-            freelancerLogout.style.display = "none";
+            userSection.style.display = "flex";
 
         }
 

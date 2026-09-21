@@ -12,350 +12,94 @@
 
 <style>
 
-/* =====================================================
-   GLOBAL
-===================================================== */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    background: #f7f8fc;
-    color: #111827;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* =====================================================
-   MY JOBS PAGE
-===================================================== */
-
 .my-jobs-page {
-    min-height: calc(100vh - 72px);
-
-    padding: 42px 6%;
-
-    background:
-        radial-gradient(
-            circle at 10% 0%,
-            rgba(112, 69, 232, 0.08),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 90% 10%,
-            rgba(47, 128, 237, 0.06),
-            transparent 25%
-        ),
-        #f7f8fc;
+    min-height: 80vh;
+    padding: 50px 8%;
 }
-
-
-/* =====================================================
-   BACK BUTTON
-===================================================== */
-
-.back-btn {
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    margin-bottom: 22px;
-
-    text-decoration: none;
-
-    color: #6845e8;
-
-    font-size: 14px;
-
-    font-weight: 700;
-
-    transition: 0.2s ease;
-}
-
-.back-btn:hover {
-    color: #4f2fc4;
-
-    transform: translateX(-3px);
-}
-
-
-/* =====================================================
-   PAGE HEADER
-===================================================== */
 
 .page-header {
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
 .page-header-top {
     display: flex;
-
     justify-content: space-between;
-
-    align-items: flex-end;
-
-    gap: 25px;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 8px;
 }
 
 .page-header h1 {
-    margin: 0 0 8px;
-
-    color: #111827;
-
-    font-size: 32px;
-
-    line-height: 1.2;
-
-    font-weight: 800;
-
-    letter-spacing: -0.6px;
+    margin-bottom: 8px;
 }
 
 .page-header p {
-    margin: 0;
-
-    color: #6b7280;
-
-    font-size: 15px;
-
-    line-height: 1.6;
+    color: #666;
 }
 
-
-/* =====================================================
-   POST JOB BUTTON
-===================================================== */
-
 .post-job-btn {
-    border: none;
-
-    padding: 13px 21px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7045e8,
-            #5834d4
-        );
-
+    background: #6845e8;
     color: white;
-
+    border: none;
+    padding: 12px 20px;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 600;
     font-size: 14px;
-
-    font-weight: 700;
-
     white-space: nowrap;
-
-    box-shadow:
-        0 8px 18px rgba(104, 69, 232, 0.22);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
 .post-job-btn:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 24px rgba(104, 69, 232, 0.28);
+    background: #5635c9;
 }
 
-.post-job-btn:active {
-    transform: translateY(0);
+.back-btn {
+    display: inline-block;
+    margin-bottom: 25px;
+    text-decoration: none;
+    color: #5b3cc4;
+    font-weight: 600;
 }
 
-
-/* =====================================================
-   JOB GRID
-===================================================== */
+.back-btn:hover {
+    color: #6845e8;
+}
 
 #jobsContainer {
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(290px, 1fr)
-        );
-
-    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
-
-
-/* =====================================================
-   JOB CARD
-===================================================== */
 
 .job-card {
-    position: relative;
-
-    overflow: hidden;
-
-    background: rgba(255,255,255,0.97);
-
-    padding: 24px;
-
-    border-radius: 18px;
-
-    border: 1px solid #ececf4;
-
-    box-shadow:
-        0 5px 18px rgba(24, 28, 50, 0.06);
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease,
-        border-color 0.25s ease;
-
-    display: flex;
-
-    flex-direction: column;
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
 }
-
-.job-card::before {
-    content: "";
-
-    position: absolute;
-
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 4px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #7045e8,
-            #8c6af0,
-            #2f80ed
-        );
-}
-
-.job-card:hover {
-    transform: translateY(-5px);
-
-    border-color: #ddd7f8;
-
-    box-shadow:
-        0 16px 35px rgba(44, 39, 90, 0.12);
-}
-
-
-/* =====================================================
-   JOB TITLE
-===================================================== */
 
 .job-card h2 {
-    margin: 2px 0 13px;
-
-    color: #111827;
-
-    font-size: 20px;
-
-    line-height: 1.3;
-
-    font-weight: 800;
-
-    letter-spacing: -0.25px;
+    margin-bottom: 12px;
 }
 
-
-/* =====================================================
-   DESCRIPTION
-===================================================== */
-
-.job-card > p {
-    margin: 0;
-
-    color: #667085;
-
-    font-size: 14px;
-
-    line-height: 1.65;
-
-    display: -webkit-box;
-
-    -webkit-line-clamp: 5;
-
-    -webkit-box-orient: vertical;
-
-    overflow: hidden;
-
-    min-height: 115px;
+.job-card p {
+    color: #666;
+    line-height: 1.6;
 }
-
-
-/* =====================================================
-   JOB INFORMATION
-===================================================== */
 
 .job-info {
     margin-top: 18px;
-
-    padding-top: 16px;
-
-    border-top: 1px solid #eeeeF5;
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 8px;
 }
 
 .job-info strong {
     display: block;
-
-    margin: 0;
-
-    color: #273142;
-
-    font-size: 13px;
-
-    line-height: 1.45;
-
-    font-weight: 700;
+    margin-bottom: 6px;
 }
-
-.job-info strong:first-child {
-    color: #5b35d5;
-
-    font-size: 15px;
-}
-
-.job-info strong:nth-child(2) {
-    color: #374151;
-}
-
-.job-info strong:nth-child(3),
-.job-info strong:nth-child(4) {
-    color: #6b7280;
-}
-
-
-/* =====================================================
-   JOB ACTIONS
-===================================================== */
 
 .job-actions {
     display: flex;
-
-    gap: 8px;
-
-    margin-top: auto;
-
-    padding-top: 20px;
-
+    gap: 10px;
+    margin-top: 20px;
     flex-wrap: wrap;
 }
 
@@ -363,290 +107,117 @@ body {
 .delete-btn,
 .view-applications-btn {
     border: none;
-
-    padding: 10px 13px;
-
-    border-radius: 9px;
-
+    padding: 10px 16px;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+}
 
-    font-size: 13px;
+.edit-btn {
+    background: #5b3cc4;
+    color: white;
+}
 
-    font-weight: 700;
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+}
 
-    transition:
-        transform 0.18s ease,
-        box-shadow 0.18s ease,
-        background 0.18s ease;
+.view-applications-btn {
+    background: #2f80ed;
+    color: white;
 }
 
 .edit-btn:hover,
 .delete-btn:hover,
 .view-applications-btn:hover {
-    transform: translateY(-2px);
+    opacity: 0.9;
 }
-
-.edit-btn {
-    background:
-        linear-gradient(
-            135deg,
-            #7045e8,
-            #5b36d3
-        );
-
-    color: white;
-
-    box-shadow:
-        0 5px 12px rgba(104, 69, 232, 0.18);
-}
-
-.edit-btn:hover {
-    box-shadow:
-        0 8px 16px rgba(104, 69, 232, 0.25);
-}
-
-.delete-btn {
-    background: #fff0ef;
-
-    color: #dc3b31;
-
-    border: 1px solid #ffd7d4;
-}
-
-.delete-btn:hover {
-    background: #ffe4e1;
-}
-
-.view-applications-btn {
-    background: #edf4ff;
-
-    color: #2169d5;
-
-    border: 1px solid #d9e8ff;
-}
-
-.view-applications-btn:hover {
-    background: #e0edff;
-}
-
-
-/* =====================================================
-   LOADING
-===================================================== */
-
-.loading {
-    grid-column: 1 / -1;
-
-    text-align: center;
-
-    padding: 70px 20px;
-
-    color: #667085;
-
-    font-size: 15px;
-}
-
-
-/* =====================================================
-   EMPTY STATE
-===================================================== */
 
 .empty-message {
-    grid-column: 1 / -1;
-
     text-align: center;
-
-    padding: 70px 25px;
-
-    background: white;
-
-    border: 1px solid #ececf4;
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 8px 25px rgba(20, 25, 45, 0.06);
+    padding: 50px;
+    color: #666;
 }
 
-.empty-message h2 {
-    margin: 0 0 10px;
-
-    color: #111827;
-
-    font-size: 24px;
-}
-
-.empty-message p {
-    margin: 0;
-
-    color: #6b7280;
-
-    line-height: 1.6;
+.loading {
+    text-align: center;
+    padding: 40px;
 }
 
 
-/* =====================================================
-   CLIENT NAVBAR
-===================================================== */
+/* ===============================
+   NAVBAR
+================================ */
 
-.client-navbar {
+.navbar {
     width: 100%;
-
-    height: 72px;
-
-    min-height: 72px;
-
-    padding: 0 35px;
-
+    box-sizing: border-box;
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     gap: 20px;
-
-    background: rgba(255,255,255,0.98);
-
-    border-bottom: 1px solid #e8ebf2;
-
-    box-shadow:
-        0 2px 12px rgba(0,0,0,0.05);
-
-    position: sticky;
-
-    top: 0;
-
-    z-index: 1000;
 }
 
-.client-navbar .logo {
+.navbar .logo {
     text-decoration: none;
-
     white-space: nowrap;
-
     cursor: pointer;
-
-    font-size: 24px;
-
-    font-weight: 800;
-
-    color: #1f4ed8;
-
-    flex-shrink: 0;
 }
 
-.client-navbar .logo-icon {
-    margin-right: 7px;
-}
-
-.client-navbar nav {
+.navbar nav {
     display: flex;
-
     align-items: center;
-
+    gap: 18px;
+    flex-wrap: wrap;
     justify-content: center;
-
-    gap: 5px;
-
-    flex-wrap: nowrap;
-
-    flex: 1;
 }
 
-.client-navbar nav a {
+.navbar nav a {
     text-decoration: none;
-
     white-space: nowrap;
-
-    color: #4b5563;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    padding: 10px 12px;
-
-    border-radius: 8px;
-
-    transition: 0.2s ease;
 }
 
-.client-navbar nav a:hover {
-    color: #1f4ed8;
-
-    background: #eef3ff;
-}
-
-.client-navbar nav a.active {
-    color: #1f4ed8;
-
-    background: #eef3ff;
-
+.navbar nav a.active {
     font-weight: 700;
 }
 
-.client-navbar .nav-actions {
+.nav-actions {
     display: flex;
-
     align-items: center;
-
     gap: 10px;
-
-    flex-shrink: 0;
-}
-
-.client-navbar .logout-btn {
-    border: none;
-
-    padding: 9px 15px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    background: #fff0f0;
-
-    color: #dc2626;
-
     white-space: nowrap;
-
-    transition: 0.2s ease;
 }
 
-.client-navbar .logout-btn:hover {
-    background: #ffe2e2;
+.logout-btn {
+    border: none;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    background: #f1f1f5;
+    color: #444;
+}
 
-    transform: translateY(-1px);
+.logout-btn:hover {
+    background: #e7e7ec;
+    color: #dc2626;
 }
 
 
-/* =====================================================
+/* ===============================
    APPLICATION MODAL
-===================================================== */
+================================ */
 
 .application-modal {
     position: fixed;
-
     inset: 0;
-
-    background:
-        rgba(15, 18, 35, 0.62);
-
-    backdrop-filter: blur(5px);
-
+    background: rgba(0,0,0,0.55);
     display: none;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 20px;
-
     z-index: 9999;
 }
 
@@ -656,212 +227,115 @@ body {
 
 .application-modal-content {
     width: 100%;
-
     max-width: 850px;
-
     max-height: 90vh;
-
     overflow-y: auto;
-
     background: white;
-
-    border-radius: 20px;
-
+    border-radius: 18px;
     padding: 30px;
-
     position: relative;
-
-    border: 1px solid #ececf4;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.25);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
 
 .modal-close {
     position: absolute;
-
     right: 18px;
-
     top: 15px;
-
-    width: 38px;
-
-    height: 38px;
-
     border: none;
-
-    background: #f4f4f8;
-
-    border-radius: 50%;
-
-    font-size: 25px;
-
+    background: transparent;
+    font-size: 30px;
     cursor: pointer;
-
     color: #555;
-
-    transition: 0.2s ease;
-}
-
-.modal-close:hover {
-    background: #eee7ff;
-
-    color: #6845e8;
 }
 
 .modal-header {
-    padding-right: 45px;
-
+    padding-right: 40px;
     margin-bottom: 25px;
 }
 
 .modal-header h2 {
-    margin: 0 0 7px;
-
-    color: #111827;
-
-    font-size: 24px;
+    margin-bottom: 7px;
 }
 
 .modal-header p {
-    margin: 0;
-
-    color: #6b7280;
+    color: #666;
 }
 
 .application-job-info {
-    background:
-        linear-gradient(
-            135deg,
-            #f4f0ff,
-            #f7f9ff
-        );
-
+    background: #f5f4ff;
     padding: 18px;
-
-    border-radius: 14px;
-
+    border-radius: 12px;
     margin-bottom: 22px;
-
-    border: 1px solid #e5defb;
 }
 
 .application-job-info strong {
     display: block;
-
-    margin-bottom: 7px;
-
-    color: #34394a;
-
-    font-size: 14px;
-}
-
-.application-job-info strong:last-child {
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
 #applicationsList {
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
 }
 
 .application-item {
-    border: 1px solid #e7e8ef;
-
-    border-radius: 14px;
-
+    border: 1px solid #e5e5e5;
+    border-radius: 13px;
     padding: 18px;
-
     background: #fff;
-
-    transition: 0.2s ease;
-}
-
-.application-item:hover {
-    border-color: #d9d1f8;
-
-    box-shadow:
-        0 7px 20px rgba(50,40,100,0.07);
 }
 
 .application-item-header {
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     gap: 15px;
-
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .application-item-header h3 {
     margin: 0;
-
-    color: #111827;
-
-    font-size: 16px;
 }
 
 .application-email {
-    color: #6b7280;
-
-    font-size: 13px;
-
-    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
 }
 
 .status-badge {
     display: inline-block;
-
     padding: 6px 11px;
-
     border-radius: 20px;
-
     font-size: 12px;
-
     font-weight: 700;
-
-    white-space: nowrap;
 }
 
 .status-pending {
-    background: #fff7db;
-
-    color: #9a6700;
+    background: #fff3cd;
+    color: #856404;
 }
 
 .status-accepted {
-    background: #e6f8ed;
-
-    color: #15803d;
+    background: #d4edda;
+    color: #155724;
 }
 
 .status-rejected {
-    background: #ffebeb;
-
-    color: #c62828;
+    background: #f8d7da;
+    color: #721c24;
 }
 
 .application-item-info {
-    color: #596273;
-
+    color: #555;
     line-height: 1.7;
-
     margin-bottom: 15px;
-
-    font-size: 14px;
 }
 
 .application-item-actions {
     display: flex;
-
     gap: 8px;
-
     flex-wrap: wrap;
 }
 
@@ -870,80 +344,51 @@ body {
 .application-reject-btn,
 .application-close-btn {
     border: none;
-
     padding: 9px 14px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-weight: 600;
-
-    transition: 0.2s ease;
 }
 
 .application-view-btn {
-    background: #eee9ff;
-
-    color: #6845e8;
+    background: #6845e8;
+    color: white;
 }
 
 .application-accept-btn {
     background: #16a34a;
-
     color: white;
 }
 
 .application-reject-btn {
     background: #dc2626;
-
     color: white;
 }
 
 .application-close-btn {
     background: #eeeeee;
-
     color: #444;
-}
-
-.application-view-btn:hover,
-.application-accept-btn:hover,
-.application-reject-btn:hover,
-.application-close-btn:hover {
-    transform: translateY(-1px);
 }
 
 .no-applications {
     text-align: center;
-
-    padding: 40px 15px;
-
-    color: #667085;
+    padding: 35px 15px;
+    color: #666;
 }
 
 
-/* =====================================================
+/* ===============================
    DETAILS MODAL
-===================================================== */
+================================ */
 
 .details-modal {
     position: fixed;
-
     inset: 0;
-
-    background:
-        rgba(15,18,35,0.68);
-
-    backdrop-filter: blur(5px);
-
+    background: rgba(0,0,0,0.6);
     display: none;
-
     align-items: center;
-
     justify-content: center;
-
     padding: 20px;
-
     z-index: 10000;
 }
 
@@ -953,347 +398,172 @@ body {
 
 .details-modal-content {
     width: 100%;
-
     max-width: 550px;
-
     background: white;
-
-    border-radius: 20px;
-
+    border-radius: 18px;
     padding: 30px;
-
     position: relative;
-
-    border: 1px solid #ececf4;
-
-    box-shadow:
-        0 25px 70px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 
 .details-close {
     position: absolute;
-
     right: 18px;
-
     top: 12px;
-
-    width: 38px;
-
-    height: 38px;
-
     border: none;
-
-    background: #f4f4f8;
-
-    border-radius: 50%;
-
-    font-size: 25px;
-
+    background: transparent;
+    font-size: 30px;
     cursor: pointer;
-
     color: #555;
-}
-
-.details-close:hover {
-    background: #eee7ff;
-
-    color: #6845e8;
 }
 
 .details-header {
     margin-bottom: 25px;
-
-    padding-right: 40px;
 }
 
 .details-header h2 {
-    margin: 0 0 6px;
-
-    color: #111827;
+    margin-bottom: 6px;
 }
 
 .details-header p {
-    margin: 0;
-
-    color: #6b7280;
+    color: #666;
 }
 
 .freelancer-box {
     display: flex;
-
     align-items: center;
-
     gap: 15px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #f5f1ff,
-            #f5f8ff
-        );
-
-    padding: 17px;
-
-    border-radius: 14px;
-
+    background: #f5f4ff;
+    padding: 16px;
+    border-radius: 12px;
     margin-bottom: 20px;
-
-    border: 1px solid #e5defb;
 }
 
 .freelancer-avatar {
     width: 50px;
-
     height: 50px;
-
-    flex-shrink: 0;
-
     border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7045e8,
-            #4e7bea
-        );
-
+    background: #6845e8;
     color: white;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 22px;
 }
 
 .freelancer-box h3 {
-    margin: 0 0 4px;
-
-    color: #111827;
+    margin-bottom: 4px;
 }
 
 .freelancer-box p {
-    margin: 0;
-
-    color: #6b7280;
-
+    color: #666;
     font-size: 14px;
 }
 
 .details-grid {
     display: grid;
-
     grid-template-columns: 1fr 1fr;
-
     gap: 12px;
-
     margin-bottom: 22px;
 }
 
 .detail-box {
-    background: #f8f9fc;
-
-    padding: 14px;
-
-    border-radius: 11px;
-
-    border: 1px solid #eceef3;
+    background: #f8f8f8;
+    padding: 13px;
+    border-radius: 10px;
 }
 
 .detail-label {
     display: block;
-
-    color: #7a8291;
-
+    color: #777;
     font-size: 12px;
-
     margin-bottom: 5px;
 }
 
 .detail-value {
-    font-weight: 700;
-
-    color: #293142;
-
-    font-size: 14px;
+    font-weight: 600;
 }
 
 .detail-status {
     display: inline-block;
-
     padding: 5px 10px;
-
     border-radius: 15px;
-
     font-size: 12px;
 }
 
 .detail-actions {
     display: flex;
-
     gap: 10px;
-
     flex-wrap: wrap;
 }
 
 .detail-actions button {
     flex: 1;
-
     min-width: 120px;
-
     border: none;
-
     padding: 11px 15px;
-
     border-radius: 9px;
-
     cursor: pointer;
-
     font-weight: 600;
-
-    transition: 0.2s ease;
-}
-
-.detail-actions button:hover {
-    transform: translateY(-1px);
 }
 
 .detail-accept {
     background: #16a34a;
-
     color: white;
 }
 
 .detail-reject {
     background: #dc2626;
-
     color: white;
 }
 
 .detail-close {
     background: #eeeeee;
-
     color: #444;
 }
 
 
-/* =====================================================
-   FOOTER
-===================================================== */
-
-footer {
-    margin-top: 0;
-}
-
-
-/* =====================================================
+/* ===============================
    RESPONSIVE
-===================================================== */
+================================ */
 
-@media (max-width: 1200px) {
+@media (max-width:1100px) {
 
-    .my-jobs-page {
-        padding-left: 4%;
-
-        padding-right: 4%;
-    }
-
-    #jobsContainer {
-        grid-template-columns:
-            repeat(
-                3,
-                minmax(250px, 1fr)
-            );
-    }
-
-}
-
-
-@media (max-width: 1100px) {
-
-    .client-navbar {
-        height: auto;
-
-        min-height: 72px;
-
-        padding: 15px 20px;
-
+    .navbar {
         flex-wrap: wrap;
-    }
-
-    .client-navbar nav {
-        flex-wrap: wrap;
-
         justify-content: center;
+        padding: 15px 20px;
     }
 
-    #jobsContainer {
-        grid-template-columns:
-            repeat(
-                2,
-                minmax(260px, 1fr)
-            );
+    .navbar nav {
+        gap: 12px;
     }
 
 }
 
+@media (max-width:700px) {
 
-@media (max-width: 700px) {
-
-    .client-navbar {
-        height: auto;
-
+    .navbar {
         flex-direction: column;
-
-        align-items: center;
-
-        padding: 15px 20px;
-
         gap: 15px;
     }
 
-    .client-navbar nav {
-        width: 100%;
-
-        flex-wrap: wrap;
-
+    .navbar nav {
         justify-content: center;
-
-        gap: 5px;
-    }
-
-    .client-navbar .nav-actions {
-        justify-content: center;
+        gap: 10px;
     }
 
     .my-jobs-page {
-        padding: 32px 5%;
+        padding: 40px 5%;
     }
 
     .page-header-top {
         flex-direction: column;
-
         align-items: flex-start;
-    }
-
-    .page-header h1 {
-        font-size: 27px;
     }
 
     .post-job-btn {
         width: 100%;
-    }
-
-    #jobsContainer {
-        grid-template-columns: 1fr;
-
-        gap: 18px;
-    }
-
-    .job-card {
-        padding: 22px;
     }
 
     .job-actions {
@@ -1308,7 +578,6 @@ footer {
 
     .application-item-header {
         flex-direction: column;
-
         align-items: flex-start;
     }
 
@@ -1324,85 +593,39 @@ footer {
 }
 
 
-/* =====================================================
+/* ===============================
    DARK MODE
-===================================================== */
+================================ */
 
-body.dark {
-    background: #11121b;
-}
-
-body.dark .my-jobs-page {
-    background:
-        radial-gradient(
-            circle at 10% 0%,
-            rgba(112,69,232,0.12),
-            transparent 28%
-        ),
-        #11121b;
-}
-
-body.dark .page-header h1,
-body.dark .job-card h2,
-body.dark .empty-message h2,
-body.dark .modal-header h2,
-body.dark .details-header h2,
-body.dark .freelancer-box h3 {
+body.dark .job-card,
+body.dark .application-modal-content,
+body.dark .details-modal-content,
+body.dark .application-item {
+    background: #1f1f2b;
     color: white;
 }
 
+body.dark .job-card p,
 body.dark .page-header p,
-body.dark .job-card > p,
 body.dark .application-email,
 body.dark .application-item-info,
 body.dark .modal-header p,
 body.dark .details-header p,
 body.dark .freelancer-box p {
-    color: #b9bdc9;
-}
-
-body.dark .job-card,
-body.dark .empty-message,
-body.dark .application-modal-content,
-body.dark .details-modal-content,
-body.dark .application-item {
-    background: #1b1c28;
-
-    border-color: #303141;
-
-    color: white;
-}
-
-body.dark .job-info {
-    border-color: #303141;
-}
-
-body.dark .job-info strong {
-    color: #d8dbe4;
+    color: #c7c7d1;
 }
 
 body.dark .application-job-info,
 body.dark .freelancer-box {
-    background: #252638;
-
-    border-color: #38394c;
+    background: #29293a;
 }
 
 body.dark .detail-box {
-    background: #252638;
-
-    border-color: #38394c;
+    background: #29293a;
 }
 
-body.dark .detail-value {
-    color: #e5e7eb;
-}
-
-body.dark .modal-close,
-body.dark .details-close {
-    background: #292a38;
-
-    color: #ddd;
+body.dark .application-item {
+    border-color: #3d3d4d;
 }
 
 </style>
@@ -1412,22 +635,21 @@ body.dark .details-close {
 <body>
 
 
-<!-- =====================================================
+<!-- ===============================
      CLIENT NAVBAR
-===================================================== -->
+================================ -->
 
-<header class="client-navbar">
+<header class="navbar">
 
-    <a
-        href="client-dashboard.html"
-        class="logo">
+    <a href="client-dashboard.html" class="logo">
 
         <span class="logo-icon">✣</span>
 
-        Freelance<span>Hub</span>
+        <span>
+            Freelance<span>Hub</span>
+        </span>
 
     </a>
-
 
     <nav>
 
@@ -1439,12 +661,8 @@ body.dark .details-close {
             Post Job
         </a>
 
-        <a
-            href="my-jobs.html"
-            class="active">
-
+        <a href="my-jobs.html" class="active">
             My Jobs
-
         </a>
 
         <a href="applications-client.html">
@@ -1469,16 +687,20 @@ body.dark .details-close {
 
     </nav>
 
-
     <div class="nav-actions">
+
+        <button
+            type="button"
+            class="icon-btn"
+            id="themeBtn">
+            ☾
+        </button>
 
         <button
             type="button"
             class="logout-btn"
             onclick="logoutUser()">
-
             Logout
-
         </button>
 
     </div>
@@ -1486,20 +708,17 @@ body.dark .details-close {
 </header>
 
 
-<!-- =====================================================
+<!-- ===============================
      MY JOBS
-===================================================== -->
+================================ -->
 
 <section class="my-jobs-page">
 
     <a
         href="client-dashboard.html"
         class="back-btn">
-
         ← Back to Dashboard
-
     </a>
-
 
     <div class="page-header">
 
@@ -1517,19 +736,15 @@ body.dark .details-close {
 
             </div>
 
-
             <button
                 class="post-job-btn"
                 onclick="window.location.href='post-job.html'">
-
                 + Post a Job
-
             </button>
 
         </div>
 
     </div>
-
 
     <div id="jobsContainer">
 
@@ -1542,9 +757,9 @@ body.dark .details-close {
 </section>
 
 
-<!-- =====================================================
+<!-- ===============================
      APPLICATION LIST MODAL
-===================================================== -->
+================================ -->
 
 <div
     id="applicationModal"
@@ -1558,11 +773,8 @@ body.dark .details-close {
             type="button"
             class="modal-close"
             onclick="closeApplicationModal()">
-
             ×
-
         </button>
-
 
         <div class="modal-header">
 
@@ -1575,7 +787,6 @@ body.dark .details-close {
             </p>
 
         </div>
-
 
         <div class="application-job-info">
 
@@ -1596,7 +807,6 @@ body.dark .details-close {
 
         </div>
 
-
         <div id="applicationsList">
 
             <div class="loading">
@@ -1605,16 +815,13 @@ body.dark .details-close {
 
         </div>
 
-
         <div style="margin-top:20px;text-align:right;">
 
             <button
                 type="button"
                 class="application-close-btn"
                 onclick="closeApplicationModal()">
-
                 ✕ Close
-
             </button>
 
         </div>
@@ -1624,9 +831,9 @@ body.dark .details-close {
 </div>
 
 
-<!-- =====================================================
+<!-- ===============================
      APPLICATION DETAILS MODAL
-===================================================== -->
+================================ -->
 
 <div
     id="detailsModal"
@@ -1640,11 +847,8 @@ body.dark .details-close {
             type="button"
             class="details-close"
             onclick="closeDetailsModal()">
-
             ×
-
         </button>
-
 
         <div class="details-header">
 
@@ -1657,7 +861,6 @@ body.dark .details-close {
             </p>
 
         </div>
-
 
         <div class="freelancer-box">
 
@@ -1679,7 +882,6 @@ body.dark .details-close {
 
         </div>
 
-
         <div class="details-grid">
 
             <div class="detail-box">
@@ -1691,13 +893,10 @@ body.dark .details-close {
                 <span
                     class="detail-value"
                     id="detailApplicationId">
-
                     -
-
                 </span>
 
             </div>
-
 
             <div class="detail-box">
 
@@ -1708,13 +907,10 @@ body.dark .details-close {
                 <span
                     class="detail-value"
                     id="detailJobId">
-
                     -
-
                 </span>
 
             </div>
-
 
             <div class="detail-box">
 
@@ -1725,13 +921,10 @@ body.dark .details-close {
                 <span
                     class="detail-value"
                     id="detailJobTitle">
-
                     -
-
                 </span>
 
             </div>
-
 
             <div class="detail-box">
 
@@ -1742,13 +935,10 @@ body.dark .details-close {
                 <span
                     class="detail-value"
                     id="detailBudget">
-
                     -
-
                 </span>
 
             </div>
-
 
             <div class="detail-box">
 
@@ -1759,15 +949,12 @@ body.dark .details-close {
                 <span
                     class="detail-value detail-status"
                     id="detailStatus">
-
                     -
-
                 </span>
 
             </div>
 
         </div>
-
 
         <div
             id="detailActions"
@@ -1779,9 +966,9 @@ body.dark .details-close {
 </div>
 
 
-<!-- =====================================================
+<!-- ===============================
      FOOTER
-===================================================== -->
+================================ -->
 
 <footer>
 
@@ -1816,7 +1003,6 @@ const API_BASE = "http://localhost:8080";
 function logoutUser() {
 
     localStorage.removeItem("loggedInUser");
-
     localStorage.removeItem("userEmail");
 
     window.location.href = "home.html";
@@ -2432,6 +1618,10 @@ async function viewApplications(jobId) {
 
     try {
 
+        /* =========================
+           LOAD APPLICATIONS FIRST
+        ========================= */
+
         const applicationsResponse =
             await fetch(
                 `${API_BASE}/applications`
@@ -2456,6 +1646,10 @@ async function viewApplications(jobId) {
             applications
         );
 
+
+        /* =========================
+           LOAD JOB
+        ========================= */
 
         const jobsResponse =
             await fetch(
@@ -2500,6 +1694,10 @@ async function viewApplications(jobId) {
         }
 
 
+        /* =========================
+           JOB INFORMATION
+        ========================= */
+
         document.getElementById(
             "modalJobTitle"
         ).textContent =
@@ -2517,6 +1715,10 @@ async function viewApplications(jobId) {
         ).textContent =
             job.budget || "-";
 
+
+        /* =========================
+           FILTER APPLICATIONS
+        ========================= */
 
         const jobApplications =
             applications.filter(
@@ -3157,6 +2359,50 @@ document
 
         }
     );
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+const themeBtn =
+    document.getElementById(
+        "themeBtn"
+    );
+
+
+if (themeBtn) {
+
+    themeBtn.addEventListener(
+        "click",
+        function() {
+
+            document.body
+                .classList
+                .toggle("dark");
+
+
+            if (
+                document.body
+                    .classList
+                    .contains("dark")
+            ) {
+
+                themeBtn.textContent =
+                    "☀";
+
+            }
+
+            else {
+
+                themeBtn.textContent =
+                    "☾";
+
+            }
+
+        }
+    );
+}
 
 
 /* =====================================================

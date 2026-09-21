@@ -20,181 +20,100 @@
             margin: 0;
         }
 
-        /* ================= CLIENT NAVBAR ================= */
+        /* ================= NAVBAR ================= */
 
-        .client-navbar {
+        nav {
             width: 100%;
-            height: 72px;
             min-height: 72px;
-
             padding: 0 35px;
+            box-sizing: border-box;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            gap: 20px;
-
             background: #ffffff;
-
             border-bottom: 1px solid #e8ebf2;
 
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 
             position: sticky;
             top: 0;
-            left: 0;
-
             z-index: 1000;
-
-            box-sizing: border-box;
         }
 
-        .client-navbar .logo {
-            display: flex;
-            align-items: center;
-
-            text-decoration: none;
-            white-space: nowrap;
-
+        .logo {
             font-size: 24px;
             font-weight: 800;
-
             color: #1f4ed8;
 
-            flex-shrink: 0;
+            white-space: nowrap;
+            margin-right: 30px;
+
+            text-decoration: none;
         }
 
-        .client-navbar .logo-icon {
-            margin-right: 7px;
-        }
-
-        .client-navbar nav {
+        .nav-links {
             display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
 
-            gap: 5px;
-
-            flex: 1;
-            min-width: 0;
-
-            white-space: nowrap;
-        }
-
-        .client-navbar nav a {
-            text-decoration: none;
-            white-space: nowrap;
+            padding: 10px 12px;
 
             color: #4b5563;
+            text-decoration: none;
 
             font-size: 14px;
             font-weight: 600;
 
-            padding: 10px 12px;
-
             border-radius: 8px;
 
-            transition: 0.2s ease;
+            white-space: nowrap;
+
+            transition: all 0.2s ease;
         }
 
-        .client-navbar nav a:hover {
+        .nav-links a:hover {
             color: #1f4ed8;
             background: #eef3ff;
         }
 
-        .client-navbar nav a.active {
+        .nav-links a.active {
             color: #1f4ed8;
             background: #eef3ff;
         }
 
-        .client-navbar .logout-btn {
-            flex-shrink: 0;
-
+        .logout-btn {
             border: none;
+            padding: 10px 13px;
 
-            padding: 9px 14px;
+            color: #4b5563;
+            background: #f3f4f6;
+
+            font-size: 14px;
+            font-weight: 600;
 
             border-radius: 8px;
 
             cursor: pointer;
 
-            font-size: 13px;
-            font-weight: 700;
+            white-space: nowrap;
 
-            background: #feecec;
+            transition: all 0.2s ease;
+        }
+
+        .logout-btn:hover {
             color: #dc2626;
-        }
-
-        .client-navbar .logout-btn:hover {
-            background: #fde0e0;
-        }
-
-        @media (max-width: 1200px) {
-
-            .client-navbar {
-                padding: 0 20px;
-                gap: 10px;
-            }
-
-            .client-navbar nav {
-                gap: 2px;
-            }
-
-            .client-navbar nav a {
-                padding: 9px 8px;
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 950px) {
-
-            .client-navbar {
-                height: auto;
-                min-height: 72px;
-
-                padding: 12px 20px;
-
-                flex-wrap: wrap;
-            }
-
-            .client-navbar nav {
-                order: 3;
-
-                width: 100%;
-                flex-basis: 100%;
-
-                justify-content: center;
-
-                overflow-x: auto;
-
-                padding-bottom: 3px;
-            }
-        }
-
-        @media (max-width: 600px) {
-
-            .client-navbar {
-                height: auto;
-
-                flex-direction: column;
-
-                align-items: center;
-
-                padding: 15px;
-            }
-
-            .client-navbar nav {
-                order: initial;
-
-                width: 100%;
-
-                display: none;
-            }
-
-            .client-navbar .logout-btn {
-                margin-top: 5px;
-            }
+            background: #fee2e2;
         }
 
 
@@ -417,7 +336,65 @@
 
         /* ================= RESPONSIVE ================= */
 
+        @media (max-width: 1100px) {
+
+            nav {
+                padding: 15px 20px;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+            .logo {
+                margin-top: 8px;
+            }
+
+            .nav-links {
+                justify-content: flex-end;
+
+                max-width: 800px;
+            }
+
+            .nav-links a,
+            .logout-btn {
+                font-size: 13px;
+
+                padding: 8px 10px;
+            }
+        }
+
+
         @media (max-width: 768px) {
+
+            nav {
+                flex-direction: column;
+
+                align-items: center;
+
+                padding: 15px;
+
+                gap: 12px;
+            }
+
+            .logo {
+                margin: 0;
+            }
+
+            .nav-links {
+                width: 100%;
+
+                justify-content: center;
+
+                gap: 5px;
+            }
+
+            .nav-links a,
+            .logout-btn {
+                font-size: 12px;
+
+                padding: 8px 9px;
+            }
 
             .page-header {
                 align-items: flex-start;
@@ -452,6 +429,13 @@
                 padding: 20px;
             }
 
+            .nav-links a,
+            .logout-btn {
+                font-size: 11px;
+
+                padding: 7px 6px;
+            }
+
         }
 
     </style>
@@ -464,20 +448,17 @@
 
 <!-- ================= CLIENT NAVBAR ================= -->
 
-<header class="client-navbar">
+<nav>
 
-    <a href="client-dashboard.html" class="logo">
+    <a href="client-dashboard.html"
+       class="logo">
 
-        <span class="logo-icon">✣</span>
-
-        <span>
-            Freelance<span>Hub</span>
-        </span>
+        FreelanceHub
 
     </a>
 
 
-    <nav>
+    <div class="nav-links">
 
         <a href="client-dashboard.html">
             Dashboard
@@ -491,7 +472,7 @@
             My Jobs
         </a>
 
-        <a href="applications-client.html">
+        <a href="applications.html">
             Applications Received
         </a>
 
@@ -503,27 +484,28 @@
             My Payments
         </a>
 
-        <a href="my-reviews.html" class="active">
+        <a href="my-reviews.html"
+           class="active">
+
             My Reviews
+
         </a>
 
         <a href="profile.html">
             My Profile
         </a>
 
-    </nav>
+        <button
+            class="logout-btn"
+            onclick="logoutUser()">
 
+            Logout
 
-    <button
-        type="button"
-        class="logout-btn"
-        onclick="logoutUser()">
+        </button>
 
-        Logout
+    </div>
 
-    </button>
-
-</header>
+</nav>
 
 
 <!-- ================= MAIN ================= -->

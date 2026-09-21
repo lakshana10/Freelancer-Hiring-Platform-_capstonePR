@@ -17,6 +17,781 @@
         href="../css/signup.css"
     >
 
+    <style>
+
+        /* =========================================
+           SIGNUP PAGE ENHANCEMENTS
+        ========================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #eee7ff 0%,
+                    #f8f7ff 42%,
+                    #ffffff 100%
+                );
+            color: #11152b;
+        }
+
+
+        /* =========================================
+           HEADER
+        ========================================= */
+
+        .signup-header {
+            width: 100%;
+            height: 72px;
+
+            padding: 0 6%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(255,255,255,0.96);
+
+            border-bottom: 1px solid #ece9f7;
+
+            box-shadow: 0 3px 15px rgba(60,45,130,0.05);
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+
+        .signup-header .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            text-decoration: none;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            color: #17132d;
+        }
+
+
+        .signup-header .logo > span:last-child span {
+            color: #7045df;
+        }
+
+
+        .signup-header .logo-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #7045df,
+                #5935d2
+            );
+
+            color: white;
+
+            border-radius: 10px;
+
+            font-size: 18px;
+
+            box-shadow:
+                0 6px 16px rgba(112,69,223,0.25);
+        }
+
+
+        .back-home {
+            text-decoration: none;
+
+            color: #5f4acb;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            padding: 9px 14px;
+
+            border-radius: 8px;
+
+            transition: 0.2s ease;
+        }
+
+
+        .back-home:hover {
+            background: #eee7ff;
+            color: #7045df;
+        }
+
+
+        /* =========================================
+           SIGNUP SECTION
+        ========================================= */
+
+        .signup-section {
+            min-height: calc(100vh - 130px);
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            padding: 45px 20px 60px;
+        }
+
+
+        /* =========================================
+           CARD
+        ========================================= */
+
+        .signup-card {
+            width: 100%;
+            max-width: 500px;
+
+            background: rgba(255,255,255,0.98);
+
+            padding: 38px 40px 32px;
+
+            border-radius: 20px;
+
+            border: 1px solid #ebe7f8;
+
+            box-shadow:
+                0 18px 55px rgba(57,42,120,0.12);
+
+            position: relative;
+        }
+
+
+        .signup-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 4px;
+
+            background: linear-gradient(
+                90deg,
+                #7045df,
+                #8b65ef
+            );
+
+            border-radius: 20px 20px 0 0;
+        }
+
+
+        /* =========================================
+           ICON
+        ========================================= */
+
+        .signup-icon {
+            width: 54px;
+            height: 54px;
+
+            margin: 0 auto 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eee7ff;
+
+            color: #7045df;
+
+            border-radius: 15px;
+
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+
+        .signup-card h1 {
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 27px;
+            font-weight: 800;
+
+            color: #17132d;
+        }
+
+
+        .subtitle {
+            margin: 9px 0 28px;
+
+            text-align: center;
+
+            color: #747188;
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        /* =========================================
+           INPUT GROUP
+        ========================================= */
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+
+        .input-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #17132d;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+
+        .input-group input[type="text"],
+        .input-group input[type="email"],
+        .input-group input[type="password"] {
+            width: 100%;
+
+            height: 46px;
+
+            padding: 0 14px;
+
+            border: 1px solid #dcd9e8;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+
+            color: #17132d;
+
+            font-size: 13px;
+
+            outline: none;
+
+            transition: 0.2s ease;
+        }
+
+
+        .input-group input:focus {
+            border-color: #7045df;
+
+            box-shadow:
+                0 0 0 3px rgba(112,69,223,0.10);
+        }
+
+
+        .input-group input::placeholder {
+            color: #9b98a9;
+        }
+
+
+        /* =========================================
+           OTP
+        ========================================= */
+
+        .otp-box {
+            display: flex;
+            gap: 9px;
+        }
+
+
+        .otp-box input {
+            flex: 1;
+        }
+
+
+        #generateOtpBtn {
+            min-width: 88px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #7045df;
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        #generateOtpBtn:hover {
+            background: #5e37d1;
+
+            transform: translateY(-1px);
+        }
+
+
+        .verify-otp-btn {
+            margin-top: 9px;
+
+            padding: 8px 13px;
+
+            border: 1px solid #d8cff8;
+
+            border-radius: 8px;
+
+            background: #f4f0ff;
+
+            color: #6741d8;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+
+        .verify-otp-btn:hover {
+            background: #eee7ff;
+        }
+
+
+        .otp-message {
+            margin: 7px 0 0;
+
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================
+           ROLE SELECTION
+        ========================================= */
+
+        .role-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+
+        .role-card {
+            position: relative;
+
+            display: block;
+
+            cursor: pointer;
+        }
+
+
+        .role-card > input {
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .role-content {
+            min-height: 76px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 12px 14px;
+
+            border: 1px solid #dedbea;
+
+            border-radius: 12px;
+
+            background: white;
+
+            transition: 0.2s ease;
+        }
+
+
+        .role-card:hover .role-content {
+            border-color: #bba9f3;
+
+            background: #faf8ff;
+        }
+
+
+        .role-card > input:checked + .role-content {
+            border-color: #7045df;
+
+            background: #f7f3ff;
+
+            box-shadow:
+                0 0 0 2px rgba(112,69,223,0.08);
+        }
+
+
+        .role-icon {
+            width: 40px;
+            height: 40px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #eee7ff;
+
+            border-radius: 11px;
+
+            font-size: 19px;
+        }
+
+
+        .role-info {
+            flex: 1;
+        }
+
+
+        .role-info h3 {
+            margin: 0 0 4px;
+
+            font-size: 14px;
+
+            color: #17132d;
+        }
+
+
+        .role-info p {
+            margin: 0;
+
+            color: #77738a;
+
+            font-size: 11px;
+
+            line-height: 1.35;
+        }
+
+
+        .role-check {
+            width: 21px;
+            height: 21px;
+
+            flex-shrink: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1.5px solid #d1cddd;
+
+            border-radius: 50%;
+
+            color: transparent;
+
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+
+        .role-card > input:checked + .role-content .role-check {
+            background: #7045df;
+
+            border-color: #7045df;
+
+            color: white;
+        }
+
+
+        /* =========================================
+           PASSWORD
+        ========================================= */
+
+        .password-box {
+            position: relative;
+        }
+
+
+        .password-box input {
+            padding-right: 45px !important;
+        }
+
+
+        .show-password {
+            position: absolute;
+
+            top: 50%;
+            right: 10px;
+
+            transform: translateY(-50%);
+
+            width: 30px;
+            height: 30px;
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: #777;
+
+            border-radius: 7px;
+        }
+
+
+        .show-password:hover {
+            background: #f1edff;
+        }
+
+
+        /* =========================================
+           TERMS
+        ========================================= */
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+
+            gap: 8px;
+
+            margin: 5px 0 20px;
+
+            color: #77738a;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        .terms input {
+            margin-top: 2px;
+
+            accent-color: #7045df;
+
+            cursor: pointer;
+        }
+
+
+        .terms label {
+            cursor: pointer;
+        }
+
+
+        .terms a {
+            color: #7045df;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+
+        .terms a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           CREATE BUTTON
+        ========================================= */
+
+        .create-btn {
+            width: 100%;
+
+            height: 47px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #7045df,
+                #6841e8
+            );
+
+            color: white;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 18px rgba(112,69,223,0.22);
+
+            transition: 0.2s ease;
+        }
+
+
+        .create-btn span {
+            margin-left: 5px;
+        }
+
+
+        .create-btn:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 11px 23px rgba(112,69,223,0.28);
+        }
+
+
+        .create-btn:active {
+            transform: translateY(0);
+        }
+
+
+        /* =========================================
+           LOGIN TEXT
+        ========================================= */
+
+        .login-text {
+            margin: 21px 0 0;
+
+            text-align: center;
+
+            color: #77738a;
+
+            font-size: 13px;
+        }
+
+
+        .login-text a {
+            color: #7045df;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+            padding: 18px 20px 25px;
+
+            text-align: center;
+
+            color: #888499;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .signup-header {
+                height: 64px;
+
+                padding: 0 18px;
+            }
+
+
+            .signup-header .logo {
+                font-size: 18px;
+            }
+
+
+            .signup-header .logo-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+
+            .back-home {
+                font-size: 12px;
+
+                padding: 7px 9px;
+            }
+
+
+            .signup-section {
+                padding: 25px 14px 40px;
+            }
+
+
+            .signup-card {
+                padding: 30px 20px 25px;
+
+                border-radius: 16px;
+            }
+
+
+            .signup-card h1 {
+                font-size: 24px;
+            }
+
+
+            .otp-box {
+                flex-direction: column;
+            }
+
+
+            #generateOtpBtn {
+                width: 100%;
+                height: 42px;
+            }
+
+
+            .role-content {
+                padding: 11px;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .signup-header {
+                align-items: center;
+            }
+
+
+            .back-home {
+                font-size: 11px;
+            }
+
+
+            .signup-card {
+                padding: 27px 16px 23px;
+            }
+
+
+            .signup-card h1 {
+                font-size: 22px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
@@ -65,7 +840,7 @@
         <div class="signup-card">
 
 
-            <!-- Icon -->
+            <!-- ICON -->
 
             <div class="signup-icon">
                 ✦
@@ -90,7 +865,7 @@
             <form id="signupForm">
 
 
-                <!-- Full Name -->
+                <!-- FULL NAME -->
 
                 <div class="input-group">
 
@@ -109,7 +884,7 @@
 
 
 
-                <!-- Email -->
+                <!-- EMAIL -->
 
                 <div class="input-group">
 
@@ -128,9 +903,7 @@
 
 
 
-                <!-- ===============================
-                     OTP
-                ================================ -->
+                <!-- OTP -->
 
                 <div class="input-group">
 
@@ -178,9 +951,7 @@
 
 
 
-                <!-- ===============================
-                     JOIN AS
-                ================================ -->
+                <!-- JOIN AS -->
 
                 <div class="input-group">
 
@@ -192,7 +963,7 @@
                     <div class="role-selection">
 
 
-                        <!-- Freelancer -->
+                        <!-- FREELANCER -->
 
                         <label class="role-card">
 
@@ -231,7 +1002,7 @@
 
 
 
-                        <!-- Client -->
+                        <!-- CLIENT -->
 
                         <label class="role-card">
 
@@ -275,7 +1046,7 @@
 
 
 
-                <!-- Password -->
+                <!-- PASSWORD -->
 
                 <div class="input-group">
 
@@ -312,7 +1083,7 @@
 
 
 
-                <!-- Confirm Password -->
+                <!-- CONFIRM PASSWORD -->
 
                 <div class="input-group">
 
@@ -345,7 +1116,7 @@
 
 
 
-                <!-- Terms -->
+                <!-- TERMS -->
 
                 <div class="terms">
 
@@ -376,7 +1147,7 @@
 
 
 
-                <!-- Create Account -->
+                <!-- CREATE ACCOUNT -->
 
                 <button
                     type="submit"

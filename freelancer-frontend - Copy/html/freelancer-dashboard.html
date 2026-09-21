@@ -27,44 +27,46 @@
         }
 
 
-        /* ================= FREELANCER NAVBAR ================= */
+        /* ================= NAVBAR ================= */
 
         .dashboard-navbar {
             width: 100%;
             min-height: 72px;
             padding: 0 35px;
-            box-sizing: border-box;
 
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 20px;
 
             background: white;
+
             border-bottom: 1px solid #e8ebf2;
+
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 
             position: sticky;
             top: 0;
+
             z-index: 1000;
         }
 
 
         .dashboard-logo {
-            text-decoration: none;
-            white-space: nowrap;
+            display: flex;
+            align-items: center;
 
             font-size: 24px;
             font-weight: 800;
 
             color: #1f4ed8;
 
-            cursor: pointer;
+            white-space: nowrap;
         }
 
 
         .logo-icon {
             margin-right: 7px;
+            font-size: 22px;
         }
 
 
@@ -76,13 +78,12 @@
 
             flex-wrap: wrap;
 
-            justify-content: center;
+            justify-content: flex-end;
         }
 
 
         .dashboard-nav a {
             text-decoration: none;
-            white-space: nowrap;
 
             color: #4b5563;
 
@@ -93,11 +94,18 @@
 
             border-radius: 8px;
 
+            white-space: nowrap;
+
             transition: 0.2s ease;
         }
 
 
-        .dashboard-nav a:hover,
+        .dashboard-nav a:hover {
+            color: #1f4ed8;
+            background: #eef3ff;
+        }
+
+
         .dashboard-nav a.active {
             color: #1f4ed8;
             background: #eef3ff;
@@ -107,21 +115,22 @@
         /* ================= LOGOUT ================= */
 
         .logout-btn {
-            flex-shrink: 0;
-
             border: none;
+
+            background: #feecec;
+
+            color: #dc2626;
 
             padding: 9px 14px;
 
             border-radius: 8px;
 
-            cursor: pointer;
-
             font-size: 13px;
             font-weight: 700;
 
-            background: #feecec;
-            color: #dc2626;
+            cursor: pointer;
+
+            margin-left: 5px;
         }
 
 
@@ -538,42 +547,32 @@
         }
 
 
-        /* ================= RESPONSIVE ================= */
+        /* ================= MOBILE ================= */
 
-        @media (max-width: 1200px) {
-
-            .dashboard-navbar {
-                padding: 0 20px;
-                gap: 10px;
-            }
-
-            .dashboard-nav {
-                gap: 2px;
-            }
-
-            .dashboard-nav a {
-                padding: 9px 8px;
-                font-size: 13px;
-            }
-
-        }
-
-
-        @media (max-width: 950px) {
+        @media (max-width: 1000px) {
 
             .dashboard-navbar {
-                min-height: 72px;
-                padding: 12px 20px;
-                flex-wrap: wrap;
+                padding: 15px 20px;
+
+                align-items: flex-start;
+
+                gap: 15px;
             }
 
+
             .dashboard-nav {
-                order: 3;
-                width: 100%;
-                flex-basis: 100%;
-                justify-content: center;
-                overflow-x: auto;
-                padding-bottom: 3px;
+                max-width: 700px;
+            }
+
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .content-grid {
+                grid-template-columns: 1fr;
             }
 
         }
@@ -583,16 +582,13 @@
 
             .dashboard-navbar {
                 flex-direction: column;
+
                 align-items: center;
-                padding: 15px;
             }
+
 
             .dashboard-nav {
-                width: 100%;
-            }
-
-            .dashboard-nav a {
-                font-size: 13px;
+                justify-content: center;
             }
 
 
@@ -634,6 +630,13 @@
                 font-size: 25px;
             }
 
+
+            .dashboard-nav a {
+                font-size: 12px;
+
+                padding: 8px;
+            }
+
         }
 
     </style>
@@ -648,71 +651,68 @@
 
     <header class="dashboard-navbar">
 
-        <a
-            href="./freelancer-dashboard.html"
-            class="dashboard-logo">
+        <div class="dashboard-logo">
 
             <span class="logo-icon">
                 ✣
             </span>
 
-            Freelance<span>Hub</span>
+            <span>
+                Freelance<span>Hub</span>
+            </span>
 
-        </a>
+        </div>
 
 
         <nav class="dashboard-nav">
 
             <a
-                href="./freelancer-dashboard.html"
-                class="active">
-
+                href="freelancer-dashboard.html"
+                class="active"
+            >
                 Dashboard
-
             </a>
 
 
-            <a href="./jobs.html">
+            <a href="jobs.html">
                 Find Jobs
             </a>
 
 
-            <a href="./my-applications.html">
+            <a href="my-applications.html">
                 My Applications
             </a>
 
 
-            <a href="./my-contracts.html">
+            <a href="my-contracts.html">
                 My Contracts
             </a>
 
 
-            <a href="./my-payments.html">
+            <a href="my-payments.html">
                 My Payments
             </a>
 
 
-            <a href="./my-reviews.html">
+            <a href="my-reviews.html">
                 My Reviews
             </a>
 
 
-            <a href="./profile.html">
+            <a href="profile.html">
                 My Profile
             </a>
 
 
+            <button
+                type="button"
+                class="logout-btn"
+                onclick="logoutUser()"
+            >
+                Logout
+            </button>
+
         </nav>
-
-
-        <button
-            type="button"
-            class="logout-btn"
-            onclick="logoutUser()">
-
-            Logout
-
-        </button>
 
     </header>
 
@@ -874,11 +874,10 @@
 
 
                     <a
-                        href="./my-applications.html"
-                        class="view-link">
-
+                        href="my-applications.html"
+                        class="view-link"
+                    >
                         View All →
-
                     </a>
 
                 </div>
@@ -912,8 +911,9 @@
 
 
                     <a
-                        href="./jobs.html"
-                        class="quick-action">
+                        href="jobs.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             🔍
@@ -931,8 +931,9 @@
 
 
                     <a
-                        href="./my-applications.html"
-                        class="quick-action">
+                        href="my-applications.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             📄
@@ -950,8 +951,9 @@
 
 
                     <a
-                        href="./my-contracts.html"
-                        class="quick-action">
+                        href="my-contracts.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             💼
@@ -971,8 +973,9 @@
                     <!-- MESSAGING QUICK ACTION -->
 
                     <a
-                        href="./messages.html"
-                        class="quick-action">
+                        href="messages.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             💬
@@ -990,8 +993,9 @@
 
 
                     <a
-                        href="./my-reviews.html"
-                        class="quick-action">
+                        href="my-reviews.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             ⭐
@@ -1009,8 +1013,9 @@
 
 
                     <a
-                        href="./profile.html"
-                        class="quick-action">
+                        href="profile.html"
+                        class="quick-action"
+                    >
 
                         <div class="quick-action-icon">
                             👤
@@ -1042,6 +1047,7 @@
 
     <script>
 
+
         /* ================= USER ================= */
 
         const loggedInUser =
@@ -1060,7 +1066,6 @@
 
             window.location.href =
                 "login.html";
-
         }
 
 

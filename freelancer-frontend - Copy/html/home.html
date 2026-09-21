@@ -11,268 +11,6 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/home.css">
 
-    <!-- PRICING SECTION ONLY -->
-    <style>
-
-        /* =========================
-           PRICING ENHANCEMENT
-        ========================= */
-
-        .pricing {
-            padding: 80px 5%;
-            background: #f8f7ff;
-        }
-
-        .pricing .how-it-works-heading {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .pricing .how-it-works-heading small {
-            color: #7045df;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .pricing .how-it-works-heading h2 {
-            margin: 10px 0;
-            font-size: 34px;
-            color: #11152b;
-        }
-
-        .pricing .how-it-works-heading p {
-            color: #6b6b7a;
-            font-size: 15px;
-        }
-
-        .pricing-grid {
-            width: 100%;
-            max-width: 1150px;
-            margin: 0 auto;
-
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-
-            align-items: stretch;
-        }
-
-        .pricing-card {
-            position: relative;
-
-            background: #ffffff;
-
-            border: 1px solid #e8e4f5;
-            border-radius: 20px;
-
-            padding: 32px 28px;
-
-            min-height: 430px;
-
-            display: flex;
-            flex-direction: column;
-
-            box-shadow: 0 8px 25px rgba(80, 60, 150, 0.07);
-
-            transition:
-                transform 0.25s ease,
-                box-shadow 0.25s ease,
-                border-color 0.25s ease;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-7px);
-
-            box-shadow:
-                0 18px 40px rgba(80, 60, 150, 0.14);
-
-            border-color: #d8cdfc;
-        }
-
-        .pricing-card h3 {
-            font-size: 22px;
-            color: #17132d;
-            margin-bottom: 8px;
-        }
-
-        .pricing-card > p:first-of-type {
-            color: #77758a;
-            font-size: 14px;
-            line-height: 1.6;
-            min-height: 44px;
-        }
-
-        .pricing-card h2 {
-            font-size: 34px;
-            color: #11152b;
-            margin: 22px 0 2px;
-        }
-
-        .pricing-card > p:nth-of-type(2) {
-            color: #858292;
-            font-size: 13px;
-            margin-bottom: 22px;
-        }
-
-        .pricing-card ul {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 25px;
-
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .pricing-card ul li {
-            color: #454458;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .pricing-card button {
-            width: 100%;
-
-            margin-top: auto;
-
-            padding: 12px 18px;
-
-            border: 1px solid #7045df;
-            border-radius: 10px;
-
-            background: #ffffff;
-            color: #7045df;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: 0.2s ease;
-        }
-
-        .pricing-card button:hover {
-            background: #7045df;
-            color: #ffffff;
-        }
-
-        /* =========================
-           FEATURED PLAN
-        ========================= */
-
-        .pricing-card.featured {
-            border: 2px solid #7045df;
-
-            background:
-                linear-gradient(
-                    180deg,
-                    #ffffff 0%,
-                    #faf8ff 100%
-                );
-
-            box-shadow:
-                0 15px 40px rgba(112, 69, 223, 0.16);
-
-            transform: translateY(-8px);
-        }
-
-        .pricing-card.featured:hover {
-            transform: translateY(-13px);
-
-            box-shadow:
-                0 22px 45px rgba(112, 69, 223, 0.20);
-        }
-
-        .pricing-card.featured::before {
-            content: "MOST POPULAR";
-
-            position: absolute;
-
-            top: -14px;
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            background: #7045df;
-            color: #ffffff;
-
-            padding: 6px 16px;
-
-            border-radius: 20px;
-
-            font-size: 10px;
-            font-weight: 700;
-
-            letter-spacing: 0.7px;
-
-            white-space: nowrap;
-        }
-
-        .pricing-card.featured h3 {
-            color: #7045df;
-        }
-
-        .pricing-card.featured h2 {
-            color: #7045df;
-        }
-
-        .pricing-card.featured button {
-            background: #7045df;
-            color: #ffffff;
-        }
-
-        .pricing-card.featured button:hover {
-            background: #5937c7;
-        }
-
-        /* =========================
-           PRICING RESPONSIVE
-        ========================= */
-
-        @media (max-width: 900px) {
-
-            .pricing {
-                padding: 65px 5%;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 520px;
-            }
-
-            .pricing-card {
-                min-height: auto;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
-            .pricing-card.featured:hover {
-                transform: translateY(-7px);
-            }
-
-        }
-
-        @media (max-width: 600px) {
-
-            .pricing {
-                padding: 55px 20px;
-            }
-
-            .pricing .how-it-works-heading h2 {
-                font-size: 28px;
-            }
-
-            .pricing-card {
-                padding: 28px 22px;
-            }
-
-        }
-
-    </style>
-
 </head>
 
 <body>
@@ -323,6 +61,8 @@
 
         <div class="nav-actions">
 
+            <!-- THEME -->
+
             <button
                 class="icon-btn"
                 id="themeBtn">
@@ -330,10 +70,14 @@
             </button>
 
 
+            <!-- NOTIFICATION -->
+
             <button class="icon-btn">
                 ♧
             </button>
 
+
+            <!-- LOGIN -->
 
             <div id="userSection">
 
@@ -345,6 +89,8 @@
 
                 </button>
 
+
+                <!-- SIGN UP -->
 
                 <button
                     class="signup-btn"
@@ -367,8 +113,11 @@
 
         <div class="hero-content">
 
+
             <div class="tagline">
+
                 ✣ Connect. Collaborate. Create.
+
             </div>
 
 
@@ -388,6 +137,8 @@
 
             </p>
 
+
+            <!-- SEARCH -->
 
             <div class="search-box">
 
@@ -412,23 +163,29 @@
             </div>
 
 
+            <!-- POPULAR -->
+
             <div class="popular">
 
                 <strong>
                     Popular:
                 </strong>
 
+
                 <span>
                     Web Development
                 </span>
+
 
                 <span>
                     UI/UX Design
                 </span>
 
+
                 <span>
                     Content Writing
                 </span>
+
 
                 <span>
                     Digital Marketing
@@ -476,7 +233,9 @@
 
 
                 <div class="rating">
+
                     ⭐ 4.9
+
                 </div>
 
             </div>
@@ -547,6 +306,7 @@
     <!-- ================= STATISTICS ================= -->
 
     <section class="statistics">
+
 
         <div class="stat">
 
@@ -687,6 +447,7 @@
         class="categories"
         id="categories">
 
+
         <div class="section-heading">
 
             <div>
@@ -719,6 +480,9 @@
 
         <div class="category-grid">
 
+
+            <!-- WEB DEVELOPMENT -->
+
             <div class="category-card">
 
                 <div class="category-icon purple-icon">
@@ -739,6 +503,8 @@
 
             </div>
 
+
+            <!-- UI UX -->
 
             <div class="category-card">
 
@@ -761,6 +527,8 @@
             </div>
 
 
+            <!-- CONTENT WRITING -->
+
             <div class="category-card">
 
                 <div class="category-icon blue-icon">
@@ -781,6 +549,8 @@
 
             </div>
 
+
+            <!-- DIGITAL MARKETING -->
 
             <div class="category-card">
 
@@ -803,6 +573,8 @@
             </div>
 
 
+            <!-- VIDEO EDITING -->
+
             <div class="category-card">
 
                 <div class="category-icon orange-icon">
@@ -824,6 +596,8 @@
             </div>
 
 
+            <!-- MORE CATEGORIES -->
+
             <div class="category-card">
 
                 <div class="category-icon violet-icon">
@@ -840,6 +614,7 @@
 
                 <a href="jobs.html">
                     Explore All →
+
                 </a>
 
             </div>
@@ -854,6 +629,7 @@
     <section
         class="how-it-works"
         id="how-it-works">
+
 
         <div class="how-it-works-heading">
 
@@ -874,6 +650,9 @@
 
         <div class="steps-grid">
 
+
+            <!-- STEP 1 -->
+
             <div class="step-card">
 
                 <div class="step-number">
@@ -891,6 +670,8 @@
             </div>
 
 
+            <!-- STEP 2 -->
+
             <div class="step-card">
 
                 <div class="step-number">
@@ -907,6 +688,8 @@
 
             </div>
 
+
+            <!-- STEP 3 -->
 
             <div class="step-card">
 
@@ -955,7 +738,7 @@
         <div class="pricing-grid">
 
 
-            <!-- FREE -->
+            <!-- FREE PLAN -->
 
             <div class="pricing-card">
 
@@ -977,10 +760,21 @@
 
                 <ul>
 
-                    <li>✓ Create Profile</li>
-                    <li>✓ Find Jobs</li>
-                    <li>✓ Apply for Jobs</li>
-                    <li>✓ Basic Messaging</li>
+                    <li>
+                        ✓ Create Profile
+                    </li>
+
+                    <li>
+                        ✓ Find Jobs
+                    </li>
+
+                    <li>
+                        ✓ Apply for Jobs
+                    </li>
+
+                    <li>
+                        ✓ Basic Messaging
+                    </li>
 
                 </ul>
 
@@ -994,7 +788,7 @@
             </div>
 
 
-            <!-- PROFESSIONAL -->
+            <!-- PROFESSIONAL PLAN -->
 
             <div class="pricing-card featured">
 
@@ -1016,10 +810,21 @@
 
                 <ul>
 
-                    <li>✓ Everything in Free</li>
-                    <li>✓ Priority Visibility</li>
-                    <li>✓ Advanced Profile</li>
-                    <li>✓ More Applications</li>
+                    <li>
+                        ✓ Everything in Free
+                    </li>
+
+                    <li>
+                        ✓ Priority Visibility
+                    </li>
+
+                    <li>
+                        ✓ Advanced Profile
+                    </li>
+
+                    <li>
+                        ✓ More Applications
+                    </li>
 
                 </ul>
 
@@ -1033,7 +838,7 @@
             </div>
 
 
-            <!-- BUSINESS -->
+            <!-- BUSINESS PLAN -->
 
             <div class="pricing-card">
 
@@ -1055,10 +860,21 @@
 
                 <ul>
 
-                    <li>✓ Everything in Professional</li>
-                    <li>✓ Multiple Projects</li>
-                    <li>✓ Priority Support</li>
-                    <li>✓ Business Tools</li>
+                    <li>
+                        ✓ Everything in Professional
+                    </li>
+
+                    <li>
+                        ✓ Multiple Projects
+                    </li>
+
+                    <li>
+                        ✓ Priority Support
+                    </li>
+
+                    <li>
+                        ✓ Business Tools
+                    </li>
 
                 </ul>
 
@@ -1096,6 +912,9 @@
 
         <div class="cta-buttons">
 
+
+            <!-- POST A JOB -->
+
             <button
                 class="post-job"
                 onclick="window.location.href='login.html'">
@@ -1104,6 +923,8 @@
 
             </button>
 
+
+            <!-- JOIN AS FREELANCER -->
 
             <button
                 class="join-freelancer"
