@@ -2,4 +2,5 @@ services:
   - type: web
     name: freelancer-backend
     env: docker
+    plan: free
     rootDir: freelancer-backend
