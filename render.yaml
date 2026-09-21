@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: freelancer-backend
+    env: java
+    rootDir: freelancer-backend
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/*.jar
