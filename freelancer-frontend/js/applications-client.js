@@ -33,7 +33,6 @@ async function loadApplications() {
         return;
     }
 
-
     try {
 
         // ================= GET JOBS =================
@@ -43,14 +42,12 @@ async function loadApplications() {
                 "https://freelancer-backend-9cw6.onrender.com/api/jobs"
             );
 
-
         if (!jobsResponse.ok) {
 
             throw new Error(
                 "Unable to load jobs"
             );
         }
-
 
         const jobs =
             await jobsResponse.json();
@@ -80,14 +77,12 @@ async function loadApplications() {
                 "https://freelancer-backend-9cw6.onrender.com/applications"
             );
 
-
         if (!applicationsResponse.ok) {
 
             throw new Error(
                 "Unable to load applications"
             );
         }
-
 
         allApplications =
             await applicationsResponse.json();
@@ -258,7 +253,6 @@ function displayApplications(
         applications.map(
             application => {
 
-
                 const status =
                     application.status ||
                     "Pending";
@@ -311,7 +305,6 @@ function displayApplications(
                             jobTitle
                         ).toLowerCase()}"
                     >
-
 
                         <!-- HEADER -->
 
@@ -478,8 +471,6 @@ function viewApplication(
     );
 
 
-    // Find application
-
     const application =
         clientApplications.find(
             app =>
@@ -497,8 +488,6 @@ function viewApplication(
         return;
     }
 
-
-    // Find job
 
     const job =
         clientJobs.find(
@@ -687,8 +676,6 @@ function viewApplication(
     );
 
 
-    // Prevent background scrolling
-
     document.body.style.overflow =
         "hidden";
 }
@@ -722,6 +709,539 @@ function closeApplicationModal() {
 
 
 // =====================================================
+// CONFIRMATION POPUP
+// =====================================================
+
+function showConfirmationPopup(
+    action
+) {
+
+    return new Promise(
+        (resolve) => {
+
+            const isAccept =
+                action.toLowerCase() ===
+                "accepted";
+
+
+            const popup =
+                document.createElement("div");
+
+
+            popup.setAttribute(
+                "data-confirm-popup",
+                "true"
+            );
+
+
+            popup.innerHTML = `
+
+                <div style="
+                    position: fixed;
+                    inset: 0;
+                    background: rgba(15, 23, 42, 0.45);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 99999;
+                ">
+
+                    <div style="
+                        width: 390px;
+                        max-width: 90%;
+                        background: white;
+                        border-radius: 18px;
+                        padding: 32px;
+                        text-align: center;
+                        box-shadow: 0 20px 50px rgba(0,0,0,0.20);
+                        animation: popupScale 0.25s ease;
+                    ">
+
+                        <div style="
+                            width: 64px;
+                            height: 64px;
+                            margin: 0 auto 18px;
+                            border-radius: 50%;
+                            background: ${
+                                isAccept
+                                    ? "#e8f8ef"
+                                    : "#feecec"
+                            };
+                            color: ${
+                                isAccept
+                                    ? "#16a34a"
+                                    : "#dc2626"
+                            };
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 30px;
+                            font-weight: bold;
+                        ">
+                            ${
+                                isAccept
+                                    ? "✓"
+                                    : "!"
+                            }
+                        </div>
+
+
+                        <h2 style="
+                            margin: 0 0 10px;
+                            color: #111827;
+                            font-size: 22px;
+                        ">
+                            ${
+                                isAccept
+                                    ? "Accept Application?"
+                                    : "Reject Application?"
+                            }
+                        </h2>
+
+
+                        <p style="
+                            margin: 0;
+                            color: #64748b;
+                            font-size: 15px;
+                            line-height: 1.6;
+                        ">
+                            ${
+                                isAccept
+                                    ? "Are you sure you want to accept this application?"
+                                    : "Are you sure you want to reject this application?"
+                            }
+                        </p>
+
+
+                        <div style="
+                            display: flex;
+                            justify-content: center;
+                            gap: 12px;
+                            margin-top: 25px;
+                        ">
+
+                            <button
+                                type="button"
+                                data-cancel-button
+                                style="
+                                    border: 1px solid #d1d5db;
+                                    background: white;
+                                    color: #374151;
+                                    padding: 11px 24px;
+                                    border-radius: 9px;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                "
+                            >
+                                Cancel
+                            </button>
+
+
+                            <button
+                                type="button"
+                                data-confirm-button
+                                style="
+                                    border: none;
+                                    background: ${
+                                        isAccept
+                                            ? "#1f4ed8"
+                                            : "#dc2626"
+                                    };
+                                    color: white;
+                                    padding: 11px 24px;
+                                    border-radius: 9px;
+                                    font-size: 14px;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                "
+                            >
+                                ${
+                                    isAccept
+                                        ? "Accept"
+                                        : "Reject"
+                                }
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <style>
+
+                    @keyframes popupScale {
+
+                        from {
+                            opacity: 0;
+                            transform: scale(0.9);
+                        }
+
+                        to {
+                            opacity: 1;
+                            transform: scale(1);
+                        }
+
+                    }
+
+                </style>
+
+            `;
+
+
+            document.body.appendChild(
+                popup
+            );
+
+
+            // ================= CANCEL =================
+
+            popup
+                .querySelector(
+                    "[data-cancel-button]"
+                )
+                .addEventListener(
+                    "click",
+                    function () {
+
+                        popup.remove();
+
+                        resolve(false);
+
+                    }
+                );
+
+
+            // ================= CONFIRM =================
+
+            popup
+                .querySelector(
+                    "[data-confirm-button]"
+                )
+                .addEventListener(
+                    "click",
+                    function () {
+
+                        popup.remove();
+
+                        resolve(true);
+
+                    }
+                );
+
+        }
+    );
+}
+
+
+// =====================================================
+// SUCCESS POPUP
+// =====================================================
+
+function showContractSuccessPopup() {
+
+    const popup =
+        document.createElement("div");
+
+
+    popup.setAttribute(
+        "data-success-popup",
+        "true"
+    );
+
+
+    popup.innerHTML = `
+
+        <div style="
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.45);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+        ">
+
+            <div style="
+                width: 390px;
+                max-width: 90%;
+                background: white;
+                border-radius: 18px;
+                padding: 32px;
+                text-align: center;
+                box-shadow: 0 20px 50px rgba(0,0,0,0.20);
+                animation: popupScale 0.25s ease;
+            ">
+
+                <div style="
+                    width: 64px;
+                    height: 64px;
+                    margin: 0 auto 18px;
+                    border-radius: 50%;
+                    background: #e8f8ef;
+                    color: #16a34a;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 34px;
+                    font-weight: bold;
+                ">
+                    ✓
+                </div>
+
+
+                <h2 style="
+                    margin: 0 0 10px;
+                    color: #111827;
+                    font-size: 23px;
+                ">
+                    Application Accepted
+                </h2>
+
+
+                <p style="
+                    margin: 0;
+                    color: #64748b;
+                    font-size: 15px;
+                    line-height: 1.6;
+                ">
+                    The application has been accepted
+                    and the contract has been created successfully.
+                </p>
+
+
+                <button
+                    type="button"
+                    onclick="closeContractSuccessPopup()"
+                    style="
+                        margin-top: 24px;
+                        border: none;
+                        padding: 11px 28px;
+                        border-radius: 9px;
+                        background: #1f4ed8;
+                        color: white;
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                    "
+                >
+                    Done
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <style>
+
+            @keyframes popupScale {
+
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+
+            }
+
+        </style>
+
+    `;
+
+
+    document.body.appendChild(
+        popup
+    );
+}
+
+
+// =====================================================
+// CLOSE SUCCESS POPUP
+// =====================================================
+
+function closeContractSuccessPopup() {
+
+    const popup =
+        document.querySelector(
+            "[data-success-popup]"
+        );
+
+
+    if (popup) {
+
+        popup.remove();
+    }
+}
+
+
+// =====================================================
+// CREATE CONTRACT AFTER ACCEPTING APPLICATION
+// =====================================================
+
+async function createContractFromApplication(
+    applicationId
+) {
+
+    const user =
+        getLoggedInUser();
+
+
+    if (!user) {
+        return false;
+    }
+
+
+    const application =
+        clientApplications.find(
+            app =>
+                Number(app.id) ===
+                Number(applicationId)
+        );
+
+
+    if (!application) {
+
+        throw new Error(
+            "Application not found."
+        );
+    }
+
+
+    const job =
+        clientJobs.find(
+            j =>
+                Number(j.id) ===
+                Number(application.jobId)
+        );
+
+
+    const jobTitle =
+        application.jobTitle ||
+        (
+            job
+                ? job.title
+                : "Unknown Job"
+        );
+
+
+    // ================= CHECK EXISTING CONTRACT =================
+
+    const existingResponse =
+        await fetch(
+            `http://localhost:8080/api/contracts/client/${encodeURIComponent(
+                user.email
+            )}`
+        );
+
+
+    if (!existingResponse.ok) {
+
+        throw new Error(
+            "Unable to check existing contracts."
+        );
+    }
+
+
+    const existingContracts =
+        await existingResponse.json();
+
+
+    const alreadyExists =
+        existingContracts.some(
+            contract =>
+
+                Number(contract.jobId) ===
+                    Number(application.jobId)
+
+                &&
+
+                contract.freelancerEmail &&
+
+                contract.freelancerEmail
+                    .toLowerCase() ===
+                    application.freelancerEmail
+                        .toLowerCase()
+        );
+
+
+    if (alreadyExists) {
+
+        console.log(
+            "Contract already exists for this application."
+        );
+
+        return true;
+    }
+
+
+    // ================= CREATE CONTRACT =================
+
+    const contract = {
+
+        jobId:
+            Number(application.jobId),
+
+        jobTitle:
+            jobTitle,
+
+        clientEmail:
+            user.email,
+
+        freelancerEmail:
+            application.freelancerEmail,
+
+        status:
+            "ACTIVE"
+    };
+
+
+    const response =
+        await fetch(
+            "http://localhost:8080/api/contracts",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(contract)
+            }
+        );
+
+
+    if (!response.ok) {
+
+        throw new Error(
+            "Unable to create contract."
+        );
+    }
+
+
+    const createdContract =
+        await response.json();
+
+
+    console.log(
+        "Contract created:",
+        createdContract
+    );
+
+
+    return true;
+}
+
+
+// =====================================================
 // UPDATE STATUS
 // =====================================================
 
@@ -731,23 +1251,23 @@ async function updateApplicationStatus(
     fromModal = false
 ) {
 
-    const confirmMessage =
-        newStatus === "Accepted"
+    // ================= CONFIRMATION POPUP =================
 
-            ? "Are you sure you want to accept this application?"
+    const confirmed =
+        await showConfirmationPopup(
+            newStatus
+        );
 
-            : "Are you sure you want to reject this application?";
 
-
-    if (!confirm(
-        confirmMessage
-    )) {
+    if (!confirmed) {
 
         return;
     }
 
 
     try {
+
+        // ================= UPDATE APPLICATION STATUS =================
 
         const response =
             await fetch(
@@ -768,12 +1288,63 @@ async function updateApplicationStatus(
         }
 
 
-        alert(
-            `Application ${newStatus.toLowerCase()} successfully!`
-        );
+        // ================= CREATE CONTRACT =================
+
+        if (
+            newStatus.toLowerCase() ===
+            "accepted"
+        ) {
+
+            try {
+
+                await createContractFromApplication(
+                    applicationId
+                );
+
+            } catch (contractError) {
+
+                console.error(
+                    "Contract creation error:",
+                    contractError
+                );
 
 
-        // Close modal if opened from modal
+                if (fromModal) {
+
+                    closeApplicationModal();
+                }
+
+
+                await loadApplications();
+
+
+                alert(
+                    "Application accepted, but the contract could not be created. Please check whether Spring Boot is running."
+                );
+
+                return;
+            }
+        }
+
+
+        // ================= SUCCESS =================
+
+        if (
+            newStatus.toLowerCase() ===
+            "accepted"
+        ) {
+
+            showContractSuccessPopup();
+
+        } else {
+
+            alert(
+                `Application ${newStatus.toLowerCase()} successfully!`
+            );
+        }
+
+
+        // ================= CLOSE MODAL =================
 
         if (fromModal) {
 
@@ -781,7 +1352,7 @@ async function updateApplicationStatus(
         }
 
 
-        // Reload data
+        // ================= RELOAD DATA =================
 
         await loadApplications();
 
@@ -822,7 +1393,6 @@ function searchApplications() {
     const filtered =
         clientApplications.filter(
             application => {
-
 
                 const job =
                     clientJobs.find(
@@ -1016,7 +1586,6 @@ function showErrorMessage() {
 document.addEventListener(
     "DOMContentLoaded",
     function () {
-
 
         const searchInput =
             document.getElementById(
