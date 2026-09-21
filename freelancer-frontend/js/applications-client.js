@@ -1135,7 +1135,7 @@ async function createContractFromApplication(
 
     const existingResponse =
         await fetch(
-            `http://localhost:8080/api/contracts/client/${encodeURIComponent(
+            `https://freelancer-backend-9cw6.onrender.com/api/contracts/client/${encodeURIComponent(
                 user.email
             )}`
         );
@@ -1204,7 +1204,7 @@ async function createContractFromApplication(
 
     const response =
         await fetch(
-            "http://localhost:8080/api/contracts",
+            "https://freelancer-backend-9cw6.onrender.com/api/contracts",
             {
                 method: "POST",
 
@@ -1623,3 +1623,4 @@ document.addEventListener(
 
     }
 );
+
