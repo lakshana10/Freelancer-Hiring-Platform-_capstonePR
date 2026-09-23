@@ -22,8 +22,9 @@ creates the rest on first boot).
 | `DATABASE_URL` | the **internal** Postgres URL (`postgres.railway.internal:5432`, same private network, no egress fees). Bare `postgresql://` form works — the app normalizes it |
 | `DATABASE_USERNAME` / `DATABASE_PASSWORD` | only if the URL has no embedded credentials |
 | `JWT_SECRET` | Generate (32+ chars) |
-| `MAIL_HOST` / `MAIL_PORT` | `smtp.gmail.com` / `587` |
-| `MAIL_USERNAME` / `MAIL_PASSWORD` | Gmail + 16-char App Password |
+| `MAIL_HOST` / `MAIL_PORT` | `smtp.gmail.com` / `587` (local SMTP path only) |
+| `MAIL_USERNAME` / `MAIL_PASSWORD` | Gmail + 16-char App Password (local SMTP path; also the Brevo sender address) |
+| `BREVO_API_KEY` | **Required on Railway** — Brevo dashboard API key. Railway blocks outbound SMTP (`SocketTimeoutException` on `smtp.gmail.com:587`), so OTP mail goes via the Brevo HTTPS API when this is set. Free tier 300/day; verify `MAIL_USERNAME` as a sender in Brevo first |
 | `CORS_ALLOWED_ORIGINS` | your frontend origin, e.g. `https://<app>.vercel.app` |
 
 `PORT` is injected by Railway and honored automatically. No secrets
