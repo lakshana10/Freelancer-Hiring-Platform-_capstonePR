@@ -78,4 +78,19 @@ class DatabaseConfigTest {
                 DatabaseConfig.normalizeJdbcUrl(raw)).username())
                 .isEqualTo("bob");
     }
+
+    @Test
+    void h2TestUrlsPassThrough() {
+        assertThat(DatabaseConfig.normalizeJdbcUrl(
+                "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL"))
+                .isEqualTo(
+                        "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;MODE=PostgreSQL");
+    }
+
+    @Test
+    void hidesCredentialsForLogging() {
+        assertThat(DatabaseConfig.hideCredentials(
+                "jdbc:postgresql://bob:s3cret@host:5432/db"))
+                .isEqualTo("jdbc:postgresql://***@host:5432/db");
+    }
 }

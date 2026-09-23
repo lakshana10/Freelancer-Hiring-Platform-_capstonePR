@@ -20,6 +20,9 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -31,12 +34,16 @@ class ApplicationServiceTest {
     @Mock
     private JobRepository jobRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     private ApplicationService applicationService;
 
     @BeforeEach
     void setUp() {
         applicationService = new ApplicationService(
-                applicationRepository, jobRepository);
+                applicationRepository, jobRepository,
+                notificationService);
     }
 
     private Job job() {
@@ -73,6 +80,46 @@ class ApplicationServiceTest {
         assertThat(response.getFreelancerEmail())
                 .isEqualTo("dev@test.com");
         assertThat(response.getStatus()).isEqualTo("Pending");
+    }
+
+    @Test
+    void createApplicationNotifiesJobOwner() {
+        when(jobRepository.findById(7L))
+                .thenReturn(Optional.of(job()));
+        when(applicationRepository
+                .existsByFreelancerEmailAndJobId(
+                        "dev@test.com", 7L))
+                .thenReturn(false);
+        when(applicationRepository.save(any(Application.class)))
+                .thenAnswer(invocation ->
+                        invocation.getArgument(0));
+
+        applicationService.createApplication(
+                applyRequest(), "dev@test.com");
+
+        verify(notificationService).notify(
+                eq("client@test.com"), anyString());
+    }
+
+    @Test
+    void statusUpdateNotifiesFreelancer() {
+        Application application =
+                new Application("dev@test.com", 7L, "Build a website");
+        application.setStatus("Pending");
+
+        when(applicationRepository.findById(3L))
+                .thenReturn(Optional.of(application));
+        when(jobRepository.findById(7L))
+                .thenReturn(Optional.of(job()));
+        when(applicationRepository.save(any(Application.class)))
+                .thenAnswer(invocation ->
+                        invocation.getArgument(0));
+
+        applicationService.updateStatus(
+                3L, "ACCEPTED", "client@test.com", false);
+
+        verify(notificationService).notify(
+                eq("dev@test.com"), anyString());
     }
 
     @Test

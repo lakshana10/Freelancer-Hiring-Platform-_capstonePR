@@ -131,7 +131,11 @@ public class SecurityConfig {
         config.setAllowedMethods(List.of(
                 "GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(false);
+        // SockJS (project chat) sends XHR with credentials mode
+        // "include"; without this the browser blocks /ws/info and
+        // live chat can never connect cross-origin. Auth itself stays
+        // header-based (JWT) — no cookies are used.
+        config.setAllowCredentials(true);
         config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source =

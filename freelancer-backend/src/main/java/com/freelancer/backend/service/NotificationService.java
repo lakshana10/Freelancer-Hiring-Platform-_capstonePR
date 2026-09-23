@@ -23,9 +23,20 @@ public class NotificationService {
     public NotificationResponse createNotification(
             NotificationRequest request) {
 
-        Notification notification = new Notification(
+        return notify(
                 request.getEmail().trim(),
                 request.getMessage().trim());
+    }
+
+    /**
+     * Internal fan-out used by other services so every important
+     * project event (proposal, hiring, payment, review, DM) lands
+     * in the recipient's notification feed without client code.
+     */
+    public NotificationResponse notify(String email, String message) {
+        Notification notification = new Notification(
+                email.trim(),
+                message.trim());
 
         return NotificationResponse.from(
                 notificationRepository.save(notification));

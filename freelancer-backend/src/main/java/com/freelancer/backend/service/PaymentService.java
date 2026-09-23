@@ -20,11 +20,15 @@ public class PaymentService {
 
     private final ContractRepository contractRepository;
 
+    private final NotificationService notificationService;
+
     public PaymentService(
             PaymentRepository paymentRepository,
-            ContractRepository contractRepository) {
+            ContractRepository contractRepository,
+            NotificationService notificationService) {
         this.paymentRepository = paymentRepository;
         this.contractRepository = contractRepository;
+        this.notificationService = notificationService;
     }
 
     public PaymentResponse createPayment(
@@ -61,8 +65,16 @@ public class PaymentService {
                         ? "PENDING"
                         : request.getStatus());
 
-        return PaymentResponse.from(
+        PaymentResponse saved = PaymentResponse.from(
                 paymentRepository.save(payment));
+
+        notificationService.notify(
+                saved.getFreelancerEmail(),
+                "Payment of $" + saved.getAmount() + " for '"
+                + saved.getJobTitle() + "' recorded ("
+                + saved.getStatus() + ").");
+
+        return saved;
     }
 
     public List<PaymentResponse> getAllPayments() {
@@ -123,7 +135,15 @@ public class PaymentService {
 
         payment.setStatus(status);
 
-        return PaymentResponse.from(
+        PaymentResponse saved = PaymentResponse.from(
                 paymentRepository.save(payment));
+
+        notificationService.notify(
+                saved.getFreelancerEmail(),
+                "Payment of $" + saved.getAmount() + " for '"
+                + saved.getJobTitle() + "' is now "
+                + status.toUpperCase() + ".");
+
+        return saved;
     }
 }

@@ -23,11 +23,15 @@ class ReviewServiceTest {
     @Mock
     private ReviewRepository reviewRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     private ReviewService reviewService;
 
     @BeforeEach
     void setUp() {
-        reviewService = new ReviewService(reviewRepository);
+        reviewService = new ReviewService(
+                reviewRepository, notificationService);
     }
 
     private ReviewRequest reviewRequest() {

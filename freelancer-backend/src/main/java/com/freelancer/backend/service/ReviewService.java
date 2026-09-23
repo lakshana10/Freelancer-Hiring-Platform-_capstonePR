@@ -15,8 +15,13 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-    public ReviewService(ReviewRepository reviewRepository) {
+    private final NotificationService notificationService;
+
+    public ReviewService(
+            ReviewRepository reviewRepository,
+            NotificationService notificationService) {
         this.reviewRepository = reviewRepository;
+        this.notificationService = notificationService;
     }
 
     public ReviewResponse createReview(
@@ -55,8 +60,17 @@ public class ReviewService {
         review.setRating(request.getRating());
         review.setComment(request.getComment().trim());
 
-        return ReviewResponse.from(
+        ReviewResponse saved = ReviewResponse.from(
                 reviewRepository.save(review));
+
+        notificationService.notify(
+                saved.getFreelancerEmail(),
+                "You received a " + saved.getRating() + "-star review"
+                + (saved.getJobTitle() != null
+                        ? " for '" + saved.getJobTitle() + "'."
+                        : "."));
+
+        return saved;
     }
 
     public List<ReviewResponse> getAllReviews() {

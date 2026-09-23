@@ -21,11 +21,15 @@ public class ApplicationService {
 
     private final JobRepository jobRepository;
 
+    private final NotificationService notificationService;
+
     public ApplicationService(
             ApplicationRepository applicationRepository,
-            JobRepository jobRepository) {
+            JobRepository jobRepository,
+            NotificationService notificationService) {
         this.applicationRepository = applicationRepository;
         this.jobRepository = jobRepository;
+        this.notificationService = notificationService;
     }
 
     public ApplicationResponse createApplication(
@@ -51,8 +55,17 @@ public class ApplicationService {
                         ? request.getJobTitle()
                         : job.getTitle());
 
-        return ApplicationResponse.from(
+        ApplicationResponse saved = ApplicationResponse.from(
                 applicationRepository.save(application));
+
+        if (job.getClientEmail() != null) {
+            notificationService.notify(
+                    job.getClientEmail(),
+                    "New proposal from " + requesterEmail
+                    + " for '" + saved.getJobTitle() + "'.");
+        }
+
+        return saved;
     }
 
     public List<ApplicationResponse> getAllApplications() {
@@ -100,7 +113,14 @@ public class ApplicationService {
 
         application.setStatus(status);
 
-        return ApplicationResponse.from(
+        ApplicationResponse saved = ApplicationResponse.from(
                 applicationRepository.save(application));
+
+        notificationService.notify(
+                application.getFreelancerEmail(),
+                "Your proposal for '" + saved.getJobTitle()
+                + "' was " + status.toUpperCase() + ".");
+
+        return saved;
     }
 }

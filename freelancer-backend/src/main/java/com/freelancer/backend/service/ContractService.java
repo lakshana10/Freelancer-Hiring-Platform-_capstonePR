@@ -19,11 +19,15 @@ public class ContractService {
 
     private final JobRepository jobRepository;
 
+    private final NotificationService notificationService;
+
     public ContractService(
             ContractRepository contractRepository,
-            JobRepository jobRepository) {
+            JobRepository jobRepository,
+            NotificationService notificationService) {
         this.contractRepository = contractRepository;
         this.jobRepository = jobRepository;
+        this.notificationService = notificationService;
     }
 
     public ContractResponse createContract(
@@ -59,8 +63,19 @@ public class ContractService {
                         ? "ACTIVE"
                         : request.getStatus());
 
-        return ContractResponse.from(
+        return saveAndNotify(contract);
+    }
+
+    private ContractResponse saveAndNotify(Contract contract) {
+        ContractResponse saved = ContractResponse.from(
                 contractRepository.save(contract));
+
+        notificationService.notify(
+                saved.getFreelancerEmail(),
+                "You were hired for '" + saved.getJobTitle()
+                + "'. Chat is open on the job page.");
+
+        return saved;
     }
 
     public List<ContractResponse> getAllContracts() {

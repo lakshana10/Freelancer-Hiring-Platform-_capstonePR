@@ -25,18 +25,21 @@ public class MessageService {
     private final JobRepository jobRepository;
     private final ApplicationRepository applicationRepository;
     private final ContractRepository contractRepository;
+    private final NotificationService notificationService;
 
     public MessageService(
             MessageRepository messageRepository,
             UserRepository userRepository,
             JobRepository jobRepository,
             ApplicationRepository applicationRepository,
-            ContractRepository contractRepository) {
+            ContractRepository contractRepository,
+            NotificationService notificationService) {
         this.messageRepository = messageRepository;
         this.userRepository = userRepository;
         this.jobRepository = jobRepository;
         this.applicationRepository = applicationRepository;
         this.contractRepository = contractRepository;
+        this.notificationService = notificationService;
     }
 
     // ===============================
@@ -99,8 +102,19 @@ public class MessageService {
                     request.getJobId(), requesterEmail, false);
         }
 
-        return MessageResponse.from(
+        MessageResponse saved = MessageResponse.from(
                 messageRepository.save(message));
+
+        // Project-room messages are already realtime; only classic
+        // DMs raise a notification.
+        if (request.getJobId() == null) {
+            notificationService.notify(
+                    saved.getReceiverEmail(),
+                    "New message from " + saved.getSenderEmail()
+                    + ".");
+        }
+
+        return saved;
     }
 
     // ===============================

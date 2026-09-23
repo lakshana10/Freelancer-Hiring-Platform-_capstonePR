@@ -47,6 +47,9 @@ class MessageServiceTest {
     @Mock
     private ContractRepository contractRepository;
 
+    @Mock
+    private NotificationService notificationService;
+
     private MessageService messageService;
 
     @BeforeEach
@@ -54,7 +57,7 @@ class MessageServiceTest {
         messageService = new MessageService(
                 messageRepository, userRepository,
                 jobRepository, applicationRepository,
-                contractRepository);
+                contractRepository, notificationService);
     }
 
     private User user(String email, String role) {
