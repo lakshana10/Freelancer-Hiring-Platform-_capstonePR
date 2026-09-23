@@ -23,6 +23,7 @@ creates the rest on first boot).
 | `DATABASE_USERNAME` / `DATABASE_PASSWORD` | only if the URL has no embedded credentials |
 | `JWT_SECRET` | Generate (32+ chars) |
 | `MAIL_HOST` / `MAIL_PORT` | `smtp.gmail.com` / `587` (local SMTP path only) |
+| `MAIL_STARTTLS` / `MAIL_SMTP_SSL` | `true` / `false` for port 587. If 587 times out on Railway (`SocketTimeoutException`), retry SMTP once via implicit SSL: `MAIL_PORT=465`, `MAIL_STARTTLS=false`, `MAIL_SMTP_SSL=true`. If 465 times out identically, SMTP is blocked on that egress — use `BREVO_API_KEY` instead |
 | `MAIL_USERNAME` / `MAIL_PASSWORD` | Gmail + 16-char App Password (local SMTP path; also the Brevo sender address) |
 | `BREVO_API_KEY` | **Required on Railway** — Brevo dashboard API key. Railway blocks outbound SMTP (`SocketTimeoutException` on `smtp.gmail.com:587`), so OTP mail goes via the Brevo HTTPS API when this is set. Free tier 300/day; verify `MAIL_USERNAME` as a sender in Brevo first |
 | `CORS_ALLOWED_ORIGINS` | your frontend origin, e.g. `https://<app>.vercel.app` |
