@@ -65,6 +65,15 @@ public class DatabaseConfig {
         log.info("Connecting to database using JDBC URL: {}",
                 hideCredentials(jdbcUrl));
 
+        // Deployment self-identification: the container reports the
+        // exact commit it was built from plus the IPv4-stack flag, so
+        // a stale/miswired deploy is diagnosable from boot logs alone.
+        log.info("Build commit: {}",
+                System.getenv().getOrDefault(
+                        "RAILWAY_GIT_COMMIT_SHA", "local"));
+        log.info("preferIPv4Stack={}",
+                System.getProperty("java.net.preferIPv4Stack"));
+
         ensureDatabaseExists(
                 jdbcUrl, effectiveUser, effectivePassword);
 
