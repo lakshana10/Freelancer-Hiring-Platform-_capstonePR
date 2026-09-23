@@ -65,8 +65,23 @@ export const contractsApi = {
     api.get(`/api/contracts/freelancer/${encodeURIComponent(email)}`),
 };
 
-export const paymentsApi = {
-  // POST /api/payments (CLIENT, ADMIN)
+export const milestonesApi = {
+  // POST /api/milestones (CLIENT, ADMIN)
+  create: (payload) => api.post("/api/milestones", payload),
+  // GET /api/milestones/contract/{contractId}
+  byContract: (contractId) =>
+    api.get(`/api/milestones/contract/${contractId}`),
+  // PUT /api/milestones/{id}/submit (FREELANCER, ADMIN)
+  submit: (id, submission) =>
+    api.put(`/api/milestones/${id}/submit`, { submission }),
+  // PUT /api/milestones/{id}/review?status= (CLIENT, ADMIN)
+  review: (id, status) =>
+    api.put(
+      `/api/milestones/${id}/review?status=${encodeURIComponent(status)}`,
+    ),
+};
+
+export const paymentsApi = {  // POST /api/payments (CLIENT, ADMIN)
   create: (payload) => api.post("/api/payments", payload),
   // GET /api/payments
   list: () => api.get("/api/payments"),

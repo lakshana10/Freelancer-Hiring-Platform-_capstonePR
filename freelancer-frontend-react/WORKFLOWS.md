@@ -9,8 +9,9 @@
 | 3. Manage own postings | `/my-jobs` | `GET /api/jobs` (client-side filter `clientEmail == me`), `DELETE /api/jobs/{id}` |
 | 4. Compare proposals per job | `/applications` or `/jobs/{id}` → Proposals tab | `GET /applications` (filtered to my job IDs), `PUT /applications/{id}/status` |
 | 5. Hire | Proposals tab → Hire | `POST /api/contracts` + `PUT /applications/{id}/status=ACCEPTED` |
+| 5b. Milestones | Contract card → Milestones | `POST /api/milestones`, `PUT /{id}/submit` (freelancer), `PUT /{id}/review?status=` (client) |
 | 6. Project chat (realtime) | `/jobs/{id}` → Project chat tab | `GET /api/messages/job/{jobId}` + WS `/app/chat/{jobId}` ↔ `/topic/jobs/{jobId}` |
-| 7. Pay | `/contracts` → Record payment, `/payments` | `POST /api/payments`, `PUT /api/payments/{id}/status` |
+| 7. Pay | `/contracts` → Record payment, `/payments` | `POST /api/payments` (+ optional `milestoneId`), `PUT /api/payments/{id}/status` |
 | 8. Review | `/reviews/give` | `POST /api/reviews` |
 
 Clients are fenced out of the public board: visiting `/jobs` redirects to

@@ -17,6 +17,11 @@ public final class PaymentDto {
 
         private Long jobId;
 
+        /**
+         * Optional: the approved milestone this payment settles.
+         */
+        private Long milestoneId;
+
         private String jobTitle;
 
         private String clientEmail;
@@ -47,6 +52,14 @@ public final class PaymentDto {
 
         public void setJobId(Long jobId) {
             this.jobId = jobId;
+        }
+
+        public Long getMilestoneId() {
+            return milestoneId;
+        }
+
+        public void setMilestoneId(Long milestoneId) {
+            this.milestoneId = milestoneId;
         }
 
         public String getJobTitle() {
@@ -95,6 +108,7 @@ public final class PaymentDto {
         private Long id;
         private Long contractId;
         private Long jobId;
+        private Long milestoneId;
         private String jobTitle;
         private String clientEmail;
         private String freelancerEmail;
@@ -109,6 +123,7 @@ public final class PaymentDto {
             response.setId(payment.getId());
             response.setContractId(payment.getContractId());
             response.setJobId(payment.getJobId());
+            response.setMilestoneId(payment.getMilestoneId());
             response.setJobTitle(payment.getJobTitle());
             response.setClientEmail(payment.getClientEmail());
             response.setFreelancerEmail(
@@ -140,6 +155,14 @@ public final class PaymentDto {
 
         public void setJobId(Long jobId) {
             this.jobId = jobId;
+        }
+
+        public Long getMilestoneId() {
+            return milestoneId;
+        }
+
+        public void setMilestoneId(Long milestoneId) {
+            this.milestoneId = milestoneId;
         }
 
         public String getJobTitle() {

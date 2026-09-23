@@ -5,6 +5,7 @@
 .playwright-mcp/
 
 # Build outputs
+node_modules/
 freelancer-frontend-react/dist/
 freelancer-frontend-react/node_modules/
 freelancer-backend/target/

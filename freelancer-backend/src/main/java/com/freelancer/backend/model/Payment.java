@@ -13,6 +13,11 @@ public class Payment {
     private Long contractId;
     private Long jobId;
 
+    /**
+     * Optional link to the approved milestone this payment settles.
+     */
+    private Long milestoneId;
+
     private String jobTitle;
     private String clientEmail;
     private String freelancerEmail;
@@ -46,6 +51,14 @@ public class Payment {
 
     public void setJobId(Long jobId) {
         this.jobId = jobId;
+    }
+
+    public Long getMilestoneId() {
+        return milestoneId;
+    }
+
+    public void setMilestoneId(Long milestoneId) {
+        this.milestoneId = milestoneId;
     }
 
     public String getJobTitle() {

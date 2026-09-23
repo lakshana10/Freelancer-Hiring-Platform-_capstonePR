@@ -370,7 +370,36 @@ a:hover {
   overflow-x: auto;
   padding: 0;
 }
-table {
+
+.milestones {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+}
+.milestones h4 {
+  margin: 0 0 8px;
+}
+.milestone {
+  margin-bottom: 10px;
+}
+.milestone input {
+  font: inherit;
+  padding: 9px 10px;
+  border: 1px solid #dcd9e8;
+  border-radius: 8px;
+  outline: none;
+  flex: 1;
+  min-width: 140px;
+}
+.status-submitted {
+  background: #b7791f;
+}
+.status-revision_requested {
+  background: #b7791f;
+}
+.status-approved {
+  background: #1e7e34;
+}table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13.5px;

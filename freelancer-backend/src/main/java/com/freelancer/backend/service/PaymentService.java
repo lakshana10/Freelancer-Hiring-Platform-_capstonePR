@@ -53,6 +53,7 @@ public class PaymentService {
         Payment payment = new Payment();
         payment.setContractId(request.getContractId());
         payment.setJobId(request.getJobId());
+        payment.setMilestoneId(request.getMilestoneId());
         payment.setJobTitle(request.getJobTitle());
         payment.setClientEmail(
                 admin && request.getClientEmail() != null

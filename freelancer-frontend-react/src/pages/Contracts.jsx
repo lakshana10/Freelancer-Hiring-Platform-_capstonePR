@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { contractsApi, paymentsApi } from "../api";
 import { apiError } from "../api/client";
 import { EmptyState, ErrorBanner, Page } from "../components/ui";
+import { MilestonePanel } from "../components/MilestonePanel";
 import { useAuth } from "../context/AuthContext";
 
 function ContractList({ items, onPay, payingId, showParty }) {
+  const [openId, setOpenId] = useState(null);
+
   return (
     <div className="grid grid-2">
       {items.map((c) => (
@@ -30,6 +33,12 @@ function ContractList({ items, onPay, payingId, showParty }) {
             >
               Review
             </Link>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => setOpenId(openId === c.id ? null : c.id)}
+            >
+              {openId === c.id ? "Hide milestones" : "Milestones"}
+            </button>
             {onPay && (
               <button
                 className="btn btn-primary btn-sm"
@@ -40,6 +49,7 @@ function ContractList({ items, onPay, payingId, showParty }) {
               </button>
             )}
           </div>
+          {openId === c.id && <MilestonePanel contract={c} />}
         </div>
       ))}
     </div>
