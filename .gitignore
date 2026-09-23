@@ -1,5 +1,16 @@
-# Secrets — never commit. Use .env.example as the template.
+# ---- Secrets -------------------------------------------------------------
+# Env files may hold DB / JWT / Gmail app-password secrets. Only the
+# *.example templates and the client's public VITE_* files are tracked.
 .env
+.env.local
+.env.*.local
+
+# Server: every env file is secret -> ignore all, re-include the template.
+freelancer-backend/.env*
+!freelancer-backend/.env.example
+
+# Client: .env.development / .env.production hold only the public API
+# origin and are committed on purpose (Vite + Vercel read them).
 
 # Playwright MCP session artifacts (screenshots, console logs)
 .playwright-mcp/
