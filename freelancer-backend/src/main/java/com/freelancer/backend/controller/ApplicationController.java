@@ -1,60 +1,65 @@
 package com.freelancer.backend.controller;
 
-import com.freelancer.backend.model.Application;
+import com.freelancer.backend.dto.ApplicationDto.ApplicationRequest;
+import com.freelancer.backend.dto.ApplicationDto.ApplicationResponse;
+import com.freelancer.backend.security.SecurityUtils;
 import com.freelancer.backend.service.ApplicationService;
-import org.springframework.http.HttpStatus;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/applications")
-@CrossOrigin
 public class ApplicationController {
 
     private final ApplicationService applicationService;
 
-    public ApplicationController(ApplicationService applicationService) {
+    public ApplicationController(
+            ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
 
     @PostMapping("/apply")
-    public ResponseEntity<?> applyJob(@RequestBody Application application) {
+    @PreAuthorize("hasAnyRole('FREELANCER', 'ADMIN')")
+    public ResponseEntity<ApplicationResponse> applyJob(
+            @Valid @RequestBody ApplicationRequest request) {
 
-        try {
+        ApplicationResponse saved = applicationService
+                .createApplication(
+                        request,
+                        SecurityUtils.currentEmail());
 
-            Application savedApplication =
-                    applicationService.createApplication(application);
-
-            return ResponseEntity.ok(savedApplication);
-
-        } catch (RuntimeException e) {
-
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(e.getMessage());
-
-        }
+        return ResponseEntity.ok(saved);
     }
 
     @GetMapping
-    public List<Application> getAllApplications() {
-        return applicationService.getAllApplications();
+    public ResponseEntity<List<ApplicationResponse>> getAllApplications() {
+        return ResponseEntity.ok(
+                applicationService.getAllApplications());
     }
 
     @GetMapping("/freelancer/{email}")
-    public List<Application> getFreelancerApplications(
+    @PreAuthorize(
+        "#email == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<List<ApplicationResponse>> getFreelancerApplications(
             @PathVariable String email) {
 
-        return applicationService.getApplicationsByFreelancer(email);
+        return ResponseEntity.ok(applicationService
+                .getApplicationsByFreelancer(email));
     }
 
     @PutMapping("/{id}/status")
-    public Application updateStatus(
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public ResponseEntity<ApplicationResponse> updateStatus(
             @PathVariable Long id,
             @RequestParam String status) {
 
-        return applicationService.updateStatus(id, status);
+        return ResponseEntity.ok(applicationService.updateStatus(
+                id, status,
+                SecurityUtils.currentEmail(),
+                SecurityUtils.isAdmin()));
     }
 }

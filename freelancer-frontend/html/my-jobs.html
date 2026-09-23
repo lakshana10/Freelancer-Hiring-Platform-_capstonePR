@@ -1407,6 +1407,7 @@ body.dark .details-close {
 
 </style>
 
+<script src="../js/auth.js"></script>
 </head>
 
 <body>
@@ -1816,6 +1817,7 @@ const API_BASE = "https://freelancer-backend-9cw6.onrender.com";
 function logoutUser() {
 
     localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("authToken");
 
     localStorage.removeItem("userEmail");
 

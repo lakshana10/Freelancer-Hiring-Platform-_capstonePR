@@ -1,0 +1,16 @@
+# Secrets — never commit. Use .env.example as the template.
+.env
+
+# Playwright MCP session artifacts (screenshots, console logs)
+.playwright-mcp/
+
+# Build outputs
+freelancer-frontend-react/dist/
+freelancer-frontend-react/node_modules/
+freelancer-backend/target/
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -193,6 +193,7 @@ function updateUserSection() {
 function logoutUser() {
 
     localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("authToken");
 
     alert("You have been logged out successfully.");
 

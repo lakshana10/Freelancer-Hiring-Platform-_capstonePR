@@ -292,6 +292,7 @@
             }
         }
     </style>
+<script src="../js/auth.js"></script>
 </head>
 
 <body>
@@ -402,6 +403,7 @@
 
         function logout() {
             localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("authToken");
             window.location.href = "login.html";
         }
 

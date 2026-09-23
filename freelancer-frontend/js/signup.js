@@ -8,9 +8,68 @@ const EMAILJS_TEMPLATE_ID = "template_q3itx8p";
 
 // ===============================
 // OTP STATUS
+// Backend OTP (Gmail SMTP) is the single source of truth.
+// Signup is blocked until the SAME email is verified.
 // ===============================
 
 let otpVerified = false;
+
+let verifiedEmail = "";
+
+let otpCooldownUntil = 0;
+
+
+function setOtpMessage(text, color) {
+
+    const otpMessage =
+        document.getElementById("otpMessage");
+
+    if (!otpMessage) {
+        return;
+    }
+
+    otpMessage.textContent = text;
+    otpMessage.style.color = color;
+}
+
+
+// Changing the email invalidates any previous verification.
+document.addEventListener("DOMContentLoaded", function () {
+
+    const emailInput =
+        document.getElementById("email");
+
+    if (!emailInput) {
+        return;
+    }
+
+    emailInput.addEventListener("input", function () {
+
+        otpVerified = false;
+        verifiedEmail = "";
+        setOtpMessage("", "green");
+
+    });
+
+});
+
+
+// ===============================
+// STRONG PASSWORD (mirrors backend SignupRequest)
+// ===============================
+
+function isStrongPassword(password) {
+
+    if (!password || password.length < 8) {
+        return false;
+    }
+
+    return /[a-z]/.test(password)
+        && /[A-Z]/.test(password)
+        && /\d/.test(password)
+        && /[@$!%*?&^#_+\-=:;.]/.test(password);
+
+}
 
 
 // ===============================
@@ -58,6 +117,23 @@ document
         }
 
 
+        // Resend cooldown: backend allows 5 OTPs per 10 min.
+        const now = Date.now();
+
+        if (now < otpCooldownUntil) {
+
+            const waitSec = Math.ceil(
+                (otpCooldownUntil - now) / 1000);
+
+            alert(
+                "Please wait " + waitSec +
+                "s before requesting a new OTP."
+            );
+            return;
+
+        }
+
+
         try {
 
             this.disabled = true;
@@ -80,15 +156,44 @@ document
             );
 
 
-            const data = await response.json();
+            let data = {};
+
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                data = {};
+            }
 
 
             if (!response.ok) {
 
-                alert(
-                    data.message ||
-                    "Failed to send OTP."
-                );
+                if (response.status === 429) {
+
+                    otpCooldownUntil =
+                        Date.now() + 60000;
+
+                    alert(
+                        data.message ||
+                        "Too many OTP requests. " +
+                        "Please wait a minute and try again."
+                    );
+
+                } else if (response.status >= 500) {
+
+                    alert(
+                        data.message ||
+                        "Email service is temporarily unavailable. " +
+                        "Please try again in a minute."
+                    );
+
+                } else {
+
+                    alert(
+                        data.message ||
+                        "Failed to send OTP."
+                    );
+
+                }
 
                 return;
             }
@@ -103,12 +208,15 @@ document
             );
 
 
-            otpMessage.textContent =
-                "✓ OTP sent successfully. Please check your email.";
-
-            otpMessage.style.color = "green";
+            setOtpMessage(
+                "✓ OTP sent successfully. Please check your email.",
+                "green");
 
             otpVerified = false;
+            verifiedEmail = "";
+
+            // 60s resend cooldown.
+            otpCooldownUntil = Date.now() + 60000;
 
 
         } catch (error) {
@@ -197,12 +305,12 @@ document
             if (response.ok) {
 
                 otpVerified = true;
+                verifiedEmail = email.toLowerCase();
 
 
-                otpMessage.textContent =
-                    "✓ Email verified successfully.";
-
-                otpMessage.style.color = "green";
+                setOtpMessage(
+                    "✓ Email verified successfully.",
+                    "green");
 
 
                 alert(
@@ -213,12 +321,12 @@ document
             } else {
 
                 otpVerified = false;
+                verifiedEmail = "";
 
 
-                otpMessage.textContent =
-                    "Invalid or expired OTP.";
-
-                otpMessage.style.color = "red";
+                setOtpMessage(
+                    "Invalid or expired OTP.",
+                    "red");
 
 
                 alert(result);
@@ -310,12 +418,16 @@ document
         }
 
 
-        if (!otpVerified) {
+        // OTP verification is required and synced with the
+        // backend: the user must verify the SAME email via
+        // /api/otp/verify before the account is created.
+
+        if (!otpVerified
+                || verifiedEmail !== email.toLowerCase()) {
 
             alert(
-                "Please generate and verify your OTP before creating your account."
+                "Please verify your email with the OTP first."
             );
-
             return;
 
         }
@@ -332,10 +444,14 @@ document
         }
 
 
-        if (password.length < 6) {
+        // Must mirror backend SignupRequest: 8+ chars with
+        // upper, lower, digit and special character.
+
+        if (!isStrongPassword(password)) {
 
             alert(
-                "Password must contain at least 6 characters."
+                "Password must be 8+ characters with uppercase, " +
+                "lowercase, digit and special character."
             );
 
             return;

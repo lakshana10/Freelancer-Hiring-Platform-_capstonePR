@@ -11,4 +11,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
     List<Application> findByFreelancerEmail(String freelancerEmail);
 
+    List<Application> findByJobId(Long jobId);
+
 }

@@ -1,5 +1,9 @@
 package com.freelancer.backend.service;
 
+import com.freelancer.backend.dto.ReviewDto.ReviewRequest;
+import com.freelancer.backend.dto.ReviewDto.ReviewResponse;
+import com.freelancer.backend.exception.BadRequestException;
+import com.freelancer.backend.exception.ConflictException;
 import com.freelancer.backend.model.Review;
 import com.freelancer.backend.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
@@ -15,59 +19,75 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    public Review createReview(Review review) {
+    public ReviewResponse createReview(
+            ReviewRequest request,
+            String requesterEmail, boolean admin) {
 
-        if (review.getRating() == null ||
-                review.getRating() < 1 ||
-                review.getRating() > 5) {
-
-            throw new RuntimeException(
-                    "Rating must be between 1 and 5"
-            );
+        if (request.getRating() == null
+                || request.getRating() < 1
+                || request.getRating() > 5) {
+            throw new BadRequestException(
+                    "Rating must be between 1 and 5.");
         }
 
-        if (review.getComment() == null ||
-                review.getComment().trim().isEmpty()) {
-
-            throw new RuntimeException(
-                    "Review comment cannot be empty"
-            );
+        if (request.getComment() == null
+                || request.getComment().trim().isEmpty()) {
+            throw new BadRequestException(
+                    "Review comment cannot be empty.");
         }
 
-        if (review.getContractId() != null &&
-                reviewRepository.existsByContractId(
-                        review.getContractId())) {
-
-            throw new RuntimeException(
-                    "This contract has already been reviewed"
-            );
+        if (request.getContractId() != null
+                && reviewRepository.existsByContractId(
+                        request.getContractId())) {
+            throw new ConflictException(
+                    "This contract has already been reviewed.");
         }
 
-        return reviewRepository.save(review);
+        Review review = new Review();
+        review.setJobId(request.getJobId());
+        review.setContractId(request.getContractId());
+        review.setClientEmail(
+                admin && request.getClientEmail() != null
+                        ? request.getClientEmail()
+                        : requesterEmail);
+        review.setFreelancerEmail(request.getFreelancerEmail());
+        review.setJobTitle(request.getJobTitle());
+        review.setRating(request.getRating());
+        review.setComment(request.getComment().trim());
+
+        return ReviewResponse.from(
+                reviewRepository.save(review));
     }
 
-    public List<Review> getAllReviews() {
-        return reviewRepository.findAll();
+    public List<ReviewResponse> getAllReviews() {
+        return reviewRepository.findAll()
+                .stream()
+                .map(ReviewResponse::from)
+                .toList();
     }
 
-    public List<Review> getReviewsByFreelancer(
+    public List<ReviewResponse> getReviewsByFreelancer(
             String freelancerEmail) {
-
-        return reviewRepository.findByFreelancerEmail(
-                freelancerEmail
-        );
+        return reviewRepository
+                .findByFreelancerEmail(freelancerEmail)
+                .stream()
+                .map(ReviewResponse::from)
+                .toList();
     }
 
-    public List<Review> getReviewsByClient(
+    public List<ReviewResponse> getReviewsByClient(
             String clientEmail) {
-
-        return reviewRepository.findByClientEmail(
-                clientEmail
-        );
+        return reviewRepository
+                .findByClientEmail(clientEmail)
+                .stream()
+                .map(ReviewResponse::from)
+                .toList();
     }
 
-    public List<Review> getReviewsByJob(Long jobId) {
-
-        return reviewRepository.findByJobId(jobId);
+    public List<ReviewResponse> getReviewsByJob(Long jobId) {
+        return reviewRepository.findByJobId(jobId)
+                .stream()
+                .map(ReviewResponse::from)
+                .toList();
     }
 }

@@ -25,4 +25,6 @@ public interface MessageRepository
             @Param("senderEmail") String senderEmail,
             @Param("receiverEmail") String receiverEmail
     );
+
+    List<Message> findByJobIdOrderByCreatedAtAsc(Long jobId);
 }

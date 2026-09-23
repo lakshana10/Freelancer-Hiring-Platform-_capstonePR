@@ -18,6 +18,8 @@ public class OTP {
 
     private LocalDateTime expiryTime;
 
+    private int attempts = 0;
+
     public OTP() {
     }
 
@@ -57,5 +59,13 @@ public class OTP {
 
     public void setExpiryTime(LocalDateTime expiryTime) {
         this.expiryTime = expiryTime;
+    }
+
+    public int getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(int attempts) {
+        this.attempts = attempts;
     }
 }

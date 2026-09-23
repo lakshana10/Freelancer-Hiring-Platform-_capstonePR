@@ -1,18 +1,31 @@
 package com.freelancer.backend.controller;
 
+import com.freelancer.backend.dto.OtpDto.OtpGenerateRequest;
+import com.freelancer.backend.dto.OtpDto.OtpVerifyRequest;
+import com.freelancer.backend.exception.RateLimitException;
 import com.freelancer.backend.service.EmailService;
 import com.freelancer.backend.service.OTPService;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * OTP endpoints stay public. /generate always answers JSON
+ * because the signup page parses the body with response.json().
+ * /verify answers plain text (the page uses response.text()).
+ */
 @RestController
 @RequestMapping("/api/otp")
-@CrossOrigin(origins = "*")
 public class OTPController {
+
+    private static final Logger log =
+            LoggerFactory.getLogger(OTPController.class);
 
     private final OTPService otpService;
     private final EmailService emailService;
@@ -20,163 +33,99 @@ public class OTPController {
     public OTPController(
             OTPService otpService,
             EmailService emailService) {
-
         this.otpService = otpService;
         this.emailService = emailService;
     }
-
 
     // ===============================
     // GENERATE OTP
     // ===============================
 
     @PostMapping("/generate")
-    public ResponseEntity<?> generateOTP(
-            @RequestBody OTPRequest request) {
+    public ResponseEntity<Map<String, String>> generateOTP(
+            @RequestBody OtpGenerateRequest request) {
+
+        if (request.getEmail() == null
+                || request.getEmail().trim().isEmpty()) {
+            return json(HttpStatus.BAD_REQUEST,
+                    "Email is required.");
+        }
+
+        String email = request.getEmail().trim();
 
         try {
+            String otp = otpService.generateOTP(email);
 
-            if (request.getEmail() == null ||
-                    request.getEmail().trim().isEmpty()) {
-
-                return ResponseEntity
-                        .badRequest()
-                        .body("Email is required.");
-            }
-
-            String email =
-                    request.getEmail().trim();
-
-            // Generate and save OTP
-            String otp =
-                    otpService.generateOTP(email);
-
-            // Send OTP to Gmail
             emailService.sendOTPEmail(email, otp);
 
-            Map<String, Object> response =
-                    new HashMap<>();
+            return json(HttpStatus.OK,
+                    "OTP sent successfully to your email.");
 
-            response.put(
-                    "message",
-                    "OTP sent successfully to your email."
-            );
+        } catch (RateLimitException e) {
+            return json(HttpStatus.TOO_MANY_REQUESTS,
+                    e.getMessage());
 
-            return ResponseEntity.ok(response);
+        } catch (IllegalStateException e) {
+            // MAIL_USERNAME / MAIL_PASSWORD missing on server.
+            log.error("OTP mail not configured for {}: {}",
+                    email, e.getMessage());
+            return json(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Email service is not configured. "
+                    + "Please contact support.");
+
+        } catch (MailException e) {
+            // Gmail rejected the send (bad App Password,
+            // SMTP blocked, quota, etc.). OTP is already stored,
+            // so the user can retry without losing rate-limit budget
+            // beyond the one attempt just consumed.
+            log.error("Failed to send OTP to {}: {}",
+                    email, e.getMessage());
+            return json(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Failed to send OTP. Please try again later.");
 
         } catch (Exception e) {
-
-            e.printStackTrace();
-
-            return ResponseEntity
-                    .internalServerError()
-                    .body(
-                        "Failed to send OTP: "
-                        + e.getMessage()
-                    );
+            log.error("Failed to send OTP to {}: {}",
+                    email, e.getMessage());
+            return json(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Failed to send OTP. Please try again later.");
         }
     }
-
 
     // ===============================
     // VERIFY OTP
     // ===============================
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyOTP(
-            @RequestBody OTPVerifyRequest request) {
+    public ResponseEntity<String> verifyOTP(
+            @RequestBody OtpVerifyRequest request) {
 
-        try {
-
-            if (request.getEmail() == null ||
-                    request.getOtp() == null) {
-
-                return ResponseEntity
-                        .badRequest()
-                        .body(
-                            "Email and OTP are required."
-                        );
-            }
-
-            boolean verified =
-                    otpService.verifyOTP(
-                            request.getEmail().trim(),
-                            request.getOtp().trim()
-                    );
-
-            if (verified) {
-
-                return ResponseEntity.ok(
-                        "OTP verified successfully."
-                );
-            }
-
+        if (request.getEmail() == null
+                || request.getOtp() == null
+                || request.getEmail().trim().isEmpty()
+                || request.getOtp().trim().isEmpty()) {
             return ResponseEntity
                     .badRequest()
-                    .body(
-                        "Invalid or expired OTP."
-                    );
-
-        } catch (Exception e) {
-
-            return ResponseEntity
-                    .internalServerError()
-                    .body(
-                        "OTP verification failed: "
-                        + e.getMessage()
-                    );
+                    .body("Email and OTP are required.");
         }
+
+        boolean verified = otpService.verifyOTP(
+                request.getEmail().trim(),
+                request.getOtp().trim());
+
+        if (verified) {
+            return ResponseEntity.ok(
+                    "OTP verified successfully.");
+        }
+
+        return ResponseEntity
+                .badRequest()
+                .body("Invalid or expired OTP.");
     }
 
-
-    // ===============================
-    // OTP REQUEST
-    // ===============================
-
-    public static class OTPRequest {
-
-        private String email;
-
-        public OTPRequest() {
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-    }
-
-
-    // ===============================
-    // OTP VERIFY REQUEST
-    // ===============================
-
-    public static class OTPVerifyRequest {
-
-        private String email;
-
-        private String otp;
-
-        public OTPVerifyRequest() {
-        }
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getOtp() {
-            return otp;
-        }
-
-        public void setOtp(String otp) {
-            this.otp = otp;
-        }
+    private ResponseEntity<Map<String, String>> json(
+            HttpStatus status, String message) {
+        Map<String, String> body = new HashMap<>();
+        body.put("message", message);
+        return ResponseEntity.status(status).body(body);
     }
 }

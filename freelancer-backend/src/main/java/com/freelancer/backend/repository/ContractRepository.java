@@ -12,4 +12,6 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     List<Contract> findByClientEmail(String clientEmail);
 
     List<Contract> findByFreelancerEmail(String freelancerEmail);
+
+    List<Contract> findByJobId(Long jobId);
 }

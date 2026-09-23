@@ -1112,6 +1112,7 @@
 
     </style>
 
+<script src="../js/auth.js"></script>
 </head>
 
 
@@ -1394,6 +1395,7 @@
         function logoutUser() {
 
             localStorage.removeItem("loggedInUser");
+            localStorage.removeItem("authToken");
 
             localStorage.removeItem("userEmail");
 

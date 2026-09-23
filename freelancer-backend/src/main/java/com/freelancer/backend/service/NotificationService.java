@@ -1,5 +1,9 @@
 package com.freelancer.backend.service;
 
+import com.freelancer.backend.dto.NotificationDto.NotificationRequest;
+import com.freelancer.backend.dto.NotificationDto.NotificationResponse;
+import com.freelancer.backend.exception.ForbiddenException;
+import com.freelancer.backend.exception.ResourceNotFoundException;
 import com.freelancer.backend.model.Notification;
 import com.freelancer.backend.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
@@ -13,50 +17,66 @@ public class NotificationService {
 
     public NotificationService(
             NotificationRepository notificationRepository) {
-
-        this.notificationRepository =
-                notificationRepository;
+        this.notificationRepository = notificationRepository;
     }
 
-    // Create notification
-    public Notification createNotification(
-            String email,
-            String message) {
+    public NotificationResponse createNotification(
+            NotificationRequest request) {
 
-        Notification notification =
-                new Notification(email, message);
+        Notification notification = new Notification(
+                request.getEmail().trim(),
+                request.getMessage().trim());
 
-        return notificationRepository.save(notification);
+        return NotificationResponse.from(
+                notificationRepository.save(notification));
     }
 
-    // Get notifications for a user
-    public List<Notification> getNotifications(
+    public List<NotificationResponse> getNotifications(
             String email) {
-
         return notificationRepository
-                .findByEmailOrderByCreatedAtDesc(email);
+                .findByEmailOrderByCreatedAtDesc(email)
+                .stream()
+                .map(NotificationResponse::from)
+                .toList();
     }
 
-    // Mark notification as read
-    public Notification markAsRead(Long id) {
+    public NotificationResponse markAsRead(
+            Long id, String requesterEmail, boolean admin) {
 
-        Notification notification =
-                notificationRepository
-                        .findById(id)
-                        .orElseThrow(
-                                () -> new RuntimeException(
-                                        "Notification not found"
-                                )
-                        );
+        Notification notification = loadOwned(
+                id, requesterEmail, admin);
 
         notification.setRead(true);
 
-        return notificationRepository.save(notification);
+        return NotificationResponse.from(
+                notificationRepository.save(notification));
     }
 
-    // Delete notification
-    public void deleteNotification(Long id) {
+    public void deleteNotification(
+            Long id, String requesterEmail, boolean admin) {
 
-        notificationRepository.deleteById(id);
+        Notification notification = loadOwned(
+                id, requesterEmail, admin);
+
+        notificationRepository.delete(notification);
+    }
+
+    private Notification loadOwned(
+            Long id, String requesterEmail, boolean admin) {
+
+        Notification notification = notificationRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Notification not found."));
+
+        if (!admin
+                && (requesterEmail == null
+                    || !requesterEmail.equalsIgnoreCase(
+                            notification.getEmail()))) {
+            throw new ForbiddenException(
+                    "You can only manage your own notifications.");
+        }
+
+        return notification;
     }
 }

@@ -1,14 +1,19 @@
 package com.freelancer.backend.controller;
 
-import com.freelancer.backend.model.Contract;
+import com.freelancer.backend.dto.ContractDto.ContractRequest;
+import com.freelancer.backend.dto.ContractDto.ContractResponse;
+import com.freelancer.backend.security.SecurityUtils;
 import com.freelancer.backend.service.ContractService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/contracts")
-@CrossOrigin
 public class ContractController {
 
     private final ContractService contractService;
@@ -18,22 +23,41 @@ public class ContractController {
     }
 
     @PostMapping
-    public Contract createContract(@RequestBody Contract contract) {
-        return contractService.createContract(contract);
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public ResponseEntity<ContractResponse> createContract(
+            @Valid @RequestBody ContractRequest request) {
+
+        ContractResponse created = contractService.createContract(
+                request,
+                SecurityUtils.currentEmail(),
+                SecurityUtils.isAdmin());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(created);
     }
 
     @GetMapping
-    public List<Contract> getAllContracts() {
-        return contractService.getAllContracts();
+    public ResponseEntity<List<ContractResponse>> getAllContracts() {
+        return ResponseEntity.ok(
+                contractService.getAllContracts());
     }
 
     @GetMapping("/client/{email}")
-    public List<Contract> getContractsByClient(@PathVariable String email) {
-        return contractService.getContractsByClient(email);
+    @PreAuthorize(
+        "#email == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<List<ContractResponse>> getContractsByClient(
+            @PathVariable String email) {
+        return ResponseEntity.ok(
+                contractService.getContractsByClient(email));
     }
 
     @GetMapping("/freelancer/{email}")
-    public List<Contract> getContractsByFreelancer(@PathVariable String email) {
-        return contractService.getContractsByFreelancer(email);
+    @PreAuthorize(
+        "#email == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<List<ContractResponse>> getContractsByFreelancer(
+            @PathVariable String email) {
+        return ResponseEntity.ok(contractService
+                .getContractsByFreelancer(email));
     }
 }

@@ -181,6 +181,13 @@ form.addEventListener("submit", async function(event) {
             user.role
         );
 
+        if (data.token) {
+            localStorage.setItem(
+                "authToken",
+                data.token
+            );
+        }
+
 
         // ===============================
         // SHOW LOGIN SUCCESS POPUP

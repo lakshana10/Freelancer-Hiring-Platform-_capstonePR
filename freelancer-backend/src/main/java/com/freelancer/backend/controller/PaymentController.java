@@ -1,14 +1,19 @@
 package com.freelancer.backend.controller;
 
-import com.freelancer.backend.model.Payment;
+import com.freelancer.backend.dto.PaymentDto.PaymentRequest;
+import com.freelancer.backend.dto.PaymentDto.PaymentResponse;
+import com.freelancer.backend.security.SecurityUtils;
 import com.freelancer.backend.service.PaymentService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/payments")
-@CrossOrigin
 public class PaymentController {
 
     private final PaymentService paymentService;
@@ -18,46 +23,64 @@ public class PaymentController {
     }
 
     @PostMapping
-    public Payment createPayment(@RequestBody Payment payment) {
-        return paymentService.createPayment(payment);
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public ResponseEntity<PaymentResponse> createPayment(
+            @Valid @RequestBody PaymentRequest request) {
+
+        PaymentResponse created = paymentService.createPayment(
+                request,
+                SecurityUtils.currentEmail(),
+                SecurityUtils.isAdmin());
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(created);
     }
 
     @GetMapping
-    public List<Payment> getAllPayments() {
-        return paymentService.getAllPayments();
+    public ResponseEntity<List<PaymentResponse>> getAllPayments() {
+        return ResponseEntity.ok(
+                paymentService.getAllPayments());
     }
 
     @GetMapping("/client/{email}")
-    public List<Payment> getPaymentsByClient(
+    @PreAuthorize(
+        "#email == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<List<PaymentResponse>> getPaymentsByClient(
             @PathVariable String email) {
 
-        return paymentService.getPaymentsByClient(email);
+        return ResponseEntity.ok(
+                paymentService.getPaymentsByClient(email));
     }
 
     @GetMapping("/freelancer/{email}")
-    public List<Payment> getPaymentsByFreelancer(
+    @PreAuthorize(
+        "#email == authentication.name or hasRole('ADMIN')")
+    public ResponseEntity<List<PaymentResponse>> getPaymentsByFreelancer(
             @PathVariable String email) {
 
-        return paymentService.getPaymentsByFreelancer(email);
+        return ResponseEntity.ok(paymentService
+                .getPaymentsByFreelancer(email));
     }
 
     @GetMapping("/contract/{contractId}")
-    public List<Payment> getPaymentsByContract(
+    public ResponseEntity<List<PaymentResponse>> getPaymentsByContract(
             @PathVariable Long contractId) {
 
-        return paymentService.getPaymentsByContract(contractId);
+        return ResponseEntity.ok(paymentService
+                .getPaymentsByContract(contractId));
     }
 
-
-    // Update payment status
+    // Update payment status (paying client or admin)
     @PutMapping("/{id}/status")
-    public Payment updatePaymentStatus(
+    @PreAuthorize("hasAnyRole('CLIENT', 'ADMIN')")
+    public ResponseEntity<PaymentResponse> updatePaymentStatus(
             @PathVariable Long id,
             @RequestParam String status) {
 
-        return paymentService.updatePaymentStatus(
-                id,
-                status
-        );
+        return ResponseEntity.ok(paymentService.updatePaymentStatus(
+                id, status,
+                SecurityUtils.currentEmail(),
+                SecurityUtils.isAdmin()));
     }
 }

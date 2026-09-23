@@ -23,6 +23,12 @@ public class Message {
 
     private LocalDateTime createdAt;
 
+    /**
+     * Project room this message belongs to. Nullable so legacy
+     * peer-to-peer messages keep working.
+     */
+    private Long jobId;
+
     public Message() {
     }
 
@@ -30,12 +36,21 @@ public class Message {
             String senderEmail,
             String receiverEmail,
             String message) {
+        this(senderEmail, receiverEmail, message, null);
+    }
+
+    public Message(
+            String senderEmail,
+            String receiverEmail,
+            String message,
+            Long jobId) {
 
         this.senderEmail = senderEmail;
         this.receiverEmail = receiverEmail;
         this.message = message;
         this.isRead = false;
         this.createdAt = LocalDateTime.now();
+        this.jobId = jobId;
     }
 
     public Long getId() {
@@ -84,5 +99,13 @@ public class Message {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(Long jobId) {
+        this.jobId = jobId;
     }
 }
