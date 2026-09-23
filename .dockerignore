@@ -1,0 +1,14 @@
+# Keep the Railway build context lean, and never send secrets or
+# build outputs to the daemon. Only freelancer-backend/pom.xml and
+# freelancer-backend/src are COPY'd (see root Dockerfile).
+.env
+.env.*
+*.local
+freelancer-backend/target/
+freelancer-backend/.env*
+freelancer-backend/.mvn/wrapper/maven-wrapper.jar
+freelancer-frontend-react/node_modules/
+freelancer-frontend-react/dist/
+freelancer-frontend-react/test-results/
+freelancer-frontend-react/playwright-report/
+.git/

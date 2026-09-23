@@ -8,8 +8,12 @@ creates the rest on first boot).
 
 1. Railway → New → Deploy from GitHub repo → select this repo.
 2. Service Settings:
-   - **Root Directory:** `freelancer-backend`
-   - **Builder:** Dockerfile (auto-detected from the folder Dockerfile)
+   - **Root Directory:** empty (repo root — the root `Dockerfile`
+     builds from repo-root context, so nothing to configure)
+   - **Builder:** Dockerfile (auto-detected `Dockerfile` at repo root)
+   - **Dockerfile Path:** empty / default (do NOT set
+     `freelancer-backend/Dockerfile` — that file expects
+     `freelancer-backend/` as context and is only for local compose)
    - **Custom Healthcheck Path:** `/api/jobs`
 3. Variables tab — add:
 

@@ -1,11 +1,15 @@
-# LOCAL build (context = ./freelancer-backend), used by docker-compose.yml.
-# Railway does NOT use this file — it builds from the repo root via
-# the root Dockerfile. Keep the two files' build/run stages in sync.
+# FreelanceHub — RAILWAY build (repo-root context).
+#
+# Railway builds with the repo root as context, so backend paths are
+# prefixed with freelancer-backend/. Local `docker compose` does NOT use
+# this file — it builds ./freelancer-backend via freelancer-backend/Dockerfile.
+# Keep the two Dockerfiles' build/run stages in sync.
+
 # Build stage
 FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
+COPY freelancer-backend/pom.xml .
+COPY freelancer-backend/src ./src
 RUN mvn -B clean package -DskipTests
 
 # Run stage
