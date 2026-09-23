@@ -7,6 +7,9 @@
   before launching the JVM.
 
   Usage:
+    # If script execution is disabled (Windows default), bypass it:
+    powershell -ExecutionPolicy Bypass -File .\run-local.ps1
+
     .\run-local.ps1                          # defaults to .env.development
     .\run-local.ps1 -EnvFile .env.production
 #>

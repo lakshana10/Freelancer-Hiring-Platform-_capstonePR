@@ -26,7 +26,8 @@ Spring Boot does **not** read `.env` files on its own. Use the loader:
 
 ```powershell
 cd freelancer-backend
-.\run-local.ps1                 # loads .env.development, runs Spring Boot
+# Windows blocks .ps1 by default -> bypass the execution policy:
+powershell -ExecutionPolicy Bypass -File .\run-local.ps1
 # backend -> http://localhost:8080
 ```
 
