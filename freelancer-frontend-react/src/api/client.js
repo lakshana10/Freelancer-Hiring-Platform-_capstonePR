@@ -1,8 +1,8 @@
 import axios from "axios";
 
 // Base URL: VITE_API_URL in production, local Spring Boot in dev.
-// Mirrors the old auth.js behaviour (local pages -> localhost,
-// deployed pages -> Render) but driven by a single env var.
+// One env var selects the backend (local pages -> localhost,
+// deployed pages -> Railway).
 const baseURL =
   import.meta.env.VITE_API_URL?.trim() || "http://localhost:8080";
 

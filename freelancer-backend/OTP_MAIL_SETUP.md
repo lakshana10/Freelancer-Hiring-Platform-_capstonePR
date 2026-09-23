@@ -35,9 +35,9 @@ Invoke-RestMethod -Method Post -Uri http://localhost:8080/api/otp/verify `
   -ContentType 'application/json' -Body '{"email":"user@test.com","otp":"123456"}'
 ```
 
-## 3. Render (production)
+## 3. Railway (production)
 
-Dashboard → `freelancer-backend` → Environment → add:
+Railway → backend service → Variables → add:
 
 | Key | Value |
 |---|---|
@@ -48,8 +48,7 @@ Dashboard → `freelancer-backend` → Environment → add:
 | `JWT_SECRET` | 32+ char random string |
 | `CORS_ALLOWED_ORIGINS` | `https://*.vercel.app,http://localhost:*,http://127.0.0.1:*` |
 
-`render.yaml` already declares these with `sync: false` so the
-Blueprint never commits the secret. Redeploy after saving.
+Secrets stay in Railway Variables — never in git. Redeploy after saving.
 
 ## 4. JUnit (no real SMTP needed)
 
