@@ -13,7 +13,7 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.net.preferIPv4Stack=true"
 HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD wget -qO- http://localhost:${PORT:-8080}/api/jobs > /dev/null 2>&1 || exit 1
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
