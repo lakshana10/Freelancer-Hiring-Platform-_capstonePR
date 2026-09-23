@@ -30,6 +30,13 @@ creates the rest on first boot).
 `PORT` is injected by Railway and honored automatically. No secrets
 in git — everything above lives in Variables only.
 
+### Gate deploys on CI (recommended)
+
+Repo now has `.github/workflows/ci.yml` (JUnit + lint/build +
+Playwright E2E on a live stack). After its first green run on `main`,
+enable Railway → backend service → **Wait for CI** so only green
+commits deploy to production.
+
 ## 2. Frontend (`freelancer-frontend-react` on Vercel)
 
 1. Vercel → New Project → same repo, **Root Directory:**
