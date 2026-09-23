@@ -4,6 +4,10 @@
 # Playwright MCP session artifacts (screenshots, console logs)
 .playwright-mcp/
 
+# Playwright test runner output (traces, reports)
+freelancer-frontend-react/test-results/
+freelancer-frontend-react/playwright-report/
+
 # Build outputs
 node_modules/
 freelancer-frontend-react/dist/
