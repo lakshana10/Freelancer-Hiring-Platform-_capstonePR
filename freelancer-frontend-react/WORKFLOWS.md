@@ -4,7 +4,7 @@
 
 | Step | Screen | API |
 |---|---|---|
-| 1. Sign up + verify email | `/signup` | `POST /api/otp/generate` → `POST /api/otp/verify` → `POST /api/users/signup` |
+| 1. Sign up (no email verification — OTP unlinked) | `/signup` | `POST /api/users/signup` |
 | 2. Post a job | `/post-job` | `POST /api/jobs` |
 | 3. Manage own postings | `/my-jobs` | `GET /api/jobs` (client-side filter `clientEmail == me`), `DELETE /api/jobs/{id}` |
 | 4. Compare proposals per job | `/applications` or `/jobs/{id}` → Proposals tab | `GET /applications` (filtered to my job IDs), `PUT /applications/{id}/status` |
@@ -22,7 +22,7 @@ freelancer directory link is hidden.
 
 | Step | Screen | API |
 |---|---|---|
-| 1. Sign up + verify email | `/signup` | same OTP flow |
+| 1. Sign up (no email verification — OTP unlinked) | `/signup` | `POST /api/users/signup` (OTP endpoints retained for later re-link) |
 | 2. Find work | `/jobs` (public board, all clients) | `GET /api/jobs` |
 | 3. Apply | `/jobs/{id}` → Apply | `POST /applications/apply` |
 | 4. Track status | `/my-applications` | `GET /applications/freelancer/{email}` |

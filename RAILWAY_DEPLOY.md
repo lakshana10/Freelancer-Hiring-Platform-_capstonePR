@@ -50,5 +50,5 @@ commits deploy to production.
 ## 3. Verify live
 
 - `GET https://<backend>/api/jobs` → `[]` or job list (public)
-- Signup → OTP email arrives → verify → account created
+- Signup → account created directly (OTP email verification is unlinked; `/api/otp/*` retained for later)
 - Client posts job → freelancer applies → accept → project chat LIVE
