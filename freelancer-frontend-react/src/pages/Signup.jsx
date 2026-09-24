@@ -1,11 +1,8 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { otpApi } from "../api";
 import { apiError } from "../api/client";
 import { useAuth } from "../context/AuthContext";
-import { ErrorBanner, Page, SuccessBanner } from "../components/ui";
-
-const RESEND_COOLDOWN_MS = 60000;
+import { ErrorBanner, Page } from "../components/ui";
 
 // Mirrors backend SignupRequest: min 8 chars, upper + lower +
 // digit + special. Single source text shown under the field.
@@ -29,88 +26,12 @@ export function Signup() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [otp, setOtp] = useState("");
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [terms, setTerms] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
-  const [verifiedEmail, setVerifiedEmail] = useState("");
-  const [otpMessage, setOtpMessage] = useState({ text: "", ok: true });
   const [error, setError] = useState("");
-  const [sending, setSending] = useState(false);
-  const [verifying, setVerifying] = useState(false);
   const [creating, setCreating] = useState(false);
-  const cooldownUntil = useRef(0);
-
-  const onEmailChange = (value) => {
-    setEmail(value);
-    setOtpVerified(false);
-    setVerifiedEmail("");
-    setOtpMessage({ text: "", ok: true });
-  };
-
-  const sendOtp = async () => {
-    const trimmed = email.trim();
-    if (!trimmed || !trimmed.includes("@")) {
-      setError("Please enter a valid email address first.");
-      return;
-    }
-    const waitMs = cooldownUntil.current - Date.now();
-    if (waitMs > 0) {
-      setError(`Please wait ${Math.ceil(waitMs / 1000)}s before resending.`);
-      return;
-    }
-    setSending(true);
-    setError("");
-    try {
-      await otpApi.generate(trimmed);
-      setOtpMessage({
-        text: "✓ OTP sent. Check your email.",
-        ok: true,
-      });
-      setOtpVerified(false);
-      setVerifiedEmail("");
-      cooldownUntil.current = Date.now() + RESEND_COOLDOWN_MS;
-    } catch (err) {
-      const status = err?.response?.status;
-      setError(
-        status === 429
-          ? "Too many OTP requests. Wait a minute and try again."
-          : apiError(err, "Failed to send OTP."),
-      );
-      if (status === 429) cooldownUntil.current = Date.now() + RESEND_COOLDOWN_MS;
-    } finally {
-      setSending(false);
-    }
-  };
-
-  const verifyOtp = async () => {
-    const trimmed = email.trim();
-    if (!trimmed) {
-      setError("Please enter your email address.");
-      return;
-    }
-    if (!otp.trim() || otp.trim().length !== 6) {
-      setError("Please enter the 6-digit OTP.");
-      return;
-    }
-    setVerifying(true);
-    setError("");
-    try {
-      await otpApi.verify(trimmed, otp.trim());
-      setOtpVerified(true);
-      setVerifiedEmail(trimmed.toLowerCase());
-      setOtpMessage({ text: "✓ Email verified successfully.", ok: true });
-    } catch (err) {
-      setOtpVerified(false);
-      setVerifiedEmail("");
-      setOtpMessage({ text: "Invalid or expired OTP.", ok: false });
-      setError(apiError(err, "Invalid or expired OTP."));
-    } finally {
-      setVerifying(false);
-    }
-  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -119,8 +40,6 @@ export function Signup() {
     if (name.trim().length < 2) return setError("Please enter your full name.");
     if (!trimmedEmail.includes("@"))
       return setError("Please enter a valid email address.");
-    if (!otpVerified || verifiedEmail !== trimmedEmail.toLowerCase())
-      return setError("Please verify your email with the OTP first.");
     if (!role) return setError("Please choose Freelancer or Client.");
     if (!isStrongPassword(password))
       return setError(
@@ -163,53 +82,11 @@ export function Signup() {
           <input
             type="email"
             value={email}
-            onChange={(e) => onEmailChange(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             required
           />
         </label>
-        <div className="field">
-          <span>Email verification OTP</span>
-          <div className="row">
-            <input
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="6-digit OTP"
-              maxLength={6}
-              inputMode="numeric"
-            />
-            <button
-              type="button"
-              className="btn btn-primary btn-sm"
-              disabled={sending}
-              onClick={sendOtp}
-            >
-              {sending ? "Sending…" : "Get OTP"}
-            </button>
-          </div>
-          <div className="row">
-            <button
-              type="button"
-              className="btn btn-ghost btn-sm"
-              disabled={verifying}
-              onClick={verifyOtp}
-            >
-              {verifying ? "Verifying…" : "Verify OTP"}
-            </button>
-          </div>
-          <p className="muted small">
-            No email yet? Check your Spam folder too — OTP mail
-            sometimes lands there instead of Primary.
-          </p>
-          {otpMessage.text && (
-            <SuccessBanner message={otpVerified ? otpMessage.text : ""} />
-          )}
-          {!otpVerified && otpMessage.text && (
-            <p className={`small ${otpMessage.ok ? "ok" : "bad"}`}>
-              {otpMessage.text}
-            </p>
-          )}
-        </div>
         <div className="field">
           <span>I want to join as</span>
           <div className="row">
